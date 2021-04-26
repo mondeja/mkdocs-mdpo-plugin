@@ -13,6 +13,7 @@ theme:
   name: material
   icon:
     repo: fontawesome/brands/github
+  language: en
 
 nav:
   - Introduction: index.md
@@ -33,8 +34,21 @@ plugins:
   - minify:
       minify_html: true
       minify_js: true
-  - mdpo:
-      default_language: en
-      languages:
-          - es
-          - fr
+  - mdpo
+
+extra:
+  alternate:
+    # Switch to English
+    - name: English
+      link:
+      lang: en
+
+    # Switch to German
+    - name: Español
+      link: es
+      lang: es
+
+    # Switch to Japanese
+    - name: Français
+      link: fr
+      lang: fr

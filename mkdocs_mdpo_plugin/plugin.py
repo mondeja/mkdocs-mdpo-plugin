@@ -12,8 +12,8 @@ from mdpo import markdown_to_pofile, pofile_to_markdown
 
 class MdpoPlugin(mkdocs.plugins.BasePlugin):
     config_scheme = (
-        ('locales_dir', mkdocs.config.config_options.Type(str, default='')),
-        ("default_language", mkdocs.config.config_options.Type(str, required=True)),
+        ('locale_dir', mkdocs.config.config_options.Type(str, default='')),
+        ("default_language", mkdocs.config.config_options.Type(str, required=False)),
         ('languages', mkdocs.config.config_options.Type(list, required=False)),
         (
             'dest_filename_template',
@@ -21,11 +21,13 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 str,
                 default='{{language}}/{{page.file.dest_path}}',
             ),
-        )
+        ),
+        ("lc_messages", mkdocs.config.config_options.Type((str, bool), default="")),
     )
-    
+
     def __init__(self, *args, **kwargs):
         self.__temp_pages_to_remove = []
+        
         super().__init__(*args, **kwargs)
     
     def _non_default_languages(self):
@@ -33,16 +35,84 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             if language != self.config["default_language"]:
                 yield language
     
-    def _language_dir(self, language, base_dir):
-        return os.path.join(base_dir, self.config["locales_dir"], language)
+    def _language_dir(self, base_dir, language):
+        return os.path.join(
+            base_dir,
+            self.config["locale_dir"],
+            language,
+            self.config["lc_messages"],
+        )
+    
+    def on_config(self, config, **kwargs):
+        if self.config["lc_messages"] is True:
+            self.config["lc_messages"] = "LC_MESSAGES"
+        elif not self.config["lc_messages"]:
+            self.config["lc_messages"] = ""
+            
+        def _type_error(plugin_setting, expected_type):
+            return mkdocs.config.base.ValidationError(
+                f"'plugins.mdpo.{plugin_setting}' must be a {expected_type}"
+            )
+        
+        _material_theme_configured = config["theme"].name == "material"
+
+        # load language selection settings from material or mdpo configuration
+        def _languages_required():
+            msg = ("You must define the languages you will translate the"
+                   " content into using"
+                   f" {'either ' if _material_theme_configured else 'the '}"
+                   " 'plugins.mdpo.languages'")
+            if _material_theme_configured:
+                msg += " or 'extra.alternate'"
+            msg += (" configuration setting"
+                    f"{'s' if _material_theme_configured else ''}.")
+            return mkdocs.config.base.ValidationError(msg)
+        
+        def _default_language_required():
+            msg = ("You must define the original language for translations using"
+                   f" {'either ' if _material_theme_configured else 'the '}"
+                   " 'plugins.mdpo.default_language'")
+            if _material_theme_configured:
+                msg += " or 'theme.language'"
+            msg += (" configuration setting"
+                    f"{'s' if _material_theme_configured else ''}.")
+            return mkdocs.config.base.ValidationError(msg)
+
+        languages = self.config.get("languages")
+        if not languages:
+            if _material_theme_configured:
+                if "extra" not in config:
+                    raise _languages_required()
+                alternate = config["extra"].get("alternate")
+                if not alternate:
+                    raise _languages_required()
+                self.config["languages"] = [l["lang"] for l in alternate]
+            else:
+                raise _languages_required()
+        elif not isinstance(languages, list):
+            raise _type_error("languages", "list")
+
+        default_language = self.config.get("default_language")
+        if not default_language:
+            if _material_theme_configured:
+                if "language" not in config["theme"]:
+                    raise _languages_required()
+                self.config["default_language"] = config["theme"]["language"]
+            else:
+                raise _default_language_required()
+        elif not isinstance(default_language, str):
+            raise _type_error("default_language", "str")
 
     def on_pre_build(self, config):
-        """Create 'locales/' folders inside documentation directory."""
+        """Create locales folders inside documentation directory."""
+
         for language in self._non_default_languages():
             os.makedirs(
-                self._language_dir(language, config["docs_dir"]), exist_ok=True,
+                os.path.join(
+                    self._language_dir(config["docs_dir"], language),
+                ),
+                exist_ok=True,
             )
-    
 
     def on_files(self, files, config):
         """Remove locales directory from collected files.
@@ -56,18 +126,16 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 new_files.append(file)
         return new_files
 
-    
     def on_page_markdown(self, markdown, page, config, files):
         if hasattr(page, "_MdpoPlugin__abort_on_page_markdown"):
             return
 
-        po_filename = f"{page.file.src_path.replace(os.sep, '_')}.po"
-
         for language in self._non_default_languages():
             po_filepath = os.path.join(
-                self._language_dir(language, config["docs_dir"]),
-                po_filename,
+                self._language_dir(config["docs_dir"], language),
+                f"{page.file.src_path}.po",
             )
+            os.makedirs(os.path.abspath(os.path.dirname(po_filepath)), exist_ok=True)
             po = markdown_to_pofile(markdown, po_filepath=po_filepath)
 
             # translate title
@@ -75,6 +143,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             for entry in po:
                 if entry.msgid == page.title:
                     _title_in_pofile = True
+                    if entry.obsolete:
+                        entry.obsolete = False
                     translated_page_title = entry.msgstr
             if not _title_in_pofile:
                 po.insert(0, polib.POEntry(msgid=page.title, msgstr=""))
@@ -84,7 +154,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             
             # create site language dir if not exists
             os.makedirs(
-                self._language_dir(language, config["site_dir"]),
+                self._language_dir(config["site_dir"], language),
                 exist_ok=True,
             )
 
@@ -99,10 +169,10 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
             # This is really a hack but it works very well
             #
-            # The current approach of Mkdocs doesn't provide a way to add new
-            #   documentation pages on the fly when the first page is being
-            #   populated, so we need to create a temporal page inside the
-            #   locales directory and populate them manually
+            # The current Mkdocs approach doesn't provide a way to add new
+            #   documentation pages on the fly when a page is being  populated,
+            #   so we need to create a temporal page inside the locales
+            #   directory and populate them manually
             src_abs_path = os.path.abspath(os.path.join(config["docs_dir"], src_path))
             self.__temp_pages_to_remove.append(src_abs_path)
             os.makedirs(os.path.dirname(src_abs_path), exist_ok=True)
@@ -134,9 +204,15 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             )
     
     def on_post_build(self, config):
-        """
-        Derived from mkdocs commands build function.
-        We build every language on its own directory.
-        """
+        """Cleanup."""
         for filepath in self.__temp_pages_to_remove:
             os.remove(filepath)
+            
+            parent_dir = os.path.abspath(os.path.dirname(filepath))
+            if not os.listdir(parent_dir):
+                os.rmdir(parent_dir)
+        
+        # remove empty directories from site_dir
+        for root, dirs, files in os.walk(config["site_dir"], topdown=False):
+            if not os.listdir(root):
+                os.rmdir(root)        
