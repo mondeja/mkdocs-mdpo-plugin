@@ -1,0 +1,40 @@
+site_name: mkdocs-mdpo-plugin
+site_url: https://mondeja.github.io/mkdocs-mdpo-plugin/
+site_description: Multilanguage HTTP request code snippet generator.
+site_author: Álvaro Mondéjar Rubio
+
+repo_url: https://github.com/mondeja/mkdocs-mdpo-plugin
+repo_name: mkdocs-mdpo-plugin
+edit_uri: tree/master/docs
+copyright: Copyright &copy; 2021 Álvaro Mondéjar Rubio
+
+docs_dir: docs
+theme:
+  name: material
+  icon:
+    repo: fontawesome/brands/github
+
+nav:
+  - Introduction: index.md
+
+markdown_extensions:
+  - pymdownx.tabbed
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+  - meta
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - admonition
+  - pymdownx.details
+
+plugins:
+  - search
+  - minify:
+      minify_html: true
+      minify_js: true
+  - mdpo:
+      default_language: en
+      languages:
+          - es
+          - fr
