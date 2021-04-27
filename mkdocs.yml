@@ -16,39 +16,33 @@ theme:
   language: en
 
 nav:
-  - Introduction: index.md
+  - Home: index.md
 
 markdown_extensions:
   - pymdownx.tabbed
   - pymdownx.superfences
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+  - pymdownx.details
   - toc:
       permalink: true
   - meta
   - pymdownx.tasklist:
       custom_checkbox: true
   - admonition
-  - pymdownx.details
 
 plugins:
   - search
   - minify:
       minify_html: true
       minify_js: true
+  - include-markdown
   - mdpo
 
 extra:
   alternate:
-    # Switch to English
     - name: English
-      link:
       lang: en
-
-    # Switch to German
     - name: Español
       link: es
       lang: es
-
-    # Switch to Japanese
-    - name: Français
-      link: fr
-      lang: fr

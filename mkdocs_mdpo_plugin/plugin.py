@@ -27,6 +27,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
     def __init__(self, *args, **kwargs):
         self.__temp_pages_to_remove = []
+        self.__translated_nav = {} # original_title, translations, url
         
         super().__init__(*args, **kwargs)
     
@@ -60,7 +61,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         def _languages_required():
             msg = ("You must define the languages you will translate the"
                    " content into using"
-                   f" {'either ' if _material_theme_configured else 'the '}"
+                   f"{' either' if _material_theme_configured else ' the'}"
                    " 'plugins.mdpo.languages'")
             if _material_theme_configured:
                 msg += " or 'extra.alternate'"
@@ -99,7 +100,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                     raise _languages_required()
                 self.config["default_language"] = config["theme"]["language"]
             else:
-                raise _default_language_required()
+                self.config["default_language"] = self.config["languages"][0]
         elif not isinstance(default_language, str):
             raise _type_error("default_language", "str")
 
@@ -125,11 +126,27 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             if os.path.splitext(file.src_path)[-1] != ".po":
                 new_files.append(file)
         return new_files
+    
+    def on_page_context(self, context, page, config, nav):
+        """Navigation translation."""
+        if not hasattr(page, "_language"):
+            return
+        
+        for item in nav:
+            if item.title not in self.__translated_nav:
+                continue
+            tr_title, tr_url = self.__translated_nav[item.title][page._language]
+            item.title = tr_title
+            item.file.url = tr_url
 
     def on_page_markdown(self, markdown, page, config, files):
         if hasattr(page, "_MdpoPlugin__abort_on_page_markdown"):
             return
 
+        if page.title not in self.__translated_nav:
+            # lang: [title, url]
+            self.__translated_nav[page.title] = {}
+        
         for language in self._non_default_languages():
             po_filepath = os.path.join(
                 self._language_dir(config["docs_dir"], language),
@@ -137,6 +154,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             )
             os.makedirs(os.path.abspath(os.path.dirname(po_filepath)), exist_ok=True)
             po = markdown_to_pofile(markdown, po_filepath=po_filepath)
+            
 
             # translate title
             translated_page_title, _title_in_pofile = (None, False)
@@ -191,8 +209,13 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 config,
             )
             new_page.__abort_on_page_markdown = True
+            new_page._language = language
             files.append(new_file)
-
+            
+            self.__translated_nav[page.title][language] = [
+                translated_page_title, new_page.url,
+            ]
+        
             mkdocs.commands.build._populate_page(
                 new_page,
                 config,
@@ -202,7 +225,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                     '-c' not in sys.argv and '--clean' not in sys.argv
                 )
             )
-    
+
     def on_post_build(self, config):
         """Cleanup."""
         for filepath in self.__temp_pages_to_remove:
