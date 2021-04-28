@@ -1,13 +1,34 @@
 """mkdocs-mdpo-plugin module"""
 
 import os
+import re
 import shutil
 import sys
 
 import mkdocs
 import polib
 from jinja2 import Template
-from mdpo import markdown_to_pofile, pofile_to_markdown
+from mdpo import Po2Md, markdown_to_pofile
+from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
+from mdpo.command import COMMAND_SEARCH_RE
+
+MKDOCS_MINOR_VERSION_INFO = tuple(int(n) for n in mkdocs.__version__.split(".")[:2])
+
+
+class MkdocsBuild(object):
+    """Represents the mkdocs build process.
+
+    Is a singleton, so only accepts one build. Should be initialized using
+    the `instance` class method, which accepts an instance of the plugin class.
+    """
+    _instance = None
+
+    @classmethod
+    def instance(cls, mdpo_plugin):
+        if cls._instance is None:
+            cls._instance = cls.__new__(cls)
+            cls.mdpo_plugin = mdpo_plugin
+        return cls._instance
 
 
 class MdpoPlugin(mkdocs.plugins.BasePlugin):
@@ -26,16 +47,33 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
     )
 
     def __init__(self, *args, **kwargs):
-        self.__temp_pages_to_remove = []
-        self.__translated_nav = {} # original_title, translations, url
-        
+        #  temporal translated pages created by the plugin at runtime
+        self._temp_pages_to_remove = []
+
+        # md4c extensions used in mdpo translation (depend on Python-Markdown
+        # configured extensions in `mkdocs.yml`)
+        self._md4c_extensions = DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
+
+        # navigation translation
+        # {original_title: {lang: {title: [translation, url]}}}
+        self.__translated_nav = {}
+
+        # information needed by `mkdocs.mdpo` extension
+        #
+        #   instance that represents the run
+        MkdocsBuild.instance(self)
+        #   current page being rendered
+        self.current_page = None
+        #   configuration of the build (loaded at `on_config` method)
+        self.mkdocs_build_config = None
+
         super().__init__(*args, **kwargs)
-    
+
     def _non_default_languages(self):
         for language in self.config["languages"]:
             if language != self.config["default_language"]:
                 yield language
-    
+
     def _language_dir(self, base_dir, language):
         return os.path.join(
             base_dir,
@@ -43,18 +81,26 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             language,
             self.config["lc_messages"],
         )
-    
+
     def on_config(self, config, **kwargs):
+        """Configuration for `mkdocs_mdpo_plugin`.
+
+        * Define properly `lc_messages`, `languages` and `locale_dir`
+          configuration settings.
+        * Loads `mkdocs.mdpo` extension.
+        * Stores the build configuration in `mkdocs_build_config` property
+          of the plugin instance.
+        """
         if self.config["lc_messages"] is True:
             self.config["lc_messages"] = "LC_MESSAGES"
         elif not self.config["lc_messages"]:
             self.config["lc_messages"] = ""
-            
+
         def _type_error(plugin_setting, expected_type):
             return mkdocs.config.base.ValidationError(
                 f"'plugins.mdpo.{plugin_setting}' must be a {expected_type}"
             )
-        
+
         _material_theme_configured = config["theme"].name == "material"
 
         # load language selection settings from material or mdpo configuration
@@ -68,7 +114,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             msg += (" configuration setting"
                     f"{'s' if _material_theme_configured else ''}.")
             return mkdocs.config.base.ValidationError(msg)
-        
+
         def _default_language_required():
             msg = ("You must define the original language for translations using"
                    f" {'either ' if _material_theme_configured else 'the '}"
@@ -104,6 +150,19 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         elif not isinstance(default_language, str):
             raise _type_error("default_language", "str")
 
+        # configure md4c extensions
+        if "tables" not in config["markdown_extensions"]:
+            self._md4c_extensions.remove("tables")
+        if "wikilinks" not in config["markdown_extensions"]:
+            self._md4c_extensions.remove("wikilinks")
+
+        # configure internal 'mkdocs.mdpo' extension
+        if "mkdocs.mdpo" in config["markdown_extensions"]:
+            config["markdown_extensions"].remove("mkdocs.mdpo")
+        config["markdown_extensions"].append("mkdocs.mdpo")
+
+        self.mkdocs_build_config = config
+
     def on_pre_build(self, config):
         """Create locales folders inside documentation directory."""
 
@@ -117,7 +176,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
     def on_files(self, files, config):
         """Remove locales directory from collected files.
-        
+
         NOTE: Since mkdocs 1.2.X, there is a new method ``remove`` for
               files which will simplify the code defined in this event.
         """
@@ -126,27 +185,42 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             if os.path.splitext(file.src_path)[-1] != ".po":
                 new_files.append(file)
         return new_files
-    
+
     def on_page_context(self, context, page, config, nav):
         """Navigation translation."""
         if not hasattr(page, "_language"):
             return
-        
+
         for item in nav:
             if item.title not in self.__translated_nav:
                 continue
             tr_title, tr_url = self.__translated_nav[item.title][page._language]
-            item.title = tr_title
+            if tr_title:
+                item.title = tr_title
             item.file.url = tr_url
 
+    def on_page_content(self, content, *args, **kwargs):
+        """Useful for debugging."""
+        # print(content)
+        pass
+
     def on_page_markdown(self, markdown, page, config, files):
-        if hasattr(page, "_MdpoPlugin__abort_on_page_markdown"):
+        """Event executed when markdown content of a page is collected.
+
+        Here happen most of the logic handled by the plugin:
+
+        * For each documentation page, creates another documentation page
+          for each language that will be translated (part here and part
+          inside the `mkdocs.mdpo` extension, see
+          :py:mod:`mkdocs_mdpo_plugin.extension` module).
+        """
+        if hasattr(page, "_language"):
             return
 
         if page.title not in self.__translated_nav:
             # lang: [title, url]
             self.__translated_nav[page.title] = {}
-        
+
         for language in self._non_default_languages():
             po_filepath = os.path.join(
                 self._language_dir(config["docs_dir"], language),
@@ -154,7 +228,6 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             )
             os.makedirs(os.path.abspath(os.path.dirname(po_filepath)), exist_ok=True)
             po = markdown_to_pofile(markdown, po_filepath=po_filepath)
-            
 
             # translate title
             translated_page_title, _title_in_pofile = (None, False)
@@ -168,8 +241,11 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 po.insert(0, polib.POEntry(msgid=page.title, msgstr=""))
 
             po.save(po_filepath)
-            content = pofile_to_markdown(markdown, po_filepath)
-            
+            po2md = Po2Md(po_filepath)
+            content = po2md.translate(markdown)
+
+            print(content)
+
             # create site language dir if not exists
             os.makedirs(
                 self._language_dir(config["site_dir"], language),
@@ -192,7 +268,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             #   so we need to create a temporal page inside the locales
             #   directory and populate them manually
             src_abs_path = os.path.abspath(os.path.join(config["docs_dir"], src_path))
-            self.__temp_pages_to_remove.append(src_abs_path)
+            self._temp_pages_to_remove.append(src_abs_path)
             os.makedirs(os.path.dirname(src_abs_path), exist_ok=True)
             with open(src_abs_path, "w") as f:
                 f.write(content)
@@ -208,14 +284,20 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 new_file,
                 config,
             )
-            new_page.__abort_on_page_markdown = True
+
+            # attach useful information inside the new translated page object
             new_page._language = language
+            new_page._po = po
+            new_page._po_filepath = po_filepath
+            new_page._po_disabled_entries = po2md.disabled_entries
             files.append(new_file)
-            
+
             self.__translated_nav[page.title][language] = [
                 translated_page_title, new_page.url,
             ]
-        
+
+            self.current_page = new_page
+
             mkdocs.commands.build._populate_page(
                 new_page,
                 config,
@@ -226,16 +308,49 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 )
             )
 
+        self.current_page = page
+
+        # for the original language, remove HTML comments of mpdo commands
+        #return re.sub(COMMAND_SEARCH_RE, '', markdown)
+
+    def _remove_temp_pages(self):
+        """Remove temporal generated pages."""
+        for filepath in self._temp_pages_to_remove:
+            self._remove_temp_page(filepath)
+
+    def _remove_temp_page(self, filepath):
+        os.remove(filepath)
+
+        parent_dir = os.path.abspath(os.path.dirname(filepath))
+        if not os.listdir(parent_dir):
+            os.rmdir(parent_dir)
+
     def on_post_build(self, config):
-        """Cleanup."""
-        for filepath in self.__temp_pages_to_remove:
-            os.remove(filepath)
-            
-            parent_dir = os.path.abspath(os.path.dirname(filepath))
-            if not os.listdir(parent_dir):
-                os.rmdir(parent_dir)
-        
+        self._remove_temp_pages()
+
         # remove empty directories from site_dir
         for root, dirs, files in os.walk(config["site_dir"], topdown=False):
             if not os.listdir(root):
-                os.rmdir(root)        
+                os.rmdir(root)
+
+
+# mkdocs>=1.2.0 includes a `build_error` event executed when the build
+# triggers a exception. The next patch provides the same cleanup functionality
+# if the `build_error` event is not supported:
+if MKDOCS_MINOR_VERSION_INFO >= (1, 2):
+    def _on_build_error(self, error):
+        self._remove_temp_pages()
+
+    MdpoPlugin.on_build_error = _on_build_error
+else:
+    import atexit
+
+    def _on_build_error():
+        mdpo_plugin_instance = MkdocsBuild().mdpo_plugin
+        for filepath in mdpo_plugin_instance._temp_pages_to_remove:
+            try:
+                mdpo_plugin_instance._remove_temp_page(filepath)
+            except FileNotFoundError:
+                pass
+
+    atexit.register(_on_build_error)

@@ -17,25 +17,29 @@ theme:
 
 nav:
   - Home: index.md
+  - Configuration: config.md
+  - Extensions support: extensions-support.md
 
 markdown_extensions:
-  - pymdownx.tabbed
-  - pymdownx.superfences
-  - pymdownx.magiclink:
-      repo_url_shorthand: true
-  - pymdownx.details
   - toc:
       permalink: true
-  - meta
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - fenced_code
+  - footnotes
+  - tables
+  - legacy_attrs
+  - wikilinks
+  - pymdownx.tabbed
+  - pymdownx.superfences
   - pymdownx.tasklist:
       custom_checkbox: true
-  - admonition
+  - pymdownx.tabbed
 
 plugins:
   - search
-  - minify:
-      minify_html: true
-      minify_js: true
   - include-markdown
   - mdpo
 

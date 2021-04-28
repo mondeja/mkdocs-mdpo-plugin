@@ -4,8 +4,8 @@
 # mkdocs-mdpo-plugin
 
 Translations for Mkdocs using PO files, fully customizable but simple and easy.
-Compatible with [mkdocs-material](https://squidfunk.github.io/mkdocs-material/),
-based on [mdpo][mdpo-link].
+Compatible with [mkdocs-material](https://squidfunk.github.io/mkdocs-material),
+based on [mdpo](https://mdpo.readthedocs.io).
 
 ## Install
 
@@ -24,7 +24,7 @@ plugins:
 
 ### Minimal configuration
 
-#### With [mkdocs-material](https://squidfunk.github.io/mkdocs-material/)
+#### With [mkdocs-material](https://squidfunk.github.io/mkdocs-material)
 
 ```yaml
 theme:
@@ -45,6 +45,7 @@ plugins:
 
 #### Standalone
 
+<!-- mdpo-include-codeblock -->
 ```yaml
 plugins:
   - mdpo:
@@ -87,12 +88,8 @@ site
 └── sitemap.xml.gz
 ```
 
-[mdpo-link]: https://mdpo.readthedocs.io/en/master/
-[docs-link]: https://mondeja.github.io/mkdocs-mdpo-plugin/
-
 <!--intro-end-->
 
 Simple and easy. Of course, the extraction of messages is fully customizable,
 and the produced layout is fully customizable: you can even translate code
-blocks! [Check the full documentation here][docs-link].
-
+blocks! [Check the full documentation here](https://mondeja.github.io/mkdocs-mdpo-plugin).
