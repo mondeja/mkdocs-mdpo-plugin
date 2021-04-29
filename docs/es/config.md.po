@@ -13,10 +13,7 @@ msgstr ""
 "X-Generator: Poedit 2.4.3\n"
 
 msgid "Configuration"
-msgstr ""
-
-msgid "Fields"
-msgstr "Campos"
+msgstr "Configuración"
 
 msgid ""
 "The layout of the generated files can be customized using different "
@@ -45,3 +42,99 @@ msgstr ""
 
 msgid "Permanent link"
 msgstr ""
+
+msgid ""
+"Original language of your pages. If not defined, the first language found in"
+" [`languages`](#languages) will be used."
+msgstr ""
+
+msgid ""
+"Defining it to `locale`, the layout will change a bit, but this doesn't mean"
+" that in the `site/` directory this new `locale/` folder will be included "
+"(see [`dest_filename_template`](#dest_filename_template))."
+msgstr ""
+
+msgid ""
+"It is common that for translations, an `LC_MESSAGES/` folder is created "
+"inside the language folder. If you need it you can set this setting as "
+"`true`, but if you want another folder name, you can pass a string, or even "
+"a relative path to create more than one folder between the language "
+"directory and their content:"
+msgstr ""
+
+msgid "**`languages`** (*list*)\\*"
+msgstr ""
+
+msgid ""
+"If you are using [mkdocs-material](https://squidfunk.github.io/mkdocs-"
+"material) theme, can also be defined in the `theme.language` configuration "
+"setting (see [Site language](https://squidfunk.github.io/mkdocs-"
+"material/setup/changing-the-language/#site-language))."
+msgstr ""
+
+msgid "Documentation directory tree"
+msgstr ""
+
+msgid "true"
+msgstr ""
+
+msgid "Custom value"
+msgstr ""
+
+msgid ""
+"Directory inside your documentation where the PO translation files will be "
+"placed. If not defined, the root of `docs` (`docs_dir` setting) will be "
+"used, so the default layout would be something like:"
+msgstr ""
+
+msgid ""
+"The default value is `{{language}}/{{page.file.dest_path}}`, being `page` "
+"the original documentation page and `language` the language of the "
+"translation."
+msgstr ""
+
+msgid ""
+"Template for destination file name inside `site/` directory. This is a valid"
+" [Jinja2 "
+"template](https://jinja2docs.readthedocs.io/en/stable/templates.html) string"
+" that will be used to define where should be placed the generated translated"
+" file inside the `site/` directory."
+msgstr ""
+
+msgid "The context for the template includes:"
+msgstr ""
+
+msgid "`language`: Translation language for the page."
+msgstr ""
+
+msgid ""
+"`page`: The original Markdown page object inside your documentation "
+"directory."
+msgstr ""
+
+msgid "`po_filepath`: The path of the PO file wich contains the translations."
+msgstr ""
+
+msgid ""
+"`po`: A "
+"[`polib.POFile`](https://polib.readthedocs.io/en/latest/api.html#polib.POFile)"
+" object with the translations loaded."
+msgstr ""
+
+msgid ""
+"All the configuration settings of the plugin such as `languages`, "
+"`default_language`, `lc_messages`, `locale_dir`, `dest_filename_template` "
+"itself..."
+msgstr ""
+
+msgid "Languages"
+msgstr ""
+
+msgid "Layout"
+msgstr ""
+
+#~ msgid "Configuración"
+#~ msgstr ""
+
+#~ msgid "Languages and layout"
+#~ msgstr ""

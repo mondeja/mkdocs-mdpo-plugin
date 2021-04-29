@@ -60,9 +60,6 @@ msgstr ""
 msgid "With [mkdocs-material](https://squidfunk.github.io/mkdocs-material)"
 msgstr "Con [mkdocs-material](https://squidfunk.github.io/mkdocs-material)"
 
-msgid "Permanent link"
-msgstr ""
-
 msgid ""
 "plugins:\n"
 "  - mdpo:\n"
@@ -90,4 +87,7 @@ msgid ""
 "Translations for Mkdocs using PO files, fully customizable but simple and "
 "easy. Compatible with [mkdocs-material](https://squidfunk.github.io/mkdocs-"
 "material), based on [mdpo](https://mdpo.readthedocs.io)."
+msgstr ""
+
+msgid "Permanent link"
 msgstr ""

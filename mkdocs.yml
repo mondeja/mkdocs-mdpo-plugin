@@ -8,6 +8,11 @@ repo_name: mkdocs-mdpo-plugin
 edit_uri: tree/master/docs
 copyright: Copyright &copy; 2021 Álvaro Mondéjar Rubio
 
+extra_javascript:
+  - assets/javascripts/language-selector.js
+extra_css:
+  - assets/stylesheets/pymdownx.progressbar.css
+
 docs_dir: docs
 theme:
   name: material
@@ -32,7 +37,17 @@ markdown_extensions:
   - tables
   - legacy_attrs
   - wikilinks
-  - pymdownx.tabbed
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.progressbar
   - pymdownx.superfences
   - pymdownx.tasklist:
       custom_checkbox: true

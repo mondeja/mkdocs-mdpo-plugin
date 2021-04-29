@@ -12,7 +12,8 @@ from mdpo.command import COMMAND_SEARCH_RE
 
 class MkdocsMdpoTreeProcessor(Treeprocessor):
     def run(self, root):
-        current_page =  MkdocsBuild().mdpo_plugin.current_page
+        mdpo_plugin = MkdocsBuild().mdpo_plugin
+        current_page = mdpo_plugin.current_page
         if not hasattr(current_page, "_language"):
             return
 
@@ -35,7 +36,8 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
                             if entry.msgstr:
                                 node.text = entry.msgstr
                             entry.obsolete = False
-                elif msgid not in current_page._disabled_msgids:
+                elif msgid not in current_page._disabled_msgids and \
+                        msgid not in mdpo_plugin._msgids_to_ignore:
                     current_page._po_msgids.append(msgid)
                     po.append(
                         polib.POEntry(msgid=msgid, msgstr="")
@@ -43,7 +45,7 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
 
         def iterate_childs(_root):
             for child in _root:
-                print(child.tag, child.text, child.attrib)
+                # print(child.tag, child.text, child.attrib)
                 if child.text and not child.text[1:].startswith("wzxhzdk:"):
                     process_translation(
                         child,
@@ -56,16 +58,14 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
 
         MkdocsBuild().mdpo_plugin.current_page = current_page
 
-        print("_______________________________________\n")
-
 
 class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
     def run(self, root):
-        mdpo_plugin_instance = MkdocsBuild().mdpo_plugin
+        mdpo_plugin = MkdocsBuild().mdpo_plugin
         current_mkdocs_build_extensions = (
-            mdpo_plugin_instance.mkdocs_build_config["markdown_extensions"]
+            mdpo_plugin.mkdocs_build_config["markdown_extensions"]
         )
-        current_page = mdpo_plugin_instance.current_page
+        current_page = mdpo_plugin.current_page
         if not hasattr(current_page, "_language"):
             return
 
@@ -81,7 +81,8 @@ class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
                             if entry.msgstr:
                                 node.attrib["title"] = entry.msgstr
                             entry.obsolete = False
-                elif msgid not in current_page._disabled_msgids:
+                elif msgid not in current_page._disabled_msgids and \
+                        msgid not in mdpo_plugin._msgids_to_ignore:
                     current_page._po_msgids.append(msgid)
                     po.append(
                         polib.POEntry(msgid=msgid, msgstr="")
@@ -89,18 +90,25 @@ class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
 
         def node_should_be_processed(node):
             if node.tag == "abbr" and "abbr" in current_mkdocs_build_extensions:
+                # abbriations titles would be duplicated in msgids
+                return False
+            elif node.get("class") in ["emojione", "twemoji", "gemoji"] and \
+                    "pymdownx.emoji" in current_mkdocs_build_extensions:
+                # don't add ':+1:' or ':heart:' as msgid
                 return False
             return True
 
 
         def iterate_childs(_root):
             for child in _root:
-                print("TITLE", child.tag, child.text, child.attrib)
+                #print("TITLE", child.tag, child.text, child.attrib)
 
                 # TODO: add support for other attribute names translation
                 #       globally (any element including that attribute)
                 #       and for `attr_list` officialed supported extension
-                if "title" in child.attrib and node_should_be_processed(child):
+                if "title" in child.attrib and \
+                        "mdpo-no-title" not in child.attrib and \
+                        node_should_be_processed(child):
                     process_translation(
                         child,
                         child.attrib["title"],
@@ -110,20 +118,6 @@ class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
         iterate_childs(root)
         current_page._po.save(current_page._po_filepath)
 
-class MkdocsMdpoRemoveCommandsFromOriginalLangProcessor(Preprocessor):
-    def run(self, lines):
-        current_page =  MkdocsBuild().mdpo_plugin.current_page
-        if hasattr(current_page, "_language"):
-            return lines
-
-        # remove root-level mdpo commands
-        new_lines = []
-        for line in lines:
-            if not re.match(COMMAND_SEARCH_RE, line):
-                new_lines.append(line)
-        return new_lines
-
-
 
 class MkdocsMdpoExtension(Extension):
     def extendMarkdown(self, md):
@@ -132,11 +126,6 @@ class MkdocsMdpoExtension(Extension):
             MkdocsMdpoTreeProcessor(self),
             'mkdocs-mdpo-tree',
             88887,
-        )
-        md.preprocessors.register(
-            MkdocsMdpoRemoveCommandsFromOriginalLangProcessor(self),
-            'mkdocs-mdpo-commands',
-            88888,
         )
 
         # run latest
