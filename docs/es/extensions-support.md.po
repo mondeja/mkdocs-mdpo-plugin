@@ -229,9 +229,6 @@ msgstr "[=100% \"cien por cien\"]"
 msgid "Here are some symbols: (tm) (c) (r)"
 msgstr "Aquí hay algunos símbolos: (tm) (c) (r)"
 
-msgid "Some inserted content from another file."
-msgstr "Algo de contenido insertado desde otro archivo."
-
 msgid "Tab content"
 msgstr "Contenido de pestaña"
 
@@ -304,6 +301,16 @@ msgid ""
 "-->`](https://mdpo.readthedocs.io/en/master/commands.html#disabling-"
 "extraction) antes de la advertencia."
 msgstr ""
+
+msgid "Some inserted content from another file."
+msgstr "Algo de contenido insertado desde otro archivo."
+
+#~ msgid ""
+#~ "<!-- mdpo-disable-next-line --> Some inserted content from another file."
+#~ msgstr ""
+
+#~ msgid "<!-- mdpo-disable-next-line -->"
+#~ msgstr ""
 
 #~ msgid "++ctrl+alt+delete++"
 #~ msgstr "++ctrl+alt+delete++"

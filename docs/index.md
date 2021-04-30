@@ -1,3 +1,13 @@
+<!-- mdpo-disable-next-line -->
+# mkdocs-mdpo-plugin
+
+{%
+   include-markdown "../README.md"
+   start="<!--description-start-->"
+   end="<!--description-end-->"
+   rewrite_relative_urls=false
+%}
+
 {%
    include-markdown "../README.md"
    start="<!--intro-start-->"

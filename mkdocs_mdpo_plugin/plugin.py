@@ -40,7 +40,7 @@ def remove_mdpo_commands_preserving_escaped(text):
             # remove commands
             COMMAND_SEARCH_RE_AT_LINE_START,
             '',
-            # escaped commands
+            # preserve escaped commands
             re.sub(
                 COMMAND_SEARCH_RE_ESCAPER,
                 r'\g<1>0-\g<2>',
