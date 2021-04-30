@@ -1,20 +1,13 @@
 var ORIGINAL_LANG = "en";
 
-var getCurrentIsOriginalLang = function() {
-  return window.location.pathname.length == 1 || window.location.pathname.split("/")[1].length != 2;
-}
-
 var getCurrentLang = function() {
   var pathSplit = window.location.pathname.split("/");
-  if (pathSplit.length > 1) {
-    if (pathSplit[1].length != 2) {
-      return ORIGINAL_LANG;
-    } else {
-      return pathSplit[1]
+  for (let i=1; i<pathSplit.length; i++) {
+    if (pathSplit[i].length == 2) {
+      return pathSplit[i];
     }
-  } else {
-    return ORIGINAL_LANG;
   }
+  return ORIGINAL_LANG;
 }
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -22,18 +15,16 @@ document.addEventListener("DOMContentLoaded", function(){
     return;
   }
 
-  var currentIsOriginalLang = getCurrentIsOriginalLang(),
-      currentLang = getCurrentLang();
+  var currentLang = getCurrentLang(),
+      languageItemsToRemove = [],
+      languageSelectorItems = document.getElementsByClassName('md-select__item');
 
-  var languageItemsToRemove = [];
-
-  var languageSelectorItems = document.getElementsByClassName('md-select__item');
   for (let i=0; i<languageSelectorItems.length; i++) {
     var languageItem = languageSelectorItems[i];
     var link = languageItem.childNodes[1];
 
     var linkLang = link.getAttribute("hreflang");
-    if (currentIsOriginalLang) {
+    if (currentLang == ORIGINAL_LANG) {
       if (linkLang == ORIGINAL_LANG) {
         languageItemsToRemove.push(languageItem);
       } else {
@@ -68,4 +59,4 @@ document.addEventListener("DOMContentLoaded", function(){
   for (let i=0; i<languageItemsToRemove.length; i++) {
     languageItemsToRemove[i].remove();
   }
-})
+});
