@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function(){
           newLink += pathSplit.slice(3).join("/")
         }
 
-        link.setAttribute("href", window.location.pathname.slice(3));
+        link.setAttribute("href", newLink);
       }
     }
   }
