@@ -37,12 +37,29 @@ document.addEventListener("DOMContentLoaded", function(){
       if (linkLang == ORIGINAL_LANG) {
         languageItemsToRemove.push(languageItem);
       } else {
-        link.setAttribute("href", '/' + linkLang + window.location.pathname);
+        var pathSplit = window.location.pathname.split("/");
+        var newLink = pathSplit.slice(0, 2).join('/') + '/' + linkLang + '/';
+        if (pathSplit.length > 3) {
+          newLink += pathSplit.slice(2).join("/")
+        }
+        link.setAttribute("href", newLink);
       }
     } else {
       if (linkLang == currentLang) {
         languageItemsToRemove.push(languageItem);
       } else {
+        if (linkLang == ORIGINAL_LANG) {
+          linkLang = '';
+        }
+        var pathSplit = window.location.pathname.split("/");
+        var newLink = pathSplit.slice(0, 2).join('/') + '/';
+        if (linkLang != ORIGINAL_LANG) {
+          newLink += (linkLang + '/');
+        }
+        if (pathSplit.length > 4) {
+          newLink += pathSplit.slice(3).join("/")
+        }
+
         link.setAttribute("href", window.location.pathname.slice(3));
       }
     }
