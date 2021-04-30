@@ -90,6 +90,6 @@ site
 
 <!--intro-end-->
 
-Simple and easy. Of course, the extraction of messages is fully customizable,
-and the produced layout is fully customizable: you can even translate code
-blocks! [Check the full documentation here](https://mondeja.github.io/mkdocs-mdpo-plugin).
+Simple and easy. The extraction of messages process and the produced
+layout are fully customizable, you can even translate code blocks!
+[Check the full documentation here](https://mondeja.github.io/mkdocs-mdpo-plugin).
