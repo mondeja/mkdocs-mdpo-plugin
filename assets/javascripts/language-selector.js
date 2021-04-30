@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function(){
         }
         var pathSplit = window.location.pathname.split("/");
         var newLink = pathSplit.slice(0, 2).join('/') + '/';
-        if (langLang.length && linkLang != ORIGINAL_LANG) {
+        if (linkLang.length && linkLang != ORIGINAL_LANG) {
           newLink += (linkLang + '/');
         }
         if (pathSplit.length > 4) {
