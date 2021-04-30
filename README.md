@@ -3,6 +3,11 @@
 <!-- mdpo-disable-next-line -->
 # mkdocs-mdpo-plugin
 
+[![PyPI version](https://img.shields.io/pypi/v/mkdocs-mdpo-plugin?label=version)](https://pypi.org/project/mkdocs-mdpo-plugin)
+[![Test](https://img.shields.io/github/workflow/status/mondeja/mkdocs-mdpo-plugin/CI?label=tests&logo=github)](https://github.com/mondeja/mkdocs-mdpo-plugin/actions?query=workflow%3ACI)
+[![Documentation](https://img.shields.io/github/workflow/status/mondeja/mkdocs-mdpo-plugin/Github%20Pages?label=docs&logo=github)](https://mondeja.github.io/mkdocs-mdpo-plugin)
+[![Coverage status](https://img.shields.io/coveralls/github/mondeja/mkdocs-mdpo-plugin?logo=coveralls)](https://coveralls.io/github/mondeja/mkdocs-mdpo-plugin)
+
 Translations for Mkdocs using PO files, fully customizable but simple and easy.
 Compatible with [mkdocs-material](https://squidfunk.github.io/mkdocs-material),
 based on [mdpo](https://mdpo.readthedocs.io).
