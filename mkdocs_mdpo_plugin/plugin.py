@@ -186,9 +186,11 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
         # configure MD4C extensions
         if "tables" not in config["markdown_extensions"]:
-            self._md4c_extensions.remove("tables")
+            if "tables" in self._md4c_extensions:
+                self._md4c_extensions.remove("tables")
         if "wikilinks" not in config["markdown_extensions"]:
-            self._md4c_extensions.remove("wikilinks")
+            if "wikilinks" in self._md4c_extensions:
+                self._md4c_extensions.remove("wikilinks")
 
         # spaces after '#' are optional in Python-Markdown for headers,
         # but the extension 'pymdownx.saneheaders' makes them mandatory
@@ -206,6 +208,12 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         else:
             if "tasklists" in self._md4c_extensions:
                 self._md4c_extensions.remove("tasklists")
+
+        # 'pymdownx.tilde' enables strikethrough syntax, but only works
+        # if the MD4C extension is disabled
+        if "pymdownx.tilde" in config["markdown_extensions"]:
+            if "strikethrough" in self._md4c_extensions:
+                self._md4c_extensions.remove("strikethrough")
 
         # configure internal 'mkdocs.mdpo' extension
         if "mkdocs.mdpo" in config["markdown_extensions"]:
@@ -298,8 +306,14 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 self._language_dir(config["docs_dir"], language),
                 f"{page.file.src_path}.po",
             )
-            os.makedirs(os.path.abspath(os.path.dirname(po_filepath)), exist_ok=True)
-            po = polib.pofile(po_filepath)
+            os.makedirs(
+                os.path.abspath(os.path.dirname(po_filepath)),
+                exist_ok=True,
+            )
+            if not os.path.isfile(po_filepath):
+                po = polib.POFile()
+            else:
+                po = polib.pofile(po_filepath)
             po.merge(original_po)
 
             # translate title
@@ -314,23 +328,11 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 po.insert(0, polib.POEntry(msgid=page.title, msgstr=""))
 
             po.save(po_filepath)
-            po2md = Po2Md(po_filepath)
 
+            po2md = Po2Md(po_filepath)
             content = remove_mdpo_commands_preserving_escaped(
                 po2md.translate(markdown),
             )
-
-            """
-            content = re.sub(
-                COMMAND_SEARCH_RE_AT_LINE_START,
-                '',
-                re.sub(
-                    COMMAND_SEARCH_RE_ESCAPED,
-                    r'\g<1>',
-                    po2md.translate(markdown),
-                ),
-            )
-            """
 
             # create site language dir if not exists
             os.makedirs(
@@ -438,6 +440,8 @@ else:
     import atexit
 
     def _on_build_error():
-        return __on_build_error(MkdocsBuild().mdpo_plugin)
+        build_instance = MkdocsBuild()
+        if hasattr(build_instance, "mdpo_plugin"):
+            return __on_build_error(build_instance.mdpo_plugin)
 
     atexit.register(_on_build_error)

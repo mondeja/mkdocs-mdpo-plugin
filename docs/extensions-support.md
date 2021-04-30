@@ -5,6 +5,17 @@ extensions. Unfortunately, sometimes you must customize the messages
 extraction process using HTML comments to exclude certain syntaxes that depends
 on extensions, or change a bit the format of your Markdown files.
 
+<!-- mdpo-disable-next-line -->
+??? note
+
+    If a version is not listed here, just means that is not tested,
+    not that doesn't works. If you doubt, using an extension, messages can
+    translate correctly, it is better to try it directly.
+    
+    If you want
+    [to submit a pull request](https://github.com/mondeja/mkdocs-mdpo-plugin/pulls)
+    adding a test evidencing that a extension works, it would be added here.
+
 ## [Officially supported extensions](https://python-markdown.github.io/extensions/#officially-supported-extensions)
 
 <!-- mdpo-disable-next-line -->
@@ -666,9 +677,9 @@ Text can't be added between tasklist items.
     - [X] Task 1
         * [X] Task A
         * [ ] Task B    
-            + [x] Task D
-            + [ ] Task E
-            + [x] Task F
+            + [x] Task δ
+            + [ ] Task ε
+            + [x] Task ζ
         * [X] Task C
     - [ ] Task 2
     - [ ] Task 3
@@ -680,9 +691,9 @@ Text can't be added between tasklist items.
     - [X] Task 1
         * [X] Task A
         * [ ] Task B    
-            + [x] Task D
-            + [ ] Task E
-            + [x] Task F
+            + [x] Task δ
+            + [ ] Task ε
+            + [x] Task ζ
         * [X] Task C
     - [ ] Task 2
     - [ ] Task 3
@@ -692,13 +703,58 @@ Text can't be added between tasklist items.
 === "PO file content"
 
     ```po
-    - [X] Task 1
-        * [X] Task A
-        * [ ] Task B    
-            + [x] Task D
-            + [ ] Task E
-            + [x] Task F
-        * [X] Task C
-    - [ ] Task 2
-    - [ ] Task 3
+    msgid "Task 1"
+    msgstr ""
+
+    msgid "Task A"
+    msgstr ""
+
+    msgid "Task B"
+    msgstr ""
+
+    msgid "Task δ"
+    msgstr ""
+
+    msgid "Task ε"
+    msgstr ""
+
+    msgid "Task ζ"
+    msgstr ""
+
+    msgid "Task C"
+    msgstr ""
+
+    msgid "Task 2"
+    msgstr ""
+
+    msgid "Task 3"
+    msgstr ""
+    ```
+
+<!-- mdpo-disable-next-line -->
+### [**`pymdownx.tilde`**](https://facelessuser.github.io/pymdown-extensions/extensions/tilde)
+
+<!-- mdpo-disable-next-line -->
+=== "Output"
+
+    ~~Delete me~~
+
+    CH~3~CH~2~OH
+
+<!-- mdpo-disable-next-line -->
+=== "Markdown"
+
+    ```markdown
+    ~~Delete me~~
+
+    <!-- mdpo-disable-next-line -->
+    CH~3~CH~2~OH
+    ```
+
+<!-- mdpo-disable-next-line -->
+=== "PO file content"
+
+    ```po
+    msgid "~~Delete me~~"
+    msgstr "~~Elimíname~~"
     ```

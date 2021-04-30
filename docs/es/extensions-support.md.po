@@ -235,3 +235,34 @@ msgstr "Algo de contenido insertado desde otro archivo."
 
 msgid "Tab content"
 msgstr "Contenido de pestaña"
+
+msgid "~~Delete me~~"
+msgstr "~~Elimíname~~"
+
+msgid "CH~3~CH~2~OH"
+msgstr ""
+
+msgid ""
+"If a version is not listed here, just means that is not tested, not that "
+"doesn't works. If you doubt, using an extension, messages can translate "
+"correctly, it is better to try it directly."
+msgstr ""
+
+msgid ""
+"If you want [to submit a pull request](https://github.com/mondeja/mkdocs-"
+"mdpo-plugin/pulls) adding a test evidencing that a extension works, it would"
+" be added here."
+msgstr ""
+
+#~ msgid "??? note"
+#~ msgstr ""
+
+#~ msgid "Other extensions"
+#~ msgstr "Otras extensiones"
+
+#~ msgid ""
+#~ "If a version is not listed here, just means that is not tested, not that "
+#~ "doesn't works. If you want [to submit a pull "
+#~ "request](https://github.com/mondeja/mkdocs-mdpo-plugin/pulls) adding a test "
+#~ "evidencing that a extension works, it would be added here."
+#~ msgstr ""
