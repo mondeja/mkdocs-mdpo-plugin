@@ -5,7 +5,7 @@ edit the content of your files:
 
 ```yaml
 - plugins
-  - search 
+  - search
   - include-markdown
   - mdpo
 ```
@@ -28,8 +28,8 @@ Languages to translate your files into. Commonly defined as
 <!-- mdpo-disable-next-line -->
 ### **`default_language`** (*str*)
 
-Original language of your pages. If not defined, the first language found in
-[`languages`](#languages) will be used.
+Original language of your files. If not defined, the first language found in
+[`languages`](#languages-list) will be used.
 
 <!-- mdpo-disable-next-line -->
 !!! note
@@ -60,7 +60,7 @@ so the default layout would be something like:
     ```
 
 <!-- mdpo-disable-next-line -->
-=== "Documentation directory tree"
+=== "Documentation directories tree"
 
     ```
     docs
@@ -72,8 +72,8 @@ so the default layout would be something like:
     ```
 
 Defining it to `locale`, the layout will change a bit, but this doesn't mean
-that in the `site/` directory this new `locale/` folder will be included
-(see [`dest_filename_template`](#dest_filename_template)).
+that this new `locale/` folder will be included in the `site/` directory
+(see [`dest_filename_template`](#dest_filename_template-str)).
 
 <!-- mdpo-disable-next-line -->
 === "Configuration"
@@ -89,7 +89,7 @@ that in the `site/` directory this new `locale/` folder will be included
     ```
 
 <!-- mdpo-disable-next-line -->
-=== "Documentation directory tree"
+=== "Documentation directories tree"
 
     ```
     docs
@@ -105,17 +105,17 @@ that in the `site/` directory this new `locale/` folder will be included
 <!-- mdpo-disable-next-line -->
 ### **`lc_messages`** (*bool* or *str*)
 
-It is common that for translations, an `LC_MESSAGES/` folder is created inside
-the language folder. If you need it you can set this setting as `true`,
-but if you want another folder name, you can pass a string, or even a relative
-path to create more than one folder between the language directory and their
-content:
+In the world of program translation is common the creation of a `LC_MESSAGES/`
+folder inside the language directory. If you need it you can set this setting
+as `true`, but if you want another folder name, you can pass a string, or even
+a relative path to create more than one folder between the language directory
+and their content:
 
 <!-- mdpo-disable-next-line -->
 === "true"
 
     === "Configuration"
-    
+
         ```yaml
         plugins:
           - mdpo:
@@ -127,7 +127,7 @@ content:
               lc_messages: true
         ```
 
-    === "Documentation directory tree"
+    === "Documentation directories tree"
 
         ```
         docs
@@ -157,7 +157,7 @@ content:
               lc_messages: my-own/subdir
         ```
 
-    === "Documentation directory tree"
+    === "Documentation directories tree"
 
         ```
         docs
@@ -194,4 +194,3 @@ The context for the template includes:
 - All the configuration settings of the plugin such as `languages`,
   `default_language`, `lc_messages`, `locale_dir`, `dest_filename_template`
   itself...
-   

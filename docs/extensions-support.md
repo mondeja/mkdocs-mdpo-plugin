@@ -8,13 +8,13 @@ on extensions, or change a bit the format of your Markdown files.
 <!-- mdpo-disable-next-line -->
 ??? note
 
-    If a version is not listed here, just means that is not tested,
-    not that doesn't works. If you doubt, using an extension, messages can
-    translate correctly, it is better to try it directly.
-    
-    If you want
-    [to submit a pull request](https://github.com/mondeja/mkdocs-mdpo-plugin/pulls)
-    adding a test evidencing that a extension works, it would be added here.
+    If an extension is not listed here, just means that is not tested,
+    not that doesn't works. If you doubt if using an extension the messages can
+    be translated correctly, it is better to try it directly.
+
+    If you
+    [submit a pull request](https://github.com/mondeja/mkdocs-mdpo-plugin/pulls)
+    adding tests evidencing that a extension works, it would be added here.
 
 ## [Officially supported extensions](https://python-markdown.github.io/extensions/#officially-supported-extensions)
 
@@ -26,15 +26,13 @@ You must always let one newline between each reference:
 <!-- mdpo-disable-next-line -->
 === "Output"
 
-    The HTML specification
-    is maintained by the W3C.
+    The HTML specification is maintained by the W3C.
 
 <!-- mdpo-disable-next-line -->
 === "Markdown"
 
     ```markdown
-    The HTML specification
-    is maintained by the W3C.
+    The HTML specification is maintained by the W3C.
 
     *[HTML]: Hyper Text Markup Language
 
@@ -47,7 +45,7 @@ You must always let one newline between each reference:
     ```po
     msgid "The HTML specification is maintained by the W3C."
     msgstr ""
-    
+
     msgid "*[HTML]: Hyper Text Markup Language"
     msgstr ""
 
@@ -64,19 +62,19 @@ You must always let one newline between each reference:
 ### [**`attr_list`**](https://python-markdown.github.io/extensions/attr_list)
 
 Only `title` attributes values are translated. Currently, this extension is a
-bit tricky because, if you want to use the `title` attribute, you must add
-an attribute `mdpo-no-title`:
+bit tricky because, if you want to see the `title` attribute value included in
+your PO file, you must add an attribute `mdpo-notitle`:
 
 <!-- mdpo-disable-next-line -->
 === "Output"
 
-    #### [link](https://mondeja.github.io/mkdocs-mdpo-plugin){: title="With a translated title!" mdpo-no-title }
+    #### [link](https://mondeja.github.io/mkdocs-mdpo-plugin){: title="With a translated title!" mdpo-notitle }
 
 <!-- mdpo-disable-next-line -->
 === "Markdown"
 
     ```markdown
-    #### [link](https://mondeja.github.io/mkdocs-mdpo-plugin){: title="With a translated title!" mdpo-no-title }
+    #### [link](https://mondeja.github.io/mkdocs-mdpo-plugin){: title="With a translated title!" mdpo-notitle }
     ```
 
 <!-- mdpo-disable-next-line -->
@@ -85,7 +83,7 @@ an attribute `mdpo-no-title`:
     ```po
     msgid ""
     "[link](https://mondeja.github.io/mkdocs-mdpo-plugin){: title=\"With a "
-    "translated title!\" mdpo-no-title }"
+    "translated title!\" mdpo-notitle }"
     msgstr ""
     ```
 
@@ -195,7 +193,7 @@ You must always let one newline between each footnote content:
     ```po
     msgid "This is a footnote[^1]. This is another[^2]."
     msgstr ""
-    
+
     msgid "[^1]: This is a footnote content."
     msgstr ""
 
@@ -244,7 +242,7 @@ You must always let one newline between each footnote content:
 
 You must always include a
 [`<!-- mdpo-disable-next-line -->`](https://mdpo.readthedocs.io/en/master/commands.html#disabling-extraction)
-HTML comment before the admonition. 
+HTML comment before the admonition.
 
 
 <!-- mdpo-disable-next-line -->
@@ -270,7 +268,7 @@ HTML comment before the admonition.
     <!-- mdpo-disable-next-line -->
     !!! note
 
-        Even the implicit title, which in this case would be "Note". 
+        Even the implicit title, which in this case would be "Note".
     ```
 
 <!-- mdpo-disable-next-line -->
@@ -279,7 +277,7 @@ HTML comment before the admonition.
     ```po
     msgid "Admonition title"
     msgstr ""
-    
+
     msgid "The title will also be included in the PO file."
     msgstr ""
 
@@ -298,34 +296,34 @@ HTML comment before the admonition.
 <!-- mdpo-disable-next-line -->
 === "Output"
 
-    Hello I'm text with ^^an insert^^.
-    
-    Hello I'm text with^a\ superscript^
+    Hello, I'm text with ^^an insert^^.
+
+    Hello, I'm text with^a\ superscript^
 
 <!-- mdpo-disable-next-line -->
 === "Markdown"
 
     ```markdown
-    Hello I'm text with ^^an insert^^.
-    
-    Hello I'm text with^a\ superscript^
+    Hello, I'm text with ^^an insert^^.
+
+    Hello, I'm text with^a\ superscript^
     ```
 
 <!-- mdpo-disable-next-line -->
 === "PO file content"
 
     ```po
-    msgid "Hello I'm text with ^^an insert^^."
+    msgid "Hello, I'm text with ^^an insert^^."
     msgstr ""
 
-    msgid "Hello I'm text with^a\\ superscript^."
+    msgid "Hello, I'm text with^a\\ superscript^."
     msgstr ""
     ```
 
 <!-- mdpo-disable-next-line -->
 ### [**`pymdownx.details`**](https://facelessuser.github.io/pymdown-extensions/extensions/details)
 
-If after adding a details admonition a msgid starting with `???` is added to
+If after adding a details admonition, a msgid starting with `???` is added to
 your PO file, you can remove it adding a
 [`<!-- mdpo-disable-next-line -->`](https://mdpo.readthedocs.io/en/master/commands.html#disabling-extraction)
 HTML comment before the admonition.
@@ -336,7 +334,7 @@ HTML comment before the admonition.
     ???+ note "Open styled details"
 
         ??? danger "Nested details!"
-        
+
             And more content again.
 
 <!-- mdpo-disable-next-line -->
@@ -347,7 +345,7 @@ HTML comment before the admonition.
     ???+ note "Open styled details"
 
         ??? danger "Nested details!"
-        
+
             And more content again.
     ```
 
@@ -368,9 +366,6 @@ HTML comment before the admonition.
 
 <!-- mdpo-disable-next-line -->
 ### [**`pymdownx.emoji`**](https://facelessuser.github.io/pymdown-extensions/extensions/emoji)
-
-Maybe your emoji expression can't be translated using the same emoji? Use another
-directly from your PO file:
 
 <!-- mdpo-disable-next-line -->
 === "Output"
@@ -568,13 +563,13 @@ You must let one blank line between each progress bar.
 
     ```po
     msgid "[=0% \"0%\"]"
-    msgstr ""
+    msgstr "[=0% \"vacío\"]"
 
     msgid "[=45% \"45%\"]"
-    msgstr ""
+    msgstr "[=45% \"45 por ciento\"]"
 
     msgid "[=100% \"100%\"]"
-    msgstr ""
+    msgstr "[=100% \"cien por cien\"]"
     ```
 
 <!-- mdpo-disable-next-line -->
@@ -597,14 +592,14 @@ You must let one blank line between each progress bar.
 
     ```po
     msgid "Here are some symbols: (tm) (c) (r)"
-    msgstr ""
+    msgstr "Aquí hay algunos símbolos: (tm) (c) (r)"
     ```
 
 <!-- mdpo-disable-next-line -->
 ### [**`pymdownx.snippets`**](https://facelessuser.github.io/pymdown-extensions/extensions/snippets)
 
 Block notation is not supported. You must add an
-[`<!-- mdpo-disable-next-line -->`](https://mdpo.readthedocs.io/en/master/commands.html#disabling-extraction)
+[`\<!-- mdpo-disable-next-line -->`](https://mdpo.readthedocs.io/en/master/commands.html#disabling-extraction)
 HTML comment before the line.
 
 <!-- mdpo-disable-next-line -->
@@ -642,7 +637,7 @@ HTML comment before each tab.
 
     <!-- mdpo-disable-next-line -->
     === "Output"
-    
+
         Tab content
 
 <!-- mdpo-disable-next-line -->
@@ -651,7 +646,7 @@ HTML comment before each tab.
     ```markdown
     \<!-- mdpo-disable-next-line -->
     === "Output"
-    
+
         Tab content
     ```
 
@@ -661,10 +656,15 @@ HTML comment before each tab.
     ```po
     msgid "Output"
     msgstr "Salida"
-    
+
     msgid "Tab content"
     msgstr "Contenido de pestaña"
     ```
+
+<!-- mdpo-disable-next-line -->
+??? warning
+
+    Some content of certain extensions placed inside tabs will not be translated.
 
 <!-- mdpo-disable-next-line -->
 ### [**`pymdownx.tasklist`**](https://facelessuser.github.io/pymdown-extensions/extensions/tasklist)
@@ -676,7 +676,7 @@ Text can't be added between tasklist items.
 
     - [X] Task 1
         * [X] Task A
-        * [ ] Task B    
+        * [ ] Task B
             + [x] Task δ
             + [ ] Task ε
             + [x] Task ζ
@@ -690,7 +690,7 @@ Text can't be added between tasklist items.
     ```markdown
     - [X] Task 1
         * [X] Task A
-        * [ ] Task B    
+        * [ ] Task B
             + [x] Task δ
             + [ ] Task ε
             + [x] Task ζ
@@ -747,7 +747,7 @@ Text can't be added between tasklist items.
     ```markdown
     ~~Delete me~~
 
-    <!-- mdpo-disable-next-line -->
+    \<!-- mdpo-disable-next-line -->
     CH~3~CH~2~OH
     ```
 

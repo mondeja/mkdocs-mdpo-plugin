@@ -2,15 +2,14 @@
 
 import os
 import re
-import shutil
 import sys
 
 import mkdocs
 import polib
 from jinja2 import Template
 from mdpo import Po2Md, markdown_to_pofile
-from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.command import COMMAND_SEARCH_RE
+from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
 from mkdocs_mdpo_plugin.ignores import MSGID_IGNORES
 
@@ -20,10 +19,16 @@ COMMAND_SEARCH_RE_AT_LINE_START = re.compile(
     re.M,
 )
 COMMAND_SEARCH_RE_ESCAPER = re.compile(
-    r'\\(' + COMMAND_SEARCH_RE.pattern[:20] + ")(" + COMMAND_SEARCH_RE.pattern[20:38] + '?=' + COMMAND_SEARCH_RE.pattern[38:] + ')',
+    (
+        r'\\(' + COMMAND_SEARCH_RE.pattern[:20] + ')('
+        + COMMAND_SEARCH_RE.pattern[20:38] + '?='
+        + COMMAND_SEARCH_RE.pattern[38:] + ')'
+    ),
     re.M,
 )
-MKDOCS_MINOR_VERSION_INFO = tuple(int(n) for n in mkdocs.__version__.split(".")[:2])
+MKDOCS_MINOR_VERSION_INFO = tuple(
+    int(n) for n in mkdocs.__version__.split('.')[:2]
+)
 
 
 def remove_mdpo_commands_preserving_escaped(text):
@@ -41,11 +46,11 @@ def remove_mdpo_commands_preserving_escaped(text):
                 r'\g<1>0-\g<2>',
                 text,
             ),
-        )
+        ),
     )
 
 
-class MkdocsBuild(object):
+class MkdocsBuild:
     """Represents the mkdocs build process.
 
     Is a singleton, so only accepts one build. Should be initialized using
@@ -63,10 +68,22 @@ class MkdocsBuild(object):
 
 class MdpoPlugin(mkdocs.plugins.BasePlugin):
     config_scheme = (
-        ('locale_dir', mkdocs.config.config_options.Type(str, default='')),
-        ("default_language", mkdocs.config.config_options.Type(str, required=False)),
-        ('languages', mkdocs.config.config_options.Type(list, required=False)),
-        ("lc_messages", mkdocs.config.config_options.Type((str, bool), default="")),
+        (
+            'locale_dir',
+            mkdocs.config.config_options.Type(str, default=''),
+        ),
+        (
+            'default_language',
+            mkdocs.config.config_options.Type(str, required=False),
+        ),
+        (
+            'languages',
+            mkdocs.config.config_options.Type(list, required=False),
+        ),
+        (
+            'lc_messages',
+            mkdocs.config.config_options.Type((str, bool), default=''),
+        ),
         (
             'dest_filename_template',
             mkdocs.config.config_options.Type(
@@ -89,7 +106,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
         # navigation translation
         # {original_title: {lang: {title: [translation, url]}}}
-        self.__translated_nav = {}
+        self._translated_nav = {}
 
         # information needed by `mkdocs.mdpo` extension
         #
@@ -103,16 +120,16 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         super().__init__(*args, **kwargs)
 
     def _non_default_languages(self):
-        for language in self.config["languages"]:
-            if language != self.config["default_language"]:
+        for language in self.config['languages']:
+            if language != self.config['default_language']:
                 yield language
 
     def _language_dir(self, base_dir, language):
         return os.path.join(
             base_dir,
-            self.config["locale_dir"],
+            self.config['locale_dir'],
             language,
-            self.config["lc_messages"],
+            self.config['lc_messages'],
         )
 
     def on_config(self, config, **kwargs):
@@ -125,104 +142,112 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         * Stores the build configuration in `mkdocs_build_config` property
           of the plugin instance.
         """
-        if self.config["lc_messages"] is True:
-            self.config["lc_messages"] = "LC_MESSAGES"
-        elif not self.config["lc_messages"]:
-            self.config["lc_messages"] = ""
+        if self.config['lc_messages'] is True:
+            self.config['lc_messages'] = 'LC_MESSAGES'
+        elif not self.config['lc_messages']:
+            self.config['lc_messages'] = ''
 
         def _type_error(plugin_setting, expected_type):
             return mkdocs.config.base.ValidationError(
-                f"'plugins.mdpo.{plugin_setting}' must be a {expected_type}"
+                f"'plugins.mdpo.{plugin_setting}' must be a {expected_type}",
             )
 
-        _using_material_theme = config["theme"].name == "material"
+        _using_material_theme = config['theme'].name == 'material'
 
         # load language selection settings from material or mdpo configuration
         def _languages_required():
-            msg = ("You must define the languages you will translate the"
-                   " content into using"
-                   f"{' either' if _using_material_theme else ' the'}"
-                   " 'plugins.mdpo.languages'")
+            msg = (
+                'You must define the languages you will translate the'
+                ' content into using'
+                f"{' either' if _using_material_theme else ' the'}"
+                " 'plugins.mdpo.languages'"
+            )
             if _using_material_theme:
                 msg += " or 'extra.alternate'"
-            msg += (" configuration setting"
-                    f"{'s' if _using_material_theme else ''}.")
+            msg += (
+                ' configuration setting'
+                f"{'s' if _using_material_theme else ''}."
+            )
             return mkdocs.config.base.ValidationError(msg)
 
         def _default_language_required():
-            msg = ("You must define the original language for translations using"
-                   f" {'either ' if _using_material_theme else 'the '}"
-                   " 'plugins.mdpo.default_language'")
+            msg = (
+                'You must define the original language for translations using'
+                f" {'either ' if _using_material_theme else 'the '}"
+                " 'plugins.mdpo.default_language'"
+            )
             if _using_material_theme:
                 msg += " or 'theme.language'"
-            msg += (" configuration setting"
-                    f"{'s' if _using_material_theme else ''}.")
+            msg += (
+                ' configuration setting'
+                f"{'s' if _using_material_theme else ''}."
+            )
             return mkdocs.config.base.ValidationError(msg)
 
-        languages = self.config.get("languages")
+        languages = self.config.get('languages')
         if not languages:
             if _using_material_theme:
-                if "extra" not in config:
+                if 'extra' not in config:
                     raise _languages_required()
-                alternate = config["extra"].get("alternate")
+                alternate = config['extra'].get('alternate')
                 if not alternate:
                     raise _languages_required()
-                self.config["languages"] = [l["lang"] for l in alternate]
+                self.config['languages'] = [alt['lang'] for alt in alternate]
             else:
                 raise _languages_required()
         elif not isinstance(languages, list):
-            raise _type_error("languages", "list")
+            raise _type_error('languages', 'list')
 
-        default_language = self.config.get("default_language")
+        default_language = self.config.get('default_language')
         if not default_language:
             if _using_material_theme:
-                if "language" not in config["theme"]:
+                if 'language' not in config['theme']:
                     raise _languages_required()
-                self.config["default_language"] = config["theme"]["language"]
+                self.config['default_language'] = config['theme']['language']
             else:
-                self.config["default_language"] = self.config["languages"][0]
+                self.config['default_language'] = self.config['languages'][0]
         elif not isinstance(default_language, str):
-            raise _type_error("default_language", "str")
+            raise _type_error('default_language', 'str')
 
         # configure MD4C extensions
-        if "tables" not in config["markdown_extensions"]:
-            if "tables" in self._md4c_extensions:
-                self._md4c_extensions.remove("tables")
-        if "wikilinks" not in config["markdown_extensions"]:
-            if "wikilinks" in self._md4c_extensions:
-                self._md4c_extensions.remove("wikilinks")
+        if 'tables' not in config['markdown_extensions']:
+            if 'tables' in self._md4c_extensions:
+                self._md4c_extensions.remove('tables')
+        if 'wikilinks' not in config['markdown_extensions']:
+            if 'wikilinks' in self._md4c_extensions:
+                self._md4c_extensions.remove('wikilinks')
 
         # spaces after '#' are optional in Python-Markdown for headers,
         # but the extension 'pymdownx.saneheaders' makes them mandatory
-        if "pymdownx.saneheaders" in config["markdown_extensions"]:
-            if "permissive_atx_headers" in self._md4c_extensions:
-                self._md4c_extensions.remove("permissive_atx_headers")
+        if 'pymdownx.saneheaders' in config['markdown_extensions']:
+            if 'permissive_atx_headers' in self._md4c_extensions:
+                self._md4c_extensions.remove('permissive_atx_headers')
         else:
-            if "permissive_atx_headers" not in self._md4c_extensions:
-                self._md4c_extensions.append("permissive_atx_headers")
+            if 'permissive_atx_headers' not in self._md4c_extensions:
+                self._md4c_extensions.append('permissive_atx_headers')
 
         # 'pymdownx.tasklist' enables 'tasklists' MD4C extentsion
-        if "pymdownx.tasklist" in config["markdown_extensions"]:
-            if "tasklists" not in self._md4c_extensions:
-                self._md4c_extensions.append("tasklists")
+        if 'pymdownx.tasklist' in config['markdown_extensions']:
+            if 'tasklists' not in self._md4c_extensions:
+                self._md4c_extensions.append('tasklists')
         else:
-            if "tasklists" in self._md4c_extensions:
-                self._md4c_extensions.remove("tasklists")
+            if 'tasklists' in self._md4c_extensions:
+                self._md4c_extensions.remove('tasklists')
 
         # 'pymdownx.tilde' enables strikethrough syntax, but only works
         # if the MD4C extension is disabled
-        if "pymdownx.tilde" in config["markdown_extensions"]:
-            if "strikethrough" in self._md4c_extensions:
-                self._md4c_extensions.remove("strikethrough")
+        if 'pymdownx.tilde' in config['markdown_extensions']:
+            if 'strikethrough' in self._md4c_extensions:
+                self._md4c_extensions.remove('strikethrough')
 
         # configure internal 'mkdocs.mdpo' extension
-        if "mkdocs.mdpo" in config["markdown_extensions"]:
-            config["markdown_extensions"].remove("mkdocs.mdpo")
-        config["markdown_extensions"].append("mkdocs.mdpo")
+        if 'mkdocs.mdpo' in config['markdown_extensions']:
+            config['markdown_extensions'].remove('mkdocs.mdpo')
+        config['markdown_extensions'].append('mkdocs.mdpo')
 
         # load msgid to ignore
         for extension, msgids in MSGID_IGNORES.items():
-            if not extension or extension in config["markdown_extensions"]:
+            if not extension or extension in config['markdown_extensions']:
                 self._msgids_to_ignore.extend(msgids)
 
         # store reference in plugin to configuration
@@ -234,7 +259,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         for language in self._non_default_languages():
             os.makedirs(
                 os.path.join(
-                    self._language_dir(config["docs_dir"], language),
+                    self._language_dir(config['docs_dir'], language),
                 ),
                 exist_ok=True,
             )
@@ -248,27 +273,29 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         new_files = mkdocs.structure.files.Files([])
         for file in files:
             # exclude all files with PO related extensions
-            if os.path.splitext(file.src_path)[-1] not in (".po", ".pot", ".mo"):
+            if os.path.splitext(file.src_path)[-1] not in (
+                '.po', '.pot', '.mo',
+            ):
                 new_files.append(file)
         return new_files
 
     def on_page_context(self, context, page, config, nav):
         """Navigation translation."""
-        if not hasattr(page, "_language"):
+        if not hasattr(page, '_language'):
             return
 
         # Si estamos usando el tema mkdocs-material, configuramos el idioma
         # correspondiente para cada página
-        if context["config"]["theme"].name == "material":
-            context["config"]["theme"]["language"] = (
-                page._language if hasattr(page, "_language") else
-                self.config["default_language"]
+        if context['config']['theme'].name == 'material':
+            context['config']['theme']['language'] = (
+                page._language if hasattr(page, '_language') else
+                self.config['default_language']
             )
 
         for item in nav:
-            if item.title not in self.__translated_nav:
+            if item.title not in self._translated_nav:
                 continue
-            tr_title, tr_url = self.__translated_nav[item.title][page._language]
+            tr_title, tr_url = self._translated_nav[item.title][page._language]
             if tr_title:
                 item.title = tr_title
             item.file.url = tr_url
@@ -289,12 +316,12 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
           :py:mod:`mkdocs_mdpo_plugin.extension` module).
         """
         # don't process again translated pages
-        if hasattr(page, "_language"):
+        if hasattr(page, '_language'):
             return
 
-        if page.title not in self.__translated_nav:
+        if page.title not in self._translated_nav:
             # lang: [title, url]
-            self.__translated_nav[page.title] = {}
+            self._translated_nav[page.title] = {}
 
         original_po = markdown_to_pofile(
             markdown,
@@ -303,8 +330,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
         for language in self._non_default_languages():
             po_filepath = os.path.join(
-                self._language_dir(config["docs_dir"], language),
-                f"{page.file.src_path}.po",
+                self._language_dir(config['docs_dir'], language),
+                f'{page.file.src_path}.po',
             )
             os.makedirs(
                 os.path.abspath(os.path.dirname(po_filepath)),
@@ -325,7 +352,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                         entry.obsolete = False
                     translated_page_title = entry.msgstr
             if not _title_in_pofile:
-                po.insert(0, polib.POEntry(msgid=page.title, msgstr=""))
+                po.insert(0, polib.POEntry(msgid=page.title, msgstr=''))
 
             po.save(po_filepath)
 
@@ -336,16 +363,16 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
             # create site language dir if not exists
             os.makedirs(
-                self._language_dir(config["site_dir"], language),
+                self._language_dir(config['site_dir'], language),
                 exist_ok=True,
             )
 
             # render destination filepath
             context = locals()
             context.update(self.config)
-            del context["self"]
+            del context['self']
             dest_path = Template(
-                self.config["dest_filename_template"],
+                self.config['dest_filename_template'],
             ).render(**context)
             src_path = f"{dest_path.rstrip('.html')}.md"
 
@@ -355,17 +382,19 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             #   documentation pages on the fly when a page is being populated,
             #   so we need to create a temporal page inside the locales
             #   directory and populate them manually
-            src_abs_path = os.path.abspath(os.path.join(config["docs_dir"], src_path))
+            src_abs_path = os.path.abspath(
+                os.path.join(config['docs_dir'], src_path),
+            )
             self._temp_pages_to_remove.append(src_abs_path)
             os.makedirs(os.path.dirname(src_abs_path), exist_ok=True)
-            with open(src_abs_path, "w") as f:
+            with open(src_abs_path, 'w') as f:
                 f.write(content)
 
             new_file = mkdocs.structure.files.File(
                 src_path,
-                config["docs_dir"],
-                config["site_dir"],
-                config["use_directory_urls"],
+                config['docs_dir'],
+                config['site_dir'],
+                config['use_directory_urls'],
             )
             new_page = mkdocs.structure.pages.Page(
                 translated_page_title,
@@ -380,7 +409,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             new_page._po_disabled_entries = po2md.disabled_entries
             files.append(new_file)
 
-            self.__translated_nav[page.title][language] = [
+            self._translated_nav[page.title][language] = [
                 translated_page_title, new_page.url,
             ]
 
@@ -393,7 +422,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 dirty=(
                     '--dirty' in sys.argv and
                     '-c' not in sys.argv and '--clean' not in sys.argv
-                )
+                ),
             )
 
         self.current_page = page
@@ -416,7 +445,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         self._remove_temp_pages()
 
         # remove empty directories from site_dir
-        for root, dirs, files in os.walk(config["site_dir"], topdown=False):
+        for root, dirs, files in os.walk(config['site_dir'], topdown=False):
             if not os.listdir(root):
                 os.rmdir(root)
 
@@ -431,6 +460,7 @@ def __on_build_error(_self):
         except FileNotFoundError:
             pass
 
+
 if MKDOCS_MINOR_VERSION_INFO >= (1, 2):
     def _on_build_error(self, error):
         return __on_build_error(self)
@@ -441,7 +471,7 @@ else:
 
     def _on_build_error():
         build_instance = MkdocsBuild()
-        if hasattr(build_instance, "mdpo_plugin"):
+        if hasattr(build_instance, 'mdpo_plugin'):
             return __on_build_error(build_instance.mdpo_plugin)
 
     atexit.register(_on_build_error)

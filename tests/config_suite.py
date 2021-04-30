@@ -2,26 +2,26 @@ CONFIGURATION_TESTS = (
     (
         # basic example with default configuration
         {
-            "index.md": "# Foo\n\nbar\n",
+            'index.md': '# Foo\n\nbar\n',
         },
         {
-            "es/index.md.po": {
-                "Foo": "Foo es",
-                "bar": "bar es",
+            'es/index.md.po': {
+                'Foo': 'Foo es',
+                'bar': 'bar es',
             },
         },
         None,
-        "en",
-        ["en", "es"],
+        'en',
+        ['en', 'es'],
         None,
         None,
         None,
         {
-            "index.html": [
+            'index.html': [
                 '<h1 id="foo">Foo</h1>',
                 '<p>bar</p></div>',
             ],
-            "es/index.html": [
+            'es/index.html': [
                 '<h1 id="foo-es">Foo es</h1>',
                 '<p>bar es</p>',
             ],
@@ -30,102 +30,102 @@ CONFIGURATION_TESTS = (
     (
         # nested files
         {
-            "index.md": "foo\n",
-            "foo/bar/baz.md": "hello\n",
+            'index.md': 'foo\n',
+            'foo/bar/baz.md': 'hello\n',
         },
         {
-            "es/index.md.po": {
-                "foo": "foo es",
+            'es/index.md.po': {
+                'foo': 'foo es',
             },
-            "es/foo/bar/baz.md.po": {
-                "hello": "hola",
-            }
+            'es/foo/bar/baz.md.po': {
+                'hello': 'hola',
+            },
         },
         None,
-        "en",
-        ["en", "es"],
+        'en',
+        ['en', 'es'],
         None,
         None,
         None,
         {
-            "index.html": ["<p>foo</p>"],
-            "es/index.html": ["<p>foo es</p>"],
-            "foo/bar/baz/index.html": ["<p>hello</p>"],
-            "es/foo/bar/baz/index.html": ["<p>hola</p>"],
+            'index.html': ['<p>foo</p>'],
+            'es/index.html': ['<p>foo es</p>'],
+            'foo/bar/baz/index.html': ['<p>hello</p>'],
+            'es/foo/bar/baz/index.html': ['<p>hola</p>'],
         },
     ),
     (
         # custom locale_dir
         {
-            "index.md": "foo\n",
+            'index.md': 'foo\n',
         },
         {
-            "locales/es/index.md.po": {
-                "foo": "foo es",
+            'locales/es/index.md.po': {
+                'foo': 'foo es',
             },
         },
-        "locales",
-        "en",
-        ["en", "es"],
+        'locales',
+        'en',
+        ['en', 'es'],
         None,
         None,
         None,
         {
-            "index.html": ["<p>foo</p>"],
-            "es/index.html": ["<p>foo es</p>"],
+            'index.html': ['<p>foo</p>'],
+            'es/index.html': ['<p>foo es</p>'],
         },
     ),
     (
         # custom dest_filename_template
         {
-            "index.md": "foo\n",
+            'index.md': 'foo\n',
         },
         {
-            "es/index.md.po": {
-                "foo": "foo es",
-            }
+            'es/index.md.po': {
+                'foo': 'foo es',
+            },
         },
-        "",
-        "en",
-        ["en", "es"],
+        '',
+        'en',
+        ['en', 'es'],
         "{{page.file.dest_path|replace(\".html\", \"\")}}-{{language}}.html",
         None,
         None,
         {
-            "index.html": ["<p>foo</p>"],
-            "index-es/index.html": ["<p>foo es</p>"],
+            'index.html': ['<p>foo</p>'],
+            'index-es/index.html': ['<p>foo es</p>'],
         },
     ),
     (
         # custom locale_dir + dest_filename_template
         {
-            "index.md": "foo\n",
+            'index.md': 'foo\n',
         },
         {
-            "locales/es/index.md.po": {
-                "foo": "foo es",
-            }
+            'locales/es/index.md.po': {
+                'foo': 'foo es',
+            },
         },
-        "locales",
-        "en",
-        ["en", "es"],
+        'locales',
+        'en',
+        ['en', 'es'],
         "{{page.file.dest_path|replace(\".html\", \"\")}}_{{language}}.html",
         None,
         None,
         {
-            "index.html": ["<p>foo</p>"],
-            "index_es/index.html": ["<p>foo es</p>"],
+            'index.html': ['<p>foo</p>'],
+            'index_es/index.html': ['<p>foo es</p>'],
         },
     ),
     (
         # configuration from 'material' theme
         {
-            "index.md": "# Foo\n\nbar\n",
+            'index.md': '# Foo\n\nbar\n',
         },
         {
-            "es/index.md.po": {
-                "Foo": "Foo es",
-                "bar": "bar es",
+            'es/index.md.po': {
+                'Foo': 'Foo es',
+                'bar': 'bar es',
             },
         },
         None,
@@ -134,27 +134,27 @@ CONFIGURATION_TESTS = (
         None,
         None,
         {
-            "theme": {
-                "name": "material",
-                "language": "en"
+            'theme': {
+                'name': 'material',
+                'language': 'en',
             },
-            "extra": {
-                "alternate": [
+            'extra': {
+                'alternate': [
                     {
-                        "name": "English",
-                        "link": None,
-                        "lang": "en",
+                        'name': 'English',
+                        'link': None,
+                        'lang': 'en',
                     },
                     {
-                        "name": "Español",
-                        "link": "es",
-                        "lang": "es"
-                    }
+                        'name': 'Español',
+                        'link': 'es',
+                        'lang': 'es',
+                    },
                 ],
-            }
+            },
         },
         {
-            "es/index.html": [
+            'es/index.html': [
                 '<h1 id="foo-es">Foo es</h1>',
                 '<p>bar es</p>',
             ],
@@ -163,47 +163,47 @@ CONFIGURATION_TESTS = (
     (
         # default_language from languages
         {
-            "index.md": "foo\n",
+            'index.md': 'foo\n',
         },
         {
-            "es/index.md.po": {
-                "foo": "foo es",
-            }
+            'es/index.md.po': {
+                'foo': 'foo es',
+            },
         },
         None,
         None,
-        ["en", "es"],
+        ['en', 'es'],
         None,
         None,
         None,
         {
-            "index.html": ["<p>foo</p>"],
-            "es/index.html": ["<p>foo es</p>"],
+            'index.html': ['<p>foo</p>'],
+            'es/index.html': ['<p>foo es</p>'],
         },
     ),
     (
         # boolean lc_messages
         {
-            "index.md": "# Foo\n\nbar\n",
+            'index.md': '# Foo\n\nbar\n',
         },
         {
-            "es/LC_MESSAGES/index.md.po": {
-                "Foo": "Foo es",
-                "bar": "bar es",
+            'es/LC_MESSAGES/index.md.po': {
+                'Foo': 'Foo es',
+                'bar': 'bar es',
             },
         },
         None,
-        "en",
-        ["en", "es"],
+        'en',
+        ['en', 'es'],
         None,
         True,
         None,
         {
-            "index.html": [
+            'index.html': [
                 '<h1 id="foo">Foo</h1>',
                 '<p>bar</p></div>',
             ],
-            "es/index.html": [
+            'es/index.html': [
                 '<h1 id="foo-es">Foo es</h1>',
                 '<p>bar es</p>',
             ],
@@ -212,50 +212,50 @@ CONFIGURATION_TESTS = (
     (
         # custom lc_messages
         {
-            "index.md": "foo\n",
+            'index.md': 'foo\n',
         },
         {
-            "es/barbaz/index.md.po": {
-                "foo": "foo es",
+            'es/barbaz/index.md.po': {
+                'foo': 'foo es',
             },
         },
         None,
-        "en",
-        ["en", "es"],
+        'en',
+        ['en', 'es'],
         None,
-        "barbaz",
+        'barbaz',
         None,
         {
-            "index.html": ["<p>foo</p>"],
-            "es/index.html": ["<p>foo es</p>"],
+            'index.html': ['<p>foo</p>'],
+            'es/index.html': ['<p>foo es</p>'],
         },
     ),
     (
         # title translation
         {
-            "index.md": "foo\n",
+            'index.md': 'foo\n',
         },
         {
-            "es/index.md.po": {
-                "foo": "foo es",
-                "Introduction": "Introducción",
+            'es/index.md.po': {
+                'foo': 'foo es',
+                'Introduction': 'Introducción',
             },
         },
         None,
-        "en",
-        ["en", "es"],
+        'en',
+        ['en', 'es'],
         None,
         None,
         {
-            "nav": [
-                {"Introduction": "index.md"},
-            ]
+            'nav': [
+                {'Introduction': 'index.md'},
+            ],
         },
         {
-            "index.html": ["<p>foo</p>"],
-            "es/index.html": [
-                "<p>foo es</p>",
-                "<title>Introducción - foo</title>"
+            'index.html': ['<p>foo</p>'],
+            'es/index.html': [
+                '<p>foo es</p>',
+                '<title>Introducción - foo</title>',
             ],
         },
     ),
