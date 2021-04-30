@@ -25,7 +25,7 @@ jobs:
           python -m pip install .[doc]
           pip list
       - name: Show documentation configuration
-        run: cat docs/conf.py
+        run: cat mkdocs.yml
       - name: Test documentation build
         run: |
           python -m mkdocs build --strict
