@@ -10,6 +10,7 @@ copyright: Copyright &copy; 2021 Álvaro Mondéjar Rubio
 
 extra_javascript:
   - assets/javascripts/language-selector.js
+  - assets/javascripts/extensions-support.js
 extra_css:
   - assets/stylesheets/pymdownx.progressbar.css
 
@@ -48,6 +49,9 @@ markdown_extensions:
   - pymdownx.magiclink
   - pymdownx.mark
   - pymdownx.progressbar
+  - pymdownx.saneheaders
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
   - pymdownx.superfences
   - pymdownx.tasklist:
       custom_checkbox: true
@@ -56,6 +60,9 @@ markdown_extensions:
 plugins:
   - search
   - include-markdown
+  - exclude:
+      glob:
+        - file-to-be-inserted.txt
   - mdpo
 
 extra:

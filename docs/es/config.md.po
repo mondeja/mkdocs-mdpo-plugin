@@ -16,11 +16,6 @@ msgid "Configuration"
 msgstr "Configuración"
 
 msgid ""
-"The layout of the generated files can be customized using different "
-"configuration fields:"
-msgstr ""
-
-msgid ""
 "Always put `mdpo` plugin in `mkdocs.yml` file after other plugins which "
 "could edit the content of your files:"
 msgstr ""
@@ -28,16 +23,6 @@ msgstr ""
 msgid ""
 "Languages to translate your files into. Commonly defined as [ISO 639 "
 "codes](https://en.wikipedia.org/wiki/ISO_639)."
-msgstr ""
-
-msgid "Note"
-msgstr ""
-
-msgid ""
-"If you are using [mkdocs-material](https://squidfunk.github.io/mkdocs-"
-"material) theme, can also be defined in the `extra.alternate` configuration "
-"setting (see [Site language selector](https://squidfunk.github.io/mkdocs-"
-"material/setup/changing-the-language/#site-language-selector))."
 msgstr ""
 
 msgid "Permanent link"
@@ -60,25 +45,6 @@ msgid ""
 "`true`, but if you want another folder name, you can pass a string, or even "
 "a relative path to create more than one folder between the language "
 "directory and their content:"
-msgstr ""
-
-msgid "**`languages`** (*list*)\\*"
-msgstr ""
-
-msgid ""
-"If you are using [mkdocs-material](https://squidfunk.github.io/mkdocs-"
-"material) theme, can also be defined in the `theme.language` configuration "
-"setting (see [Site language](https://squidfunk.github.io/mkdocs-"
-"material/setup/changing-the-language/#site-language))."
-msgstr ""
-
-msgid "Documentation directory tree"
-msgstr ""
-
-msgid "true"
-msgstr ""
-
-msgid "Custom value"
 msgstr ""
 
 msgid ""
@@ -133,8 +99,31 @@ msgstr ""
 msgid "Layout"
 msgstr ""
 
-#~ msgid "Configuración"
-#~ msgstr ""
+msgid "Note"
+msgstr ""
 
-#~ msgid "Languages and layout"
-#~ msgstr ""
+msgid ""
+"If you are using [mkdocs-material](https://squidfunk.github.io/mkdocs-"
+"material) theme, can also be defined in the `extra.alternate` configuration "
+"setting (see [Site language selector](https://squidfunk.github.io/mkdocs-"
+"material/setup/changing-the-language/#site-language-selector))."
+msgstr ""
+
+msgid "**`languages`** (*list*)\\*"
+msgstr ""
+
+msgid ""
+"If you are using [mkdocs-material](https://squidfunk.github.io/mkdocs-"
+"material) theme, can also be defined in the `theme.language` configuration "
+"setting (see [Site language](https://squidfunk.github.io/mkdocs-"
+"material/setup/changing-the-language/#site-language))."
+msgstr ""
+
+msgid "Documentation directory tree"
+msgstr ""
+
+msgid "true"
+msgstr ""
+
+msgid "Custom value"
+msgstr ""

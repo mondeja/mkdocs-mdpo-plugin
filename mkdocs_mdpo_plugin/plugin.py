@@ -14,7 +14,35 @@ from mdpo.command import COMMAND_SEARCH_RE
 
 from mkdocs_mdpo_plugin.ignores import MSGID_IGNORES
 
+
+COMMAND_SEARCH_RE_AT_LINE_START = re.compile(
+    r'^(\s{2,})?[^\\]' + COMMAND_SEARCH_RE.pattern + r'\n?',
+    re.M,
+)
+COMMAND_SEARCH_RE_ESCAPER = re.compile(
+    r'\\(' + COMMAND_SEARCH_RE.pattern[:20] + ")(" + COMMAND_SEARCH_RE.pattern[20:38] + '?=' + COMMAND_SEARCH_RE.pattern[38:] + ')',
+    re.M,
+)
 MKDOCS_MINOR_VERSION_INFO = tuple(int(n) for n in mkdocs.__version__.split(".")[:2])
+
+
+def remove_mdpo_commands_preserving_escaped(text):
+    return re.sub(
+        # restore escaped commands
+        '<!-- mdpo-0',
+        '<!-- mdpo',
+        re.sub(
+            # remove commands
+            COMMAND_SEARCH_RE_AT_LINE_START,
+            '',
+            # escaped commands
+            re.sub(
+                COMMAND_SEARCH_RE_ESCAPER,
+                r'\g<1>0-\g<2>',
+                text,
+            ),
+        )
+    )
 
 
 class MkdocsBuild(object):
@@ -156,7 +184,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         elif not isinstance(default_language, str):
             raise _type_error("default_language", "str")
 
-        # configure md4c extensions
+        # configure MD4C extensions
         if "tables" not in config["markdown_extensions"]:
             self._md4c_extensions.remove("tables")
         if "wikilinks" not in config["markdown_extensions"]:
@@ -170,6 +198,14 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         else:
             if "permissive_atx_headers" not in self._md4c_extensions:
                 self._md4c_extensions.append("permissive_atx_headers")
+
+        # 'pymdownx.tasklist' enables 'tasklists' MD4C extentsion
+        if "pymdownx.tasklist" in config["markdown_extensions"]:
+            if "tasklists" not in self._md4c_extensions:
+                self._md4c_extensions.append("tasklists")
+        else:
+            if "tasklists" in self._md4c_extensions:
+                self._md4c_extensions.remove("tasklists")
 
         # configure internal 'mkdocs.mdpo' extension
         if "mkdocs.mdpo" in config["markdown_extensions"]:
@@ -279,7 +315,22 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
             po.save(po_filepath)
             po2md = Po2Md(po_filepath)
-            content = po2md.translate(markdown)
+
+            content = remove_mdpo_commands_preserving_escaped(
+                po2md.translate(markdown),
+            )
+
+            """
+            content = re.sub(
+                COMMAND_SEARCH_RE_AT_LINE_START,
+                '',
+                re.sub(
+                    COMMAND_SEARCH_RE_ESCAPED,
+                    r'\g<1>',
+                    po2md.translate(markdown),
+                ),
+            )
+            """
 
             # create site language dir if not exists
             os.makedirs(
@@ -344,6 +395,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             )
 
         self.current_page = page
+
+        return remove_mdpo_commands_preserving_escaped(markdown)
 
     def _remove_temp_pages(self):
         """Remove temporal generated pages."""

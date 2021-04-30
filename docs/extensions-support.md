@@ -139,7 +139,7 @@ HTML comment before each code block that you want translate.
 === "Markdown"
 
     ````markdown
-    <!-- mdpo-include-codeblock -->
+    \<!-- mdpo-include-codeblock -->
     ```javascript
     var hello = "world";
     ```
@@ -251,7 +251,7 @@ HTML comment before the admonition.
 === "Markdown"
 
     ```markdown
-    <!-- mdpo-disable-next-line -->
+    \<!-- mdpo-disable-next-line -->
     !!! note "Admonition title"
 
         Don't be afraid, the title will also be included in the PO file.
@@ -332,7 +332,7 @@ HTML comment before the admonition.
 === "Markdown"
 
     ```markdown
-    <!-- mdpo-disable-next-line -->
+    \<!-- mdpo-disable-next-line -->
     ???+ note "Open styled details"
 
         ??? danger "Nested details!"
@@ -400,7 +400,7 @@ HTML comment before each code block that you want translate.
 === "Markdown"
 
     ````
-    <!-- mdpo-include-codeblock -->
+    \<!-- mdpo-include-codeblock -->
     ```python
     import mdpo
     print(mdpo.__version__)
@@ -532,42 +532,173 @@ this documentation depending on the current language:
 
 You must let one blank line between each progress bar.
 
-<!-- mdpo-disable -->
+<!-- mdpo-disable-next-line -->
 === "Output"
 
     [=0% "0%"]
 
-    [=5% "5%"]
-
-    [=25% "25%"]
-
     [=45% "45%"]
 
-    [=65% "65%"]
-
-    [=85% "85%"]
-
     [=100% "100%"]
-
-<!-- mdpo-enable -->
 
 <!-- mdpo-disable-next-line -->
 === "Markdown"
 
     ```markdown
-    <!-- mdpo-disable -->
     [=0% "0%"]
-
-    [=5% "5%"]
-
-    [=25% "25%"]
 
     [=45% "45%"]
 
-    [=65% "65%"]
-
-    [=85% "85%"]
-
     [=100% "100%"]
-    <!-- mdpo-enable -->
+    ```
+
+<!-- mdpo-disable-next-line -->
+=== "PO file content"
+
+    ```po
+    msgid "[=0% \"0%\"]"
+    msgstr ""
+
+    msgid "[=45% \"45%\"]"
+    msgstr ""
+
+    msgid "[=100% \"100%\"]"
+    msgstr ""
+    ```
+
+<!-- mdpo-disable-next-line -->
+### [**`pymdownx.smartsymbols`**](https://facelessuser.github.io/pymdown-extensions/extensions/smartsymbols)
+
+<!-- mdpo-disable-next-line -->
+=== "Output"
+
+    Here are some symbols: (tm) (c) (r)
+
+<!-- mdpo-disable-next-line -->
+=== "Markdown"
+
+    ```markdown
+    Here are some symbols: (tm) (c) (r)
+    ```
+
+<!-- mdpo-disable-next-line -->
+=== "PO file content"
+
+    ```po
+    msgid "Here are some symbols: (tm) (c) (r)"
+    msgstr ""
+    ```
+
+<!-- mdpo-disable-next-line -->
+### [**`pymdownx.snippets`**](https://facelessuser.github.io/pymdown-extensions/extensions/snippets)
+
+Block notation is not supported. You must add an
+[`<!-- mdpo-disable-next-line -->`](https://mdpo.readthedocs.io/en/master/commands.html#disabling-extraction)
+HTML comment before the line.
+
+<!-- mdpo-disable-next-line -->
+=== "Output"
+
+    <!-- mdpo-disable-next-line -->
+    --8<-- "docs/file-to-be-inserted.txt"
+
+<!-- mdpo-disable-next-line -->
+=== "Markdown"
+
+    ```markdown
+    \<!-- mdpo-disable-next-line -->
+    \--8<-- "docs/file-to-be-inserted.txt"
+    ```
+
+<!-- mdpo-disable-next-line -->
+=== "PO file content"
+
+    ```po
+    msgid "Some inserted content."
+    msgstr "Algo de contenido insertado."
+    ```
+
+<!-- mdpo-disable-next-line -->
+### [**`pymdownx.tabbed`**](https://facelessuser.github.io/pymdown-extensions/extensions/tabbed)
+
+You must add an
+[`<!-- mdpo-disable-next-line -->`](https://mdpo.readthedocs.io/en/master/commands.html#disabling-extraction)
+HTML comment before each tab.
+
+
+<!-- mdpo-disable-next-line -->
+=== "Output"
+
+    <!-- mdpo-disable-next-line -->
+    === "Output"
+    
+        Tab content
+
+<!-- mdpo-disable-next-line -->
+=== "Markdown"
+
+    ```markdown
+    \<!-- mdpo-disable-next-line -->
+    === "Output"
+    
+        Tab content
+    ```
+
+<!-- mdpo-disable-next-line -->
+=== "PO file content"
+
+    ```po
+    msgid "Output"
+    msgstr "Salida"
+    
+    msgid "Tab content"
+    msgstr "Contenido de pestaña"
+    ```
+
+<!-- mdpo-disable-next-line -->
+### [**`pymdownx.tasklist`**](https://facelessuser.github.io/pymdown-extensions/extensions/tasklist)
+
+Text can't be added between tasklist items.
+
+<!-- mdpo-disable-next-line -->
+=== "Output"
+
+    - [X] Task 1
+        * [X] Task A
+        * [ ] Task B    
+            + [x] Task D
+            + [ ] Task E
+            + [x] Task F
+        * [X] Task C
+    - [ ] Task 2
+    - [ ] Task 3
+
+<!-- mdpo-disable-next-line -->
+=== "Markdown"
+
+    ```markdown
+    - [X] Task 1
+        * [X] Task A
+        * [ ] Task B    
+            + [x] Task D
+            + [ ] Task E
+            + [x] Task F
+        * [X] Task C
+    - [ ] Task 2
+    - [ ] Task 3
+    ```
+
+<!-- mdpo-disable-next-line -->
+=== "PO file content"
+
+    ```po
+    - [X] Task 1
+        * [X] Task A
+        * [ ] Task B    
+            + [x] Task D
+            + [ ] Task E
+            + [x] Task F
+        * [X] Task C
+    - [ ] Task 2
+    - [ ] Task 3
     ```

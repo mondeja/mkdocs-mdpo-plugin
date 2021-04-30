@@ -12,9 +12,6 @@ edit the content of your files:
 
 ## Languages
 
-The layout of the generated files can be customized using different
-configuration fields:
-
 <!-- mdpo-disable-next-line -->
 ### **`languages`** (*list*)\*
 

@@ -74,6 +74,60 @@ msgid ""
 "depends on extensions, or change a bit the format of your Markdown files."
 msgstr ""
 
+msgid "Permanent link"
+msgstr "Link permanente"
+
+msgid "Jump back to footnote 1 in the text"
+msgstr "Volver a la nota al pie 1 en el texto"
+
+msgid "Jump back to footnote 2 in the text"
+msgstr "Volver a la nota al pie 2 en el texto"
+
+msgid ""
+"[PyMdown extensions](https://facelessuser.github.io/pymdown-"
+"extensions/extensions)"
+msgstr ""
+
+msgid ""
+"If after adding a details admonition a msgid starting with `???` is added to"
+" your PO file, you can remove it adding a [`<!-- mdpo-disable-next-line "
+"-->`](https://mdpo.readthedocs.io/en/master/commands.html#disabling-"
+"extraction) HTML comment before the admonition."
+msgstr ""
+
+msgid ""
+"Maybe your emoji expression can't be translated using the same emoji? Use "
+"another directly from your PO file:"
+msgstr ""
+
+msgid ""
+"There is no way of skip inline codespan blocks from being included in "
+"translations:"
+msgstr ""
+
+msgid ""
+"Sometimes the translation should edit links. See the next example linking to"
+" this documentation depending on the current language:"
+msgstr ""
+
+msgid "You must let one blank line between each progress bar."
+msgstr ""
+
+msgid ""
+"Block notation is not supported. You must add an [`<!-- mdpo-disable-next-"
+"line -->`](https://mdpo.readthedocs.io/en/master/commands.html#disabling-"
+"extraction) HTML comment before the line."
+msgstr ""
+
+msgid ""
+"You must add an [`<!-- mdpo-disable-next-line "
+"-->`](https://mdpo.readthedocs.io/en/master/commands.html#disabling-"
+"extraction) HTML comment before each tab."
+msgstr ""
+
+msgid "Text can't be added between tasklist items."
+msgstr ""
+
 msgid "Output"
 msgstr "Salida"
 
@@ -89,9 +143,6 @@ msgstr "Nota"
 msgid "Even the implicit title, which in this case would be \"Note\"."
 msgstr "Incluso el título implícito, el cual en este caso sería \"Nota\"."
 
-msgid "Permanent link"
-msgstr "Link permanente"
-
 msgid "The title will also be included in the PO file."
 msgstr "El título también será añadido en el archivo PO."
 
@@ -106,12 +157,6 @@ msgstr "Naranja"
 
 msgid "The fruit of an evergreen tree of the genus Citrus."
 msgstr "El fruto de un árbol de hoja perenne del género Citrus."
-
-msgid "Jump back to footnote 1 in the text"
-msgstr "Volver a la nota al pie 1 en el texto"
-
-msgid "Jump back to footnote 2 in the text"
-msgstr "Volver a la nota al pie 2 en el texto"
 
 msgid "This is a footnote[^1]. This is another[^2]."
 msgstr "Esto es una nota al pie[^1]. Esto es otra[^2]."
@@ -135,11 +180,6 @@ msgstr ""
 "[link](https://mondeja.github.io/mkdocs-mdpo-plugin){: title=\"¡Con un "
 "título traducido!\" mdpo-no-title }"
 
-msgid ""
-"[PyMdown extensions](https://facelessuser.github.io/pymdown-"
-"extensions/extensions)"
-msgstr ""
-
 msgid "Hello I'm text with ^^an insert^^."
 msgstr ""
 
@@ -155,20 +195,8 @@ msgstr ""
 msgid "And more content again."
 msgstr ""
 
-msgid ""
-"If after adding a details admonition a msgid starting with `???` is added to"
-" your PO file, you can remove it adding a [`<!-- mdpo-disable-next-line "
-"-->`](https://mdpo.readthedocs.io/en/master/commands.html#disabling-"
-"extraction) HTML comment before the admonition."
-msgstr ""
-
 msgid "I :heart: mdpo"
 msgstr "Me encanta mdpo :+1:"
-
-msgid ""
-"Maybe your emoji expression can't be translated using the same emoji? Use "
-"another directly from your PO file:"
-msgstr ""
 
 msgid "Here is some code: `#!py3 import pymdownx; pymdownx.__version__`."
 msgstr ""
@@ -178,16 +206,6 @@ msgid ""
 msgstr ""
 
 msgid "++ctrl+alt+delete++"
-msgstr ""
-
-msgid ""
-"There is no way of skip inline codespan blocks from being included in "
-"translations:"
-msgstr ""
-
-msgid ""
-"Sometimes the translation should edit links. See the next example linking to"
-" this documentation depending on the current language:"
 msgstr ""
 
 msgid ""
@@ -203,31 +221,17 @@ msgstr "==marcame=="
 msgid "[=0% \"0%\"]"
 msgstr ""
 
-msgid "[=5% \"5%\"]"
-msgstr ""
-
-msgid "You must let one blank line between each progress bar."
-msgstr ""
-
-msgid "[=25% \"25%\"]"
-msgstr ""
-
 msgid "[=45% \"45%\"]"
-msgstr ""
-
-msgid "[=65% \"65%\"]"
-msgstr ""
-
-msgid "[=85% \"85%\"]"
 msgstr ""
 
 msgid "[=100% \"100%\"]"
 msgstr ""
 
-#~ msgid "[=25% \"25%\"] [=45% \"45%\"] [=65% \"65%\"] [=85% \"85%\"] [=100% \"100%\"]"
-#~ msgstr ""
+msgid "Here are some symbols: (tm) (c) (r)"
+msgstr ""
 
-#~ msgid ""
-#~ "[=0% \"0%\"] [=5% \"5%\"] [=25% \"25%\"] [=45% \"45%\"] [=65% \"65%\"] [=85%"
-#~ " \"85%\"] [=100% \"100%\"]"
-#~ msgstr ""
+msgid "Some inserted content from another file."
+msgstr "Algo de contenido insertado desde otro archivo."
+
+msgid "Tab content"
+msgstr "Contenido de pestaña"

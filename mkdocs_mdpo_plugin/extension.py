@@ -13,6 +13,9 @@ from mdpo.command import COMMAND_SEARCH_RE
 class MkdocsMdpoTreeProcessor(Treeprocessor):
     def run(self, root):
         mdpo_plugin = MkdocsBuild().mdpo_plugin
+        current_mkdocs_build_extensions = (
+            mdpo_plugin.mkdocs_build_config["markdown_extensions"]
+        )
         current_page = mdpo_plugin.current_page
         if not hasattr(current_page, "_language"):
             return
@@ -43,10 +46,20 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
                         polib.POEntry(msgid=msgid, msgstr="")
                     )
 
+
+        def node_should_be_processed(node):
+            if "pymdownx.tasklist" in current_mkdocs_build_extensions and \
+                    node.tag in ["li", "p"] and len(node.text) > 2 and \
+                    node.text[:3] in ["[ ]", "[x]", "[X]"]:
+                return False
+            return True
+
         def iterate_childs(_root):
             for child in _root:
-                # print(child.tag, child.text, child.attrib)
+                #print(child.tag, child.text, child.attrib)
                 if child.text and not child.text[1:].startswith("wzxhzdk:"):
+                    if not node_should_be_processed(child):
+                        continue
                     process_translation(
                         child,
                         " ".join(child.text.split("\n")),
@@ -90,11 +103,14 @@ class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
 
         def node_should_be_processed(node):
             if node.tag == "abbr" and "abbr" in current_mkdocs_build_extensions:
-                # abbriations titles would be duplicated in msgids
+                # abbreviations titles would be duplicated in msgids
                 return False
             elif node.get("class") in ["emojione", "twemoji", "gemoji"] and \
                     "pymdownx.emoji" in current_mkdocs_build_extensions:
                 # don't add ':+1:' or ':heart:' as msgid
+                return False
+            elif node.get("class") == "task-list-item" and \
+                    "pymdownx.tasklist" in current_mkdocs_build_extensions:
                 return False
             return True
 
@@ -117,6 +133,7 @@ class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
 
         iterate_childs(root)
         current_page._po.save(current_page._po_filepath)
+
 
 
 class MkdocsMdpoExtension(Extension):
