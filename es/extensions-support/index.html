@@ -531,23 +531,23 @@ las extensiones, o cambiar un poco el formato de tus archivos Markdown.</p>
 <h3 id="attr_list"><a href="https://python-markdown.github.io/extensions/attr_list"><strong><code>attr_list</code></strong></a><a class="headerlink" href="#attr_list" title="Link permanente">&para;</a></h3>
 <p>Sólo los valores de los atributos <code>title</code> son traducidos. Actualmente, esta
 extensión es un poco complicada porque, si quieres ver el valor del atributo
-<code>title</code> incluído en un archivo PO, debes añadir un atributo <code>mdpo-notitle</code>:</p>
+<code>title</code> incluído en un archivo PO, debes añadir un atributo <code>mdpo</code>:</p>
 <div class="tabbed-set" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Salida</label><div class="tabbed-content">
-<h4 id="link"><a href="https://mondeja.github.io/mkdocs-mdpo-plugin" mdpo-notitle="mdpo-notitle" title="¡Con un título traducido!">link</a><a class="headerlink" href="#link" title="Link permanente">&para;</a></h4>
+<h4 id="link"><a href="https://mondeja.github.io/mkdocs-mdpo-plugin" mdpo="mdpo" title="¡Con un título traducido!">link</a><a class="headerlink" href="#link" title="Link permanente">&para;</a></h4>
 </div>
 <input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Markdown</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="gu">#### [link](https://mondeja.github.io/mkdocs-mdpo-plugin){: title=&quot;With a translated title!&quot; mdpo-notitle }</span>
+<div class="highlight"><pre><span></span><code><span class="gu">#### [link](https://mondeja.github.io/mkdocs-mdpo-plugin){: title=&quot;With a translated title!&quot; mdpo }</span>
 </code></pre></div>
 </div>
 <input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">Contenido de archivo PO</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;&quot;</span>
 <span class="s">&quot;[link](https://mondeja.github.io/mkdocs-mdpo-plugin){: title=&quot;With a &quot;</span>
-<span class="s">&quot;translated title!&quot; mdpo-notitle }&quot;</span>
+<span class="s">&quot;translated title!&quot; mdpo }&quot;</span>
 <span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
 </code></pre></div>
 </div>
 </div>
-<h3 id="def_list"><a href="https://python-markdown.github.io/extensions/def_list"><strong><code>def_list</code></strong></a><a class="headerlink" href="#def_list" title="Link permanente">&para;</a></h3>
+<h3 id="def_list"><a href="https://python-markdown.github.io/extensions/definition_lists"><strong><code>def_list</code></strong></a><a class="headerlink" href="#def_list" title="Link permanente">&para;</a></h3>
 <div class="tabbed-set" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Salida</label><div class="tabbed-content">
 <dl>
 <dt>Manzana</dt>
@@ -567,16 +567,16 @@ Orange
 </div>
 <input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><label for="__tabbed_3_3">Contenido de archivo PO</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;Apple&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Manzana&quot;</span>
 
 <span class="nv">msgid</span> <span class="s">&quot;Pomaceous fruit of plants of the genus Malus in the family Rosaceae.&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Fruto de orujo de plantas del género Malus de la familia Rosaceae.&quot;</span>
 
 <span class="nv">msgid</span> <span class="s">&quot;Orange&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Naranja&quot;</span>
 
 <span class="nv">msgid</span> <span class="s">&quot;The fruit of an evergreen tree of the genus Citrus.&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;El fruto de un árbol de hoja perenne del género Citrus.&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -589,7 +589,7 @@ antes de cada bloque de código que quieres traducir.</p>
 </code></pre></div>
 </div>
 <input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">Markdown</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>&lt;!-- mdpo-include-codeblock --&gt;
+<div class="highlight"><pre><span></span><code>\&lt;!-- mdpo-include-codeblock --&gt;
 <span class="sb">```javascript</span>
 <span class="kd">var</span> <span class="nx">hello</span> <span class="o">=</span> <span class="s2">&quot;world&quot;</span><span class="p">;</span>
 <span class="sb">```</span>
@@ -667,8 +667,6 @@ Content Cell  | Content Cell
 </div>
 </div>
 <h3 id="admonition"><a href="https://python-markdown.github.io/extensions/admonition"><strong><code>admonition</code></strong></a><a class="headerlink" href="#admonition" title="Link permanente">&para;</a></h3>
-<p>Debes incluir siempre un comentario <abbr title="Lenguaje de Marcado de Hipertexto">HTML</abbr> <a href="https://mdpo.readthedocs.io/en/master/commands.html#disabling-extraction"><code>&lt;!-- mdpo-disable-next-line --&gt;</code></a>
-antes de la advertencia.</p>
 <div class="tabbed-set" data-tabs="7:3"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Salida</label><div class="tabbed-content">
 <div class="admonition note">
 <p class="admonition-title">Título de advertencia</p>
@@ -680,10 +678,10 @@ antes de la advertencia.</p>
 </div>
 </div>
 <input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><label for="__tabbed_7_2">Markdown</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>&lt;!-- mdpo-disable-next-line --&gt;
-!!! note &quot;Admonition title&quot;
+<div class="highlight"><pre><span></span><code>!!! note &quot;Admonition title&quot;
 
     Don&#39;t be afraid, the title will also be included in the PO file.
+
 !!! note
 
     Even the implicit title, which in this case would be &quot;Note&quot;.
@@ -726,18 +724,13 @@ Hello, I&#39;m text with^a\ superscript^
 </div>
 </div>
 <h3 id="pymdownxdetails"><a href="https://facelessuser.github.io/pymdown-extensions/extensions/details"><strong><code>pymdownx.details</code></strong></a><a class="headerlink" href="#pymdownxdetails" title="Link permanente">&para;</a></h3>
-<p>Si tras añadir una advertencia de detalles, un msgid empezando con <code>???</code> es
-añadido a tu archivo PO, puedes eliminarlo añadiendo un comentario <abbr title="Lenguaje de Marcado de Hipertexto">HTML</abbr> <a href="https://mdpo.readthedocs.io/en/master/commands.html#disabling-extraction">
-<code>&lt;!-- mdpo-disable-next-line --&gt;</code></a>
-antes de la advertencia.</p>
 <div class="tabbed-set" data-tabs="9:3"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><label for="__tabbed_9_1">Salida</label><div class="tabbed-content">
 <details class="note" open="open"><summary>Detalles con estilo abierto</summary><details class="danger"><summary>Detalles anidados!</summary><p>Y más contenido de nuevo.</p>
 </details>
 </details>
 </div>
 <input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><label for="__tabbed_9_2">Markdown</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>&lt;!-- mdpo-disable-next-line --&gt;
-???+ note &quot;Open styled details&quot;
+<div class="highlight"><pre><span></span><code>???+ note &quot;Open styled details&quot;
 
     ??? danger &quot;Nested details!&quot;
 
@@ -780,7 +773,7 @@ antes de cada bloque de código que quieres traducir.</p>
 </code></pre></div>
 </div>
 <input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><label for="__tabbed_11_2">Markdown</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>&lt;!-- mdpo-include-codeblock --&gt;
+<div class="highlight"><pre><span></span><code>\&lt;!-- mdpo-include-codeblock --&gt;
 ```python
 import mdpo
 print(mdpo.__version__)
@@ -926,13 +919,11 @@ enlazando a esta documentación dependiendo del idioma actual:</p>
 </div>
 </div>
 <h3 id="pymdownxsnippets"><a href="https://facelessuser.github.io/pymdown-extensions/extensions/snippets"><strong><code>pymdownx.snippets</code></strong></a><a class="headerlink" href="#pymdownxsnippets" title="Link permanente">&para;</a></h3>
-<p>La notación en bloque no está soportada. Debes añadir un comentario <abbr title="Lenguaje de Marcado de Hipertexto">HTML</abbr> <a href="https://mdpo.readthedocs.io/en/master/commands.html#disabling-extraction"><code>&lt;!-- mdpo-disable-next-line --&gt;</code></a> antes de la línea.</p>
 <div class="tabbed-set" data-tabs="18:3"><input checked="checked" id="__tabbed_18_1" name="__tabbed_18" type="radio" /><label for="__tabbed_18_1">Salida</label><div class="tabbed-content">
 <p>Algo de contenido insertado desde otro archivo.</p>
 </div>
 <input id="__tabbed_18_2" name="__tabbed_18" type="radio" /><label for="__tabbed_18_2">Markdown</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>&lt;!-- mdpo-disable-next-line --&gt;
-\--8&lt;-- &quot;docs/file-to-be-inserted.txt&quot;
+<div class="highlight"><pre><span></span><code>\--8&lt;-- &quot;docs/file-to-be-inserted.txt&quot;
 </code></pre></div>
 </div>
 <input id="__tabbed_18_3" name="__tabbed_18" type="radio" /><label for="__tabbed_18_3">Contenido de archivo PO</label><div class="tabbed-content">
@@ -942,8 +933,6 @@ enlazando a esta documentación dependiendo del idioma actual:</p>
 </div>
 </div>
 <h3 id="pymdownxtabbed"><a href="https://facelessuser.github.io/pymdown-extensions/extensions/tabbed"><strong><code>pymdownx.tabbed</code></strong></a><a class="headerlink" href="#pymdownxtabbed" title="Link permanente">&para;</a></h3>
-<p>Debes añadir un comentario <abbr title="Lenguaje de Marcado de Hipertexto">HTML</abbr> <a href="https://mdpo.readthedocs.io/en/master/commands.html#disabling-extraction"><code>&lt;!-- mdpo-disable-next-line --&gt;</code></a>
-antes de cada pestaña.</p>
 <div class="tabbed-set" data-tabs="19:3"><input checked="checked" id="__tabbed_19_1" name="__tabbed_19" type="radio" /><label for="__tabbed_19_1">Salida</label><div class="tabbed-content">
 <div class="tabbed-set" data-tabs="20:1"><input checked="checked" id="__tabbed_20_1" name="__tabbed_20" type="radio" /><label for="__tabbed_20_1">Salida</label><div class="tabbed-content">
 <p>Contenido de pestaña</p>
@@ -951,8 +940,7 @@ antes de cada pestaña.</p>
 </div>
 </div>
 <input id="__tabbed_19_2" name="__tabbed_19" type="radio" /><label for="__tabbed_19_2">Markdown</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>&lt;!-- mdpo-disable-next-line --&gt;
-=== &quot;Output&quot;
+<div class="highlight"><pre><span></span><code>=== &quot;Output&quot;
 
     Tab content
 </code></pre></div>
@@ -969,12 +957,12 @@ antes de cada pestaña.</p>
 <details class="warning"><summary>Precaución</summary><p>Cierto contenido de algunas extensiones colocadas dentro de etiquetas no será traducido.</p>
 </details>
 <h3 id="pymdownxtasklist"><a href="https://facelessuser.github.io/pymdown-extensions/extensions/tasklist"><strong><code>pymdownx.tasklist</code></strong></a><a class="headerlink" href="#pymdownxtasklist" title="Link permanente">&para;</a></h3>
-<p>No se puede añadir texto entre elementos de listas de tareas.</p>
 <div class="tabbed-set" data-tabs="21:3"><input checked="checked" id="__tabbed_21_1" name="__tabbed_21" type="radio" /><label for="__tabbed_21_1">Salida</label><div class="tabbed-content">
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Task 1<ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Task A</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Task B<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Task B
+    more text<ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Task δ</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Task ε</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Task ζ</li>
@@ -991,6 +979,7 @@ antes de cada pestaña.</p>
 <div class="highlight"><pre><span></span><code><span class="k">- [X]</span> Task 1
     <span class="k">* [X]</span> Task A
     <span class="k">* [ ]</span> Task B
+        more text
         + [x] Task δ
         + [ ] Task ε
         + [x] Task ζ
@@ -1006,7 +995,7 @@ antes de cada pestaña.</p>
 <span class="nv">msgid</span> <span class="s">&quot;Task A&quot;</span>
 <span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
 
-<span class="nv">msgid</span> <span class="s">&quot;Task B&quot;</span>
+<span class="nv">msgid</span> <span class="s">&quot;Task B more text&quot;</span>
 <span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
 
 <span class="nv">msgid</span> <span class="s">&quot;Task δ&quot;</span>
@@ -1037,7 +1026,6 @@ antes de cada pestaña.</p>
 <input id="__tabbed_22_2" name="__tabbed_22" type="radio" /><label for="__tabbed_22_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="gd">~~Delete me~~</span>
 
-&lt;!-- mdpo-disable-next-line --&gt;
 CH~3~CH~2~OH
 </code></pre></div>
 </div>
