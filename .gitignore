@@ -5,6 +5,8 @@
 package.json
 package-lock.json
 /node_modules/
+prueba.html
+output.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

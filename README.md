@@ -7,7 +7,7 @@
 
 <!--description-start-->
 
-Translations for Mkdocs using PO files, fully customizable but simple and easy.
+Translations for Mkdocs using PO files, fully customizable.
 Compatible with [mkdocs-material](https://squidfunk.github.io/mkdocs-material),
 based on [mdpo](https://mdpo.readthedocs.io).
 

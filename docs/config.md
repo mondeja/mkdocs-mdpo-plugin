@@ -18,7 +18,6 @@ edit the content of your files:
 Languages to translate your files into. Commonly defined as
 [ISO 639 codes](https://en.wikipedia.org/wiki/ISO_639).
 
-<!-- mdpo-disable-next-line -->
 !!! note
 
     If you are using [mkdocs-material](https://squidfunk.github.io/mkdocs-material)
@@ -31,7 +30,6 @@ Languages to translate your files into. Commonly defined as
 Original language of your files. If not defined, the first language found in
 [`languages`](#languages-list) will be used.
 
-<!-- mdpo-disable-next-line -->
 !!! note
 
     If you are using [mkdocs-material](https://squidfunk.github.io/mkdocs-material)
@@ -47,7 +45,6 @@ Directory inside your documentation where the PO translation files will be
 placed. If not defined, the root of `docs` (`docs_dir` setting) will be used,
 so the default layout would be something like:
 
-<!-- mdpo-disable-next-line -->
 === "Configuration"
 
     ```yaml
@@ -59,7 +56,6 @@ so the default layout would be something like:
             - fr
     ```
 
-<!-- mdpo-disable-next-line -->
 === "Documentation directories tree"
 
     ```
@@ -75,7 +71,6 @@ Defining it to `locale`, the layout will change a bit, but this doesn't mean
 that this new `locale/` folder will be included in the `site/` directory
 (see [`dest_filename_template`](#dest_filename_template-str)).
 
-<!-- mdpo-disable-next-line -->
 === "Configuration"
 
     ```yaml
@@ -88,7 +83,6 @@ that this new `locale/` folder will be included in the `site/` directory
           locale_dir: locale
     ```
 
-<!-- mdpo-disable-next-line -->
 === "Documentation directories tree"
 
     ```
@@ -111,7 +105,6 @@ as `true`, but if you want another folder name, you can pass a string, or even
 a relative path to create more than one folder between the language directory
 and their content:
 
-<!-- mdpo-disable-next-line -->
 === "true"
 
     === "Configuration"
@@ -141,7 +134,6 @@ and their content:
         └── index.md
         ```
 
-<!-- mdpo-disable-next-line -->
 === "Custom value"
 
     === "Configuration"

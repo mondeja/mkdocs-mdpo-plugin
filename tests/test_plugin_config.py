@@ -1,4 +1,4 @@
-"""mkdocs builds tests for mkdocs-mdpo-plugin"""
+"""Mkdocs builds tests for mkdocs-mdpo-plugin configuration."""
 
 import pytest
 
@@ -42,6 +42,7 @@ tests = (
                 'foo': 'foo es',
             },
             'es/foo/bar/baz.md.po': {
+                'Baz': 'Baz es',  # added by default Mkdocs theme to dropdown
                 'hello': 'hola',
             },
         },
@@ -231,7 +232,7 @@ tests = (
             'index.html': ['<p>foo</p>'],
             'es/index.html': [
                 '<p>foo es</p>',
-                '<title>Introducción - foo</title>',
+                '<title>Introducción - My site</title>',
             ],
         },
     ),
@@ -248,7 +249,7 @@ tests = (
     ),
     tests,
 )
-def test_mdpo_plugin_build(
+def test_config(
     input_files_contents,
     translations,
     plugin_config,

@@ -48,7 +48,7 @@ def _mkdocs_build(
                     )
 
         mkdocs_config = {
-            'site_name': 'foo',
+            'site_name': 'My site',
             'docs_dir': docs_dir,
             'site_dir': site_dir,
             'plugins': [
@@ -86,6 +86,16 @@ def _mkdocs_build(
                     if entry.msgid == msgid:
                         entry.msgstr = msgstr
                         break
+
+            for entry in po:
+                # 'Home' is the title given to the page by the default
+                # Mkdocs theme
+                if entry.msgid == 'Home':
+                    continue
+                assert entry.msgstr, (
+                    f"Found '{entry.msgid}' not translated in pofile"
+                )
+
             po.save(po_filename)
 
         # second build, dump translations in content (PO files -> Markdown)

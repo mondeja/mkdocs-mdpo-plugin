@@ -51,13 +51,14 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
         def iterate_childs(_root):
             for child in _root:
                 # print(child.tag, child.text, child.attrib)
+
                 if child.text and not child.text[1:].startswith('wzxhzdk:'):
-                    if not node_should_be_processed(child):
-                        continue
-                    process_translation(
-                        child,
-                        ' '.join(child.text.split('\n')),
-                    )
+                    if node_should_be_processed(child):
+                        process_translation(
+                            child,
+                            ' '.join(child.text.split('\n')),
+                        )
+
                 iterate_childs(child)
 
         iterate_childs(root)
@@ -113,13 +114,12 @@ class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
                 # TODO: add support for other attribute names translation
                 #       globally (any element including that attribute)
                 #       and for `attr_list` officialed supported extension
-                if 'title' in child.attrib and \
-                        'mdpo-notitle' not in child.attrib and \
-                        node_should_be_processed(child):
-                    process_translation(
-                        child,
-                        child.attrib['title'],
-                    )
+                if 'title' in child.attrib and 'mdpo' not in child.attrib:
+                    if node_should_be_processed(child):
+                        process_translation(
+                            child,
+                            child.attrib['title'],
+                        )
                 iterate_childs(child)
 
         iterate_childs(root)

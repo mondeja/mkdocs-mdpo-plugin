@@ -7,11 +7,13 @@ import sys
 import mkdocs
 import polib
 from jinja2 import Template
-from mdpo import Po2Md, markdown_to_pofile
 from mdpo.command import COMMAND_SEARCH_RE
+from mdpo.md2po import markdown_to_pofile
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
+from mdpo.po2md import Po2Md
 
 from mkdocs_mdpo_plugin.ignores import MSGID_IGNORES
+from mkdocs_mdpo_plugin.md4c_events import build_text_md4c_parser_event
 
 
 COMMAND_SEARCH_RE_AT_LINE_START = re.compile(
@@ -326,6 +328,9 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         original_po = markdown_to_pofile(
             markdown,
             ignore_msgids=self._msgids_to_ignore,
+            events={
+                'text': build_text_md4c_parser_event(config),
+            },
         )
 
         for language in self._non_default_languages():
