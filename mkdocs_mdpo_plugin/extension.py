@@ -8,12 +8,14 @@ from mkdocs_mdpo_plugin.plugin import MkdocsBuild
 class MkdocsMdpoTreeProcessor(Treeprocessor):
     def run(self, root):
         mdpo_plugin = MkdocsBuild().mdpo_plugin
-        current_build_extensions = (
-            mdpo_plugin.mkdocs_build_config['markdown_extensions']
-        )
+
         current_page = mdpo_plugin.current_page
         if not hasattr(current_page, '_language'):
             return
+
+        current_build_extensions = (
+            mdpo_plugin.mkdocs_build_config['markdown_extensions']
+        )
 
         def process_translation(node, msgid):
             if msgid not in current_page._translated_entries_msgstrs:
@@ -30,7 +32,7 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
 
         def node_should_be_processed(node):
             if 'pymdownx.tasklist' in current_build_extensions and \
-                    node.tag in ['li', 'p'] and len(node.text) > 2 and \
+                    node.tag == 'li' and \
                     node.text[:3] in ['[ ]', '[x]', '[X]']:
                 return False
             return True
@@ -57,12 +59,14 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
 class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
     def run(self, root):
         mdpo_plugin = MkdocsBuild().mdpo_plugin
-        current_build_extensions = (
-            mdpo_plugin.mkdocs_build_config['markdown_extensions']
-        )
+
         current_page = mdpo_plugin.current_page
         if not hasattr(current_page, '_language'):
             return
+
+        current_build_extensions = (
+            mdpo_plugin.mkdocs_build_config['markdown_extensions']
+        )
 
         def process_translation(node, msgid):
             if msgid not in current_page._translated_entries_msgstrs:
