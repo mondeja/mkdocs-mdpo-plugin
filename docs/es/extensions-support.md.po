@@ -245,7 +245,10 @@ msgid "Some inserted content from another file."
 msgstr "Algo de contenido insertado desde otro archivo."
 
 msgid "++ctrl+alt+delete++"
-msgstr ""
+msgstr "++ctrl+alt+delete++"
 
 msgid "CH~3~CH~2~OH"
-msgstr ""
+msgstr "CH~3~CH~2~OH"
+
+msgid "Markdown"
+msgstr "Markdown"

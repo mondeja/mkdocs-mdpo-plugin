@@ -8,11 +8,10 @@ import mkdocs
 import polib
 from jinja2 import Template
 from mdpo.command import COMMAND_SEARCH_RE
-from mdpo.md2po import markdown_to_pofile
+from mdpo.md2po import Md2Po
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po2md import Po2Md
 
-from mkdocs_mdpo_plugin.ignores import MSGID_IGNORES
 from mkdocs_mdpo_plugin.md4c_events import build_text_md4c_parser_event
 
 
@@ -102,9 +101,6 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         # md4c extensions used in mdpo translation (depend on Python-Markdown
         # configured extensions in `mkdocs.yml`)
         self._md4c_extensions = DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
-
-        # 'ignore' attribute for md2po
-        self._msgids_to_ignore = []
 
         # navigation translation
         # {original_title: {lang: {title: [translation, url]}}}
@@ -247,11 +243,6 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             config['markdown_extensions'].remove('mkdocs.mdpo')
         config['markdown_extensions'].append('mkdocs.mdpo')
 
-        # load msgid to ignore
-        for extension, msgids in MSGID_IGNORES.items():
-            if not extension or extension in config['markdown_extensions']:
-                self._msgids_to_ignore.extend(msgids)
-
         # store reference in plugin to configuration
         self.mkdocs_build_config = config
 
@@ -286,8 +277,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         if not hasattr(page, '_language'):
             return
 
-        # Si estamos usando el tema mkdocs-material, configuramos el idioma
-        # correspondiente para cada página
+        # using mkdocs-material, configure the language for each page
         if context['config']['theme'].name == 'material':
             context['config']['theme']['language'] = (
                 page._language if hasattr(page, '_language') else
@@ -325,13 +315,14 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             # lang: [title, url]
             self._translated_nav[page.title] = {}
 
-        original_po = markdown_to_pofile(
+        md2po = Md2Po(
             markdown,
-            ignore_msgids=self._msgids_to_ignore,
             events={
                 'text': build_text_md4c_parser_event(config),
             },
+            mark_not_found_as_obsolete=False,
         )
+        original_po = md2po.extract()
 
         for language in self._non_default_languages():
             po_filepath = os.path.join(
@@ -362,9 +353,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             po.save(po_filepath)
 
             po2md = Po2Md(po_filepath)
-            content = remove_mdpo_commands_preserving_escaped(
-                po2md.translate(markdown),
-            )
+            content = po2md.translate(markdown)
 
             # create site language dir if not exists
             os.makedirs(
@@ -411,7 +400,19 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             new_page._language = language
             new_page._po = po
             new_page._po_filepath = po_filepath
-            new_page._po_disabled_entries = po2md.disabled_entries
+
+            new_page._po_msgids = []
+            new_page._translated_entries_msgstrs = []
+            new_page._disabled_msgids = []
+            for entry in po2md.translated_entries:
+                new_page._translated_entries_msgstrs.append(
+                    polib.unescape(entry.msgstr),
+                )
+            for entry in po:
+                new_page._po_msgids.append(polib.unescape(entry.msgid))
+            for entry in po2md.disabled_entries:
+                new_page._disabled_msgids.append(polib.unescape(entry.msgid))
+
             files.append(new_file)
 
             self._translated_nav[page.title][language] = [

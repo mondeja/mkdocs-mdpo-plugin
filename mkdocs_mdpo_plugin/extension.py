@@ -15,31 +15,18 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
         if not hasattr(current_page, '_language'):
             return
 
-        po = current_page._po
-
-        current_page._po_msgids = []
-        current_page._po_msgstrs = []
-        current_page._disabled_msgids = []
-        for entry in po:
-            current_page._po_msgids.append(polib.unescape(entry.msgid))
-            current_page._po_msgstrs.append(polib.unescape(entry.msgstr))
-        for entry in current_page._po_disabled_entries:
-            current_page._disabled_msgids.append(polib.unescape(entry.msgid))
-
         def process_translation(node, msgid):
-            if msgid not in current_page._po_msgstrs:
+            if msgid not in current_page._translated_entries_msgstrs:
                 if msgid in current_page._po_msgids:
-                    for entry in po:
+                    for entry in current_page._po:
                         if entry.msgid == msgid:
                             if entry.msgstr:
                                 node.text = entry.msgstr
                             entry.obsolete = False
-                elif msgid not in current_page._disabled_msgids and \
-                        msgid not in mdpo_plugin._msgids_to_ignore:
+                elif msgid not in current_page._disabled_msgids:
                     current_page._po_msgids.append(msgid)
-                    po.append(
-                        polib.POEntry(msgid=msgid, msgstr=''),
-                    )
+                    entry = polib.POEntry(msgid=msgid, msgstr='')
+                    current_page._po.append(entry)
 
         def node_should_be_processed(node):
             if 'pymdownx.tasklist' in current_build_extensions and \
@@ -62,7 +49,7 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
                 iterate_childs(child)
 
         iterate_childs(root)
-        po.save(current_page._po_filepath)
+        current_page._po.save(current_page._po_filepath)
 
         MkdocsBuild().mdpo_plugin.current_page = current_page
 
@@ -77,22 +64,18 @@ class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
         if not hasattr(current_page, '_language'):
             return
 
-        po = current_page._po
-
         def process_translation(node, msgid):
-            if msgid not in current_page._po_msgstrs:
+            if msgid not in current_page._translated_entries_msgstrs:
                 if msgid in current_page._po_msgids:
-                    for entry in po:
+                    for entry in current_page._po:
                         if entry.msgid == msgid:
                             if entry.msgstr:
                                 node.attrib['title'] = entry.msgstr
                             entry.obsolete = False
-                elif msgid not in current_page._disabled_msgids and \
-                        msgid not in mdpo_plugin._msgids_to_ignore:
+                elif msgid not in current_page._disabled_msgids:
                     current_page._po_msgids.append(msgid)
-                    po.append(
-                        polib.POEntry(msgid=msgid, msgstr=''),
-                    )
+                    entry = polib.POEntry(msgid=msgid, msgstr='')
+                    current_page._po.append(entry)
 
         def node_should_be_processed(node):
             if node.tag == 'abbr' and 'abbr' in current_build_extensions:
@@ -123,6 +106,7 @@ class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
                 iterate_childs(child)
 
         iterate_childs(root)
+
         current_page._po.save(current_page._po_filepath)
 
 
