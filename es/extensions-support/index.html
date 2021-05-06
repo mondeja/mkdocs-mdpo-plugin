@@ -541,13 +541,14 @@ extensión es un poco complicada porque, si quieres ver el valor del atributo
 </div>
 <input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">Contenido de archivo PO</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;&quot;</span>
-<span class="s">&quot;[link](https://mondeja.github.io/mkdocs-mdpo-plugin){: title=&quot;With a &quot;</span>
-<span class="s">&quot;translated title!&quot; mdpo }&quot;</span>
+<span class="s">&quot;[link](https://mondeja.github.io/mkdocs-mdpo-plugin){: title=\&quot;With a &quot;</span>
+<span class="s">&quot;translated title!\&quot; mdpo }&quot;</span>
 <span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
 </code></pre></div>
 </div>
 </div>
 <h3 id="def_list"><a href="https://python-markdown.github.io/extensions/definition_lists"><strong><code>def_list</code></strong></a><a class="headerlink" href="#def_list" title="Link permanente">&para;</a></h3>
+<p>Debes dejar una línea en blanco entre el término y su definición:</p>
 <div class="tabbed-set" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Salida</label><div class="tabbed-content">
 <dl>
 <dt>Manzana</dt>
@@ -558,10 +559,12 @@ extensión es un poco complicada porque, si quieres ver el valor del atributo
 </div>
 <input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>Apple
+
 :   Pomaceous fruit of plants of the genus Malus in
     the family Rosaceae.
 
 Orange
+
 :   The fruit of an evergreen tree of the genus Citrus.
 </code></pre></div>
 </div>
@@ -596,7 +599,7 @@ antes de cada bloque de código que quieres traducir.</p>
 </code></pre></div>
 </div>
 <input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><label for="__tabbed_4_3">Contenido de archivo PO</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;var hello = &quot;world&quot;; &quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;var hello = \&quot;world\&quot;; &quot;</span>
 <span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
 </code></pre></div>
 </div>
@@ -616,13 +619,13 @@ antes de cada bloque de código que quieres traducir.</p>
 </div>
 <input id="__tabbed_5_3" name="__tabbed_5" type="radio" /><label for="__tabbed_5_3">Contenido de archivo PO</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;This is a footnote[^1]. This is another[^2].&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Esto es una nota al pie[^1]. Esto es otra[^2].&quot;</span>
 
 <span class="nv">msgid</span> <span class="s">&quot;[^1]: This is a footnote content.&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;[^1]: Este es un contenido de nota al pie.&quot;</span>
 
 <span class="nv">msgid</span> <span class="s">&quot;[^2]: This is another footnote content.&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;[^2]: Este es otro contenido de nota al pie.&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -656,13 +659,13 @@ Content Cell  | Content Cell
 </div>
 <input id="__tabbed_6_3" name="__tabbed_6" type="radio" /><label for="__tabbed_6_3">Contenido de archivo PO</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;First header&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Primer encabezado&quot;</span>
 
 <span class="nv">msgid</span> <span class="s">&quot;Second header&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Segundo encabezado&quot;</span>
 
 <span class="nv">msgid</span> <span class="s">&quot;Content cell&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Contenido de celda&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -689,24 +692,24 @@ Content Cell  | Content Cell
 </div>
 <input id="__tabbed_7_3" name="__tabbed_7" type="radio" /><label for="__tabbed_7_3">Contenido de archivo PO</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;Admonition title&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Título de advertencia&quot;</span>
 
 <span class="nv">msgid</span> <span class="s">&quot;The title will also be included in the PO file.&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;El título también será añadido en el archivo PO.&quot;</span>
 
 <span class="nv">msgid</span> <span class="s">&quot;Note&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Nota&quot;</span>
 
-<span class="nv">msgid</span> <span class="s">&quot;Even the implicit title, which in this case would be &quot;Note&quot;.&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgid</span> <span class="s">&quot;Even the implicit title, which in this case would be \&quot;Note\&quot;.&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Incluso el título implícito, el cual en este caso sería \&quot;Nota\&quot;.&quot;</span>
 </code></pre></div>
 </div>
 </div>
 <h2 id="extensiones-pymdown"><a href="https://facelessuser.github.io/pymdown-extensions/extensions">Extensiones PyMdown</a><a class="headerlink" href="#extensiones-pymdown" title="Link permanente">&para;</a></h2>
 <h3 id="pymdownxcaret"><a href="https://facelessuser.github.io/pymdown-extensions/extensions/caret"><strong><code>pymdownx.caret</code></strong></a><a class="headerlink" href="#pymdownxcaret" title="Link permanente">&para;</a></h3>
 <div class="tabbed-set" data-tabs="8:3"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">Salida</label><div class="tabbed-content">
-<p>Hola, soy texto con <ins>un insert</ins>.</p>
-<p>Hola, soy texto con<sup>un sobreíndice</sup></p>
+<p>Hola, soy texto con <ins>una inserción</ins>.</p>
+<p>Hola, soy texto con<sup>un superíndice</sup></p>
 </div>
 <input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><label for="__tabbed_8_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>Hello, I&#39;m text with ^^an insert^^.
@@ -716,16 +719,16 @@ Hello, I&#39;m text with^a\ superscript^
 </div>
 <input id="__tabbed_8_3" name="__tabbed_8" type="radio" /><label for="__tabbed_8_3">Contenido de archivo PO</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;Hello, I&#39;m text with ^^an insert^^.&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Hola, soy texto con ^^una inserción^^.&quot;</span>
 
-<span class="nv">msgid</span> <span class="s">&quot;Hello, I&#39;m text with^a\ superscript^.&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgid</span> <span class="s">&quot;Hello, I&#39;m text with^a\\ superscript^.&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Hola, soy texto con^un\\ superíndice^&quot;</span>
 </code></pre></div>
 </div>
 </div>
 <h3 id="pymdownxdetails"><a href="https://facelessuser.github.io/pymdown-extensions/extensions/details"><strong><code>pymdownx.details</code></strong></a><a class="headerlink" href="#pymdownxdetails" title="Link permanente">&para;</a></h3>
 <div class="tabbed-set" data-tabs="9:3"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><label for="__tabbed_9_1">Salida</label><div class="tabbed-content">
-<details class="note" open="open"><summary>Detalles con estilo abierto</summary><details class="danger"><summary>Detalles anidados!</summary><p>Y más contenido de nuevo.</p>
+<details class="note" open="open"><summary>Detalles con estilo abierto</summary><details class="danger"><summary>¡Detalles anidados!</summary><p>Y más contenido.</p>
 </details>
 </details>
 </div>
@@ -734,18 +737,18 @@ Hello, I&#39;m text with^a\ superscript^
 
     ??? danger &quot;Nested details!&quot;
 
-        And more content again.
+        And more content.
 </code></pre></div>
 </div>
 <input id="__tabbed_9_3" name="__tabbed_9" type="radio" /><label for="__tabbed_9_3">Contenido de archivo PO</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;Open styled details&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Detalles con estilo abierto&quot;</span>
 
 <span class="nv">msgid</span> <span class="s">&quot;Nested details!&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;¡Detalles anidados!&quot;</span>
 
-<span class="nv">msgid</span> <span class="s">&quot;And more content again.&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgid</span> <span class="s">&quot;And more content.&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Y más contenido.&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -782,8 +785,8 @@ print(mdpo.__version__)
 </div>
 <input id="__tabbed_11_3" name="__tabbed_11" type="radio" /><label for="__tabbed_11_3">Contenido de archivo PO</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;&quot;</span>
-<span class="s">&quot;import mdpo\n&quot;</span>
-<span class="s">&quot;print(mdpo.__version__)\n&quot;</span>
+<span class="s">&quot;import mdpo\\n&quot;</span>
+<span class="s">&quot;print(mdpo.__version__)\\n&quot;</span>
 <span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
 </code></pre></div>
 </div>
@@ -798,22 +801,24 @@ traducciones:</p>
 <input id="__tabbed_12_2" name="__tabbed_12" type="radio" /><label for="__tabbed_12_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>Here is some code: <span class="sb">`#!py3 import pymdownx; pymdownx.__version__`</span>.
 
-The mock shebang will be treated like text here: <span class="sb">` #!js var test = 0; `</span>.
+The mock shebang will be treated like text here: <span class="sb">` #!js var test = 0;`</span>.
 </code></pre></div>
 </div>
 <input id="__tabbed_12_3" name="__tabbed_12" type="radio" /><label for="__tabbed_12_3">Contenido de archivo PO</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;Here is some code: `#!py3 import pymdownx; pymdownx.__version__`.&quot;</span>
 <span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="s">&quot;Aquí hay algo de código: `#!py3 import pymdownx; pymdownx.__version__`.&quot;</span>
 
 <span class="nv">msgid</span> <span class="s">&quot;&quot;</span>
-<span class="s">&quot;The mock shebang will be treated like text here: ` #!js var test = 0; `.&quot;</span>
+<span class="s">&quot;The mock shebang will be treated like text here: ` #!js var test = 0;`.&quot;</span>
 <span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="s">&quot;El shebang simulado se tratará como texto aquí: ` #!js var test = 0;`.&quot;</span>
 </code></pre></div>
 </div>
 </div>
 <h3 id="pymdownxkeys"><a href="https://facelessuser.github.io/pymdown-extensions/extensions/keys"><strong><code>pymdownx.keys</code></strong></a><a class="headerlink" href="#pymdownxkeys" title="Link permanente">&para;</a></h3>
 <div class="tabbed-set" data-tabs="13:3"><input checked="checked" id="__tabbed_13_1" name="__tabbed_13" type="radio" /><label for="__tabbed_13_1">Salida</label><div class="tabbed-content">
-<p><span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-alt">Alt</kbd><span>+</span><kbd class="key-delete">Del</kbd></span></p>
+<p><span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-alt">Alt</kbd><span>+</span><kbd class="key-f10">F10</kbd></span></p>
 </div>
 <input id="__tabbed_13_2" name="__tabbed_13" type="radio" /><label for="__tabbed_13_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>++ctrl+alt+delete++
@@ -821,23 +826,23 @@ The mock shebang will be treated like text here: <span class="sb">` #!js var tes
 </div>
 <input id="__tabbed_13_3" name="__tabbed_13" type="radio" /><label for="__tabbed_13_3">Contenido de archivo PO</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;++ctrl+alt+delete++&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;++ctrl+alt+f10++&quot;</span>
 </code></pre></div>
 </div>
 </div>
 <h3 id="pymdownxmagiclink"><a href="https://facelessuser.github.io/pymdown-extensions/extensions/magiclink"><strong><code>pymdownx.magiclink</code></strong></a><a class="headerlink" href="#pymdownxmagiclink" title="Link permanente">&para;</a></h3>
 <p>A veces la traducción debe editar enlaces. Observa el siguiente ejemplo
-enlazando a esta documentación dependiendo del idioma actual:</p>
+enlazando a esta documentación dependiendo del idioma activo actual:</p>
 <div class="tabbed-set" data-tabs="14:3"><input checked="checked" id="__tabbed_14_1" name="__tabbed_14" type="radio" /><label for="__tabbed_14_1">Salida</label><div class="tabbed-content">
 <p>Puedes acceder a la documentación de mkdocs-mdpo-plugin aquí: <a href="https://mondeja.github.io/mkdocs-mdpo-plugin/es">https://mondeja.github.io/mkdocs-mdpo-plugin/es</a></p>
 </div>
 <input id="__tabbed_14_2" name="__tabbed_14" type="radio" /><label for="__tabbed_14_2">Markdown</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>You can access to the mdocs-mdpo-plugin documentation here: https://mondeja.github.io/mkdocs-mdpo-plugin
+<div class="highlight"><pre><span></span><code>You can access to the mkdocs-mdpo-plugin documentation here: https://mondeja.github.io/mkdocs-mdpo-plugin
 </code></pre></div>
 </div>
 <input id="__tabbed_14_3" name="__tabbed_14" type="radio" /><label for="__tabbed_14_3">Contenido de archivo PO</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;&quot;</span>
-<span class="s">&quot;You can access to the mdocs-mdpo-plugin documentation here: &quot;</span>
+<span class="s">&quot;You can access to the mkdocs-mdpo-plugin documentation here: &quot;</span>
 <span class="s">&quot;</span><span class="py">https:</span><span class="s">//mondeja.github.io/mkdocs-mdpo-plugin&quot;</span>
 <span class="nv">msgstr</span> <span class="s">&quot;&quot;</span>
 <span class="s">&quot;Puedes acceder a la documentación de mkdocs-mdpo-plugin aquí: &quot;</span>
@@ -879,7 +884,7 @@ enlazando a esta documentación dependiendo del idioma actual:</p>
 <p>
 <div class="progress progress-100plus">
 <div class="progress-bar" style="width:100.00%">
-<p class="progress-label">cien por cien</p>
+<p class="progress-label">lleno</p>
 </div>
 </div>
 </p>
@@ -893,14 +898,14 @@ enlazando a esta documentación dependiendo del idioma actual:</p>
 </code></pre></div>
 </div>
 <input id="__tabbed_16_3" name="__tabbed_16" type="radio" /><label for="__tabbed_16_3">Contenido de archivo PO</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;[=0% &quot;0%&quot;]&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;[=0% &quot;vacío&quot;]&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;[=0% \&quot;0%\&quot;]&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;[=0% \&quot;vacío\&quot;]&quot;</span>
 
-<span class="nv">msgid</span> <span class="s">&quot;[=45% &quot;45%&quot;]&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;[=45% &quot;45 por ciento&quot;]&quot;</span>
+<span class="nv">msgid</span> <span class="s">&quot;[=45% \&quot;45%\&quot;]&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;[=45% \&quot;45 por ciento\&quot;]&quot;</span>
 
-<span class="nv">msgid</span> <span class="s">&quot;[=100% &quot;100%&quot;]&quot;</span>
-<span class="nv">msgstr</span> <span class="s">&quot;[=100% &quot;cien por cien&quot;]&quot;</span>
+<span class="nv">msgid</span> <span class="s">&quot;[=100% \&quot;100%\&quot;]&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;[=100% \&quot;lleno\&quot;]&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -1021,7 +1026,7 @@ enlazando a esta documentación dependiendo del idioma actual:</p>
 <h3 id="pymdownxtilde"><a href="https://facelessuser.github.io/pymdown-extensions/extensions/tilde"><strong><code>pymdownx.tilde</code></strong></a><a class="headerlink" href="#pymdownxtilde" title="Link permanente">&para;</a></h3>
 <div class="tabbed-set" data-tabs="22:3"><input checked="checked" id="__tabbed_22_1" name="__tabbed_22" type="radio" /><label for="__tabbed_22_1">Salida</label><div class="tabbed-content">
 <p><del>Elimíname</del></p>
-<p>CH<sub>3</sub>CH<sub>2</sub>OH</p>
+<p>H<sub>2</sub>O</p>
 </div>
 <input id="__tabbed_22_2" name="__tabbed_22" type="radio" /><label for="__tabbed_22_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="gd">~~Delete me~~</span>
@@ -1032,6 +1037,9 @@ CH~3~CH~2~OH
 <input id="__tabbed_22_3" name="__tabbed_22" type="radio" /><label for="__tabbed_22_3">Contenido de archivo PO</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nv">msgid</span> <span class="s">&quot;~~Delete me~~&quot;</span>
 <span class="nv">msgstr</span> <span class="s">&quot;~~Elimíname~~&quot;</span>
+
+<span class="nv">msgid</span> <span class="s">&quot;CH~3~CH~2~OH&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;H~2~O&quot;</span>
 </code></pre></div>
 </div>
 </div>
