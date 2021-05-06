@@ -142,6 +142,9 @@ msgstr "Valor personalizado"
 msgid "Documentation directories tree"
 msgstr "Árbol de directorios de documentación"
 
+msgid "true"
+msgstr "true"
+
 msgid "`language`: Translation language for the page."
 msgstr "`language`: Idioma de traducción para la página."
 
@@ -164,6 +167,3 @@ msgstr ""
 "`po`: Un objeto "
 "[`polib.POFile`](https://polib.readthedocs.io/en/latest/api.html#polib.POFile)"
 " con las traducciones cargadas."
-
-msgid "true"
-msgstr ""

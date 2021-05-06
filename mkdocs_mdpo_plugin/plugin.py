@@ -12,7 +12,7 @@ from mdpo.md2po import Md2Po
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po2md import Po2Md
 
-from mkdocs_mdpo_plugin.md4c_events import build_text_md4c_parser_event
+from mkdocs_mdpo_plugin.md4c_events import build_md4c_parser_events
 
 
 COMMAND_SEARCH_RE_AT_LINE_START = re.compile(
@@ -292,10 +292,9 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 item.title = tr_title
             item.file.url = tr_url
 
-    def on_page_content(self, content, *args, **kwargs):
-        """Useful for debugging."""
+    # Useful for debugging.
+    # def on_page_content(self, content, *args, **kwargs):
         # print(content)
-        pass
 
     def on_page_markdown(self, markdown, page, config, files):
         """Event executed when markdown content of a page is collected.
@@ -317,9 +316,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
         md2po = Md2Po(
             markdown,
-            events={
-                'text': build_text_md4c_parser_event(config),
-            },
+            events=build_md4c_parser_events(config),
             mark_not_found_as_obsolete=False,
         )
         original_po = md2po.extract()
@@ -337,7 +334,10 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 po = polib.POFile()
             else:
                 po = polib.pofile(po_filepath)
-            po.merge(original_po)
+
+            for entry in original_po:
+                if entry not in po:
+                    po.append(entry)
 
             # translate title
             translated_page_title, _title_in_pofile = (None, False)
@@ -454,6 +454,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         for root, dirs, files in os.walk(config['site_dir'], topdown=False):
             if not os.listdir(root):
                 os.rmdir(root)
+
+        MkdocsBuild._instance = None
 
 
 # mkdocs>=1.2.0 includes a `build_error` event executed when the build

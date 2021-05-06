@@ -83,6 +83,8 @@ your PO file, you must add an attribute `mdpo`:
 <!-- mdpo-disable-next-line -->
 ### [**`def_list`**](https://python-markdown.github.io/extensions/definition_lists)
 
+You must let a blank line between the term and its definition:
+
 === "Output"
 
     Apple
@@ -96,10 +98,12 @@ your PO file, you must add an attribute `mdpo`:
 
     ```markdown
     Apple
+
     :   Pomaceous fruit of plants of the genus Malus in
         the family Rosaceae.
 
     Orange
+
     :   The fruit of an evergreen tree of the genus Citrus.
     ```
 
@@ -175,15 +179,14 @@ You must always let one newline between each footnote content:
 
     ```po
     msgid "This is a footnote[^1]. This is another[^2]."
-    msgstr ""
+    msgstr "Esto es una nota al pie[^1]. Esto es otra[^2]."
 
     msgid "[^1]: This is a footnote content."
-    msgstr ""
+    msgstr "[^1]: Este es un contenido de nota al pie."
 
     msgid "[^2]: This is another footnote content."
-    msgstr ""
+    msgstr "[^2]: Este es otro contenido de nota al pie."
     ```
-
 
 <!-- mdpo-disable-next-line -->
 ### [**`tables`**](https://python-markdown.github.io/extensions/tables)
@@ -208,13 +211,13 @@ You must always let one newline between each footnote content:
 
     ```po
     msgid "First header"
-    msgstr ""
+    msgstr "Primer encabezado"
 
     msgid "Second header"
-    msgstr ""
+    msgstr "Segundo encabezado"
 
     msgid "Content cell"
-    msgstr ""
+    msgstr "Contenido de celda"
     ```
 
 <!-- mdpo-disable-next-line -->
@@ -246,16 +249,16 @@ You must always let one newline between each footnote content:
 
     ```po
     msgid "Admonition title"
-    msgstr ""
+    msgstr "Título de advertencia"
 
     msgid "The title will also be included in the PO file."
-    msgstr ""
+    msgstr "El título también será añadido en el archivo PO."
 
     msgid "Note"
-    msgstr ""
+    msgstr "Nota"
 
     msgid "Even the implicit title, which in this case would be \"Note\"."
-    msgstr ""
+    msgstr "Incluso el título implícito, el cual en este caso sería \"Nota\"."
     ```
 
 ## [PyMdown extensions](https://facelessuser.github.io/pymdown-extensions/extensions)
@@ -281,10 +284,10 @@ You must always let one newline between each footnote content:
 
     ```po
     msgid "Hello, I'm text with ^^an insert^^."
-    msgstr ""
+    msgstr "Hola, soy texto con ^^una inserción^^."
 
     msgid "Hello, I'm text with^a\\ superscript^."
-    msgstr ""
+    msgstr "Hola, soy texto con^un\\ superíndice^"
     ```
 
 <!-- mdpo-disable-next-line -->
@@ -296,7 +299,7 @@ You must always let one newline between each footnote content:
 
         ??? danger "Nested details!"
 
-            And more content again.
+            And more content.
 
 === "Markdown"
 
@@ -305,20 +308,20 @@ You must always let one newline between each footnote content:
 
         ??? danger "Nested details!"
 
-            And more content again.
+            And more content.
     ```
 
 === "PO file content"
 
     ```po
     msgid "Open styled details"
-    msgstr ""
+    msgstr "Detalles con estilo abierto"
 
     msgid "Nested details!"
-    msgstr ""
+    msgstr "¡Detalles anidados!"
 
-    msgid "And more content again."
-    msgstr ""
+    msgid "And more content."
+    msgstr "Y más contenido."
     ```
 
 <!-- mdpo-disable-next-line -->
@@ -384,14 +387,14 @@ There is no way of skip inline codespan blocks from being included in translatio
 
     Here is some code: `#!py3 import pymdownx; pymdownx.__version__`.
 
-    The mock shebang will be treated like text here: ` #!js var test = 0; `.
+    The mock shebang will be treated like text here: ` #!js var test = 0;`.
 
 === "Markdown"
 
     ```markdown
     Here is some code: `#!py3 import pymdownx; pymdownx.__version__`.
 
-    The mock shebang will be treated like text here: ` #!js var test = 0; `.
+    The mock shebang will be treated like text here: ` #!js var test = 0;`.
     ```
 
 === "PO file content"
@@ -399,10 +402,12 @@ There is no way of skip inline codespan blocks from being included in translatio
     ```po
     msgid "Here is some code: `#!py3 import pymdownx; pymdownx.__version__`."
     msgstr ""
+    "Aquí hay algo de código: `#!py3 import pymdownx; pymdownx.__version__`."
 
     msgid ""
-    "The mock shebang will be treated like text here: ` #!js var test = 0; `."
+    "The mock shebang will be treated like text here: ` #!js var test = 0;`."
     msgstr ""
+    "El shebang simulado se tratará como texto aquí: ` #!js var test = 0;`."
     ```
 
 <!-- mdpo-disable-next-line -->
@@ -422,30 +427,30 @@ There is no way of skip inline codespan blocks from being included in translatio
 
     ```po
     msgid "++ctrl+alt+delete++"
-    msgstr ""
+    msgstr "++ctrl+alt+f10++"
     ```
 
 <!-- mdpo-disable-next-line -->
 ### [**`pymdownx.magiclink`**](https://facelessuser.github.io/pymdown-extensions/extensions/magiclink)
 
 Sometimes the translation should edit links. See the next example linking to
-this documentation depending on the current language:
+this documentation depending on the current active language:
 
 === "Output"
 
-    You can access to the mdocs-mdpo-plugin documentation here: https://mondeja.github.io/mkdocs-mdpo-plugin
+    You can access to the mkdocs-mdpo-plugin documentation here: https://mondeja.github.io/mkdocs-mdpo-plugin
 
 === "Markdown"
 
     ```markdown
-    You can access to the mdocs-mdpo-plugin documentation here: https://mondeja.github.io/mkdocs-mdpo-plugin
+    You can access to the mkdocs-mdpo-plugin documentation here: https://mondeja.github.io/mkdocs-mdpo-plugin
     ```
 
 === "PO file content"
 
     ```po
     msgid ""
-    "You can access to the mdocs-mdpo-plugin documentation here: "
+    "You can access to the mkdocs-mdpo-plugin documentation here: "
     "https://mondeja.github.io/mkdocs-mdpo-plugin"
     msgstr ""
     "Puedes acceder a la documentación de mkdocs-mdpo-plugin aquí: "
@@ -505,7 +510,7 @@ You must let one blank line between each progress bar.
     msgstr "[=45% \"45 por ciento\"]"
 
     msgid "[=100% \"100%\"]"
-    msgstr "[=100% \"cien por cien\"]"
+    msgstr "[=100% \"lleno\"]"
     ```
 
 <!-- mdpo-disable-next-line -->
@@ -663,4 +668,7 @@ You must let one blank line between each progress bar.
     ```po
     msgid "~~Delete me~~"
     msgstr "~~Elimíname~~"
+
+    msgid "CH~3~CH~2~OH"
+    msgstr "H~2~O"
     ```

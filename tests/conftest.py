@@ -103,6 +103,11 @@ def _mkdocs_build(
 
         # assert that files have been translated
         for filename, expected_lines in expected_output_files.items():
+            if not expected_lines:
+                raise ValueError(
+                    'Expected file defined without output lines',
+                )
+
             filename = os.path.join(site_dir, os.path.normpath(filename))
 
             with open(filename) as f:

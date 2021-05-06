@@ -26,7 +26,21 @@ except ImportError:
     pass
 
 
-def build_text_md4c_parser_event(mkdocs_build_config):
+EVENT_EXTENSIONS = {
+    'text': [
+        'admonition',
+        'def_list',
+        'pymdownx.details',
+        'pymdownx.snippets',
+        'pymdownx.tabbed',
+    ],
+    'msgid': [
+        'def_list',
+    ],
+}
+
+
+def build_md4c_parser_events(mkdocs_build_config):
     md_extensions = mkdocs_build_config['markdown_extensions']
 
     def text_event(md2po_instance, block, text):
@@ -50,4 +64,23 @@ def build_text_md4c_parser_event(mkdocs_build_config):
             if re.match(TabbedProcessor.START, text):
                 md2po_instance.disabled_entries.append(text)
                 return False
-    return text_event
+
+    def msgid_event(md2po_instance, msgid):
+        if 'def_list' in md_extensions:
+            if msgid.startswith(': '):
+                md2po_instance._disable_next_line = True
+
+    # load only those events required for the extensions
+    events_functions = {
+        'text': text_event,
+        'msgid': msgid_event,
+    }
+
+    events = {}
+    for event_name, extensions in EVENT_EXTENSIONS.items():
+        for extension in extensions:
+            if extension in md_extensions:
+                events[event_name] = events_functions[event_name]
+                break
+
+    return events

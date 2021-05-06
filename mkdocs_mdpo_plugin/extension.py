@@ -26,6 +26,7 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
                                 node.text = entry.msgstr
                             entry.obsolete = False
                 elif msgid not in current_page._disabled_msgids:
+
                     current_page._po_msgids.append(msgid)
                     entry = polib.POEntry(msgid=msgid, msgstr='')
                     current_page._po.append(entry)
