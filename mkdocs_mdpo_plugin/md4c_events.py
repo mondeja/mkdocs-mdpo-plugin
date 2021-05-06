@@ -5,24 +5,19 @@ import re
 
 try:
     from markdown.extensions.admonition import AdmonitionProcessor
-except ImportError:
-    pass
-try:
-    from markdown.extensions.def_list import DefListProcessor
-    DEF_LIST_RE = re.compile(DefListProcessor.RE.pattern.replace('{1', '{2'))
-except ImportError:
+except ImportError:  # pragma: no cover
     pass
 try:
     from pymdownx.details import DetailsProcessor
-except ImportError:
+except ImportError:  # pragma: no cover
     pass
 try:
     from pymdownx.snippets import SnippetPreprocessor
-except ImportError:
+except ImportError:  # pragma: no cover
     pass
 try:
     from pymdownx.tabbed import TabbedProcessor
-except ImportError:
+except ImportError:  # pragma: no cover
     pass
 
 
@@ -46,10 +41,6 @@ def build_md4c_parser_events(mkdocs_build_config):
     def text_event(md2po_instance, block, text):
         if 'admonition' in md_extensions:
             if re.match(AdmonitionProcessor.RE, text):
-                md2po_instance.disabled_entries.append(text)
-                return False
-        if 'def_list' in md_extensions:
-            if re.match(DEF_LIST_RE, text):
                 md2po_instance.disabled_entries.append(text)
                 return False
         if 'pymdownx.details' in md_extensions:

@@ -32,7 +32,7 @@ jobs:
           python -m pip install .[test]
           pip list
       - name: Test with pytest
-        run: pytest -svv --cov=mkdocs_mdpo_plugin --cov-config setup.cfg
+        run: pytest -svv --cov=mkdocs_mdpo_plugin --cov-config=setup.cfg
       - name: Coveralls
         run: coveralls
         env:

@@ -145,11 +145,6 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         elif not self.config['lc_messages']:
             self.config['lc_messages'] = ''
 
-        def _type_error(plugin_setting, expected_type):
-            return mkdocs.config.base.ValidationError(
-                f"'plugins.mdpo.{plugin_setting}' must be a {expected_type}",
-            )
-
         _using_material_theme = config['theme'].name == 'material'
 
         # load language selection settings from material or mdpo configuration
@@ -193,19 +188,10 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 self.config['languages'] = [alt['lang'] for alt in alternate]
             else:
                 raise _languages_required()
-        elif not isinstance(languages, list):
-            raise _type_error('languages', 'list')
 
         default_language = self.config.get('default_language')
         if not default_language:
-            if _using_material_theme:
-                if 'language' not in config['theme']:
-                    raise _languages_required()
-                self.config['default_language'] = config['theme']['language']
-            else:
-                self.config['default_language'] = self.config['languages'][0]
-        elif not isinstance(default_language, str):
-            raise _type_error('default_language', 'str')
+            self.config['default_language'] = self.config['languages'][0]
 
         # configure MD4C extensions
         if 'tables' not in config['markdown_extensions']:
@@ -344,8 +330,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             for entry in po:
                 if entry.msgid == page.title:
                     _title_in_pofile = True
-                    if entry.obsolete:
-                        entry.obsolete = False
+                    entry.obsolete = False
                     translated_page_title = entry.msgstr
             if not _title_in_pofile:
                 po.insert(0, polib.POEntry(msgid=page.title, msgstr=''))
@@ -467,6 +452,8 @@ def __on_build_error(_self):
             _self._remove_temp_page(filepath)
         except FileNotFoundError:
             pass
+
+    MkdocsBuild._instance = None
 
 
 if MKDOCS_MINOR_VERSION_INFO >= (1, 2):

@@ -63,7 +63,11 @@ def _mkdocs_build(
             yaml.dump(mkdocs_config, f)
 
         # first build, load content to translations (Markdown -> PO files)
-        build(config.load_config(config_filename))
+        try:
+            build(config.load_config(config_filename))
+        except Exception:
+            os.remove(config_filename)
+            raise
 
         # translate PO files
         for po_filename, translation_messages in translations.items():
@@ -99,7 +103,11 @@ def _mkdocs_build(
             po.save(po_filename)
 
         # second build, dump translations in content (PO files -> Markdown)
-        build(config.load_config(config_filename))
+        try:
+            build(config.load_config(config_filename))
+        except Exception:
+            os.remove(config_filename)
+            raise
 
         # assert that files have been translated
         for filename, expected_lines in expected_output_files.items():
@@ -115,6 +123,8 @@ def _mkdocs_build(
 
             for expected_line in expected_lines:
                 assert expected_line in content
+
+        os.remove(config_filename)
 
 
 @pytest.fixture

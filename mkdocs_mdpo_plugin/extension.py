@@ -90,9 +90,6 @@ class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
                     'pymdownx.emoji' in current_build_extensions:
                 # don't add ':+1:' or ':heart:' as msgid
                 return False
-            elif node.get('class') == 'task-list-item' and \
-                    'pymdownx.tasklist' in current_build_extensions:
-                return False
             return True
 
         def iterate_childs(_root):

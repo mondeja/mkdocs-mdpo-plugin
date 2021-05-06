@@ -1,6 +1,13 @@
 """Mkdocs builds tests for mkdocs-mdpo-plugin configuration."""
 
+import os
+from tempfile import TemporaryDirectory
+
+import mkdocs
 import pytest
+import yaml
+
+from mkdocs_mdpo_plugin.plugin import MdpoPlugin
 
 
 tests = (
@@ -264,3 +271,174 @@ def test_config(
         additional_config,
         expected_output_files,
     )
+
+
+@pytest.mark.parametrize(
+    (
+        'plugin_config',
+        'additional_config',
+        'expected_error_type',
+        'expected_error_message',
+    ),
+    (
+        pytest.param(
+            {
+                'languages': 5,
+            },
+            None,
+            mkdocs.exceptions.ConfigurationError,
+            (
+                "Plugin value: 'languages'. Error: Expected type:"
+                " <class 'list'> but received: <class 'int'>"
+            ),
+            id='languages:<int>',
+        ),
+        pytest.param(
+            {
+                'languages': ['en', 'es'],
+                'default_language': 5,
+            },
+            None,
+            mkdocs.exceptions.ConfigurationError,
+            (
+                "Plugin value: 'default_language'. Error: Expected type:"
+                " <class 'str'> but received: <class 'int'>"
+            ),
+            id='default_language:<int>',
+        ),
+        pytest.param(
+            {
+                'default_language': 'es',
+            },
+            {
+                'theme': type(
+                    'Theme', (), {
+                        'name': 'readthedocs',
+                    },
+                ),
+            },
+            mkdocs.config.base.ValidationError,
+            (
+                'You must define the languages you will translate the content'
+                " into using the 'plugins.mdpo.languages' configuration"
+                ' setting.'
+            ),
+            id='languages:undefined-readthedocs',
+        ),
+        pytest.param(
+            {
+                'default_language': 'es',
+            },
+            {
+                'theme': type(
+                    'Theme', (), {
+                        'name': 'material',
+                    },
+                ),
+            },
+            mkdocs.config.base.ValidationError,
+            (
+                'You must define the languages you will translate the content'
+                " into using either 'plugins.mdpo.languages' or"
+                " 'extra.alternate' configuration settings."
+            ),
+            id='languages:undefined-material.extra:undefined',
+        ),
+        pytest.param(
+            {
+                'default_language': 'es',
+            },
+            {
+                'theme': type(
+                    'Theme', (), {
+                        'name': 'material',
+                    },
+                ),
+                'extra': {
+                    'alternate': [],
+                },
+            },
+            mkdocs.config.base.ValidationError,
+            (
+                'You must define the languages you will translate the content'
+                " into using either 'plugins.mdpo.languages' or"
+                " 'extra.alternate' configuration settings."
+            ),
+            id='languages:undefined-material.extra.alternate:undefined',
+        ),
+        pytest.param(
+            {
+                'default_language': 'es',
+            },
+            {
+                'theme': type(
+                    'Theme', (), {
+                        'name': 'material',
+                    },
+                ),
+                'extra': {
+                    'alternate': [],
+                },
+            },
+            mkdocs.config.base.ValidationError,
+            (
+                'You must define the languages you will translate the content'
+                " into using either 'plugins.mdpo.languages' or"
+                " 'extra.alternate' configuration settings."
+            ),
+            id='languages:undefined-material.extra.alternate:undefined',
+        ),
+    ),
+)
+def test_plugin_config_errors(
+    plugin_config,
+    additional_config,
+    expected_error_type,
+    expected_error_message,
+    caplog,
+):
+
+    with TemporaryDirectory() as site_dir, TemporaryDirectory() as docs_dir, \
+            TemporaryDirectory() as config_dir:
+        plugin = MdpoPlugin()
+        mdpo_config = {
+            'lc_messages': '',
+            'locale_dir': '',
+            'dest_filename_template': '{{language}}/{{page.file.dest_path}}',
+        }
+        mdpo_config.update(plugin_config)
+
+        plugin.config = mdpo_config
+
+        mkdocs_config = {
+            'site_name': 'My site',
+            'docs_dir': docs_dir,
+            'site_dir': site_dir,
+            'plugins': [
+                {'mdpo': mdpo_config},
+            ],
+        }
+        if additional_config:
+            mkdocs_config.update(additional_config)
+
+        config_filename = os.path.join(config_dir, 'mkdocs.yml')
+        with open(config_filename, 'w') as f:
+            yaml.dump(mkdocs_config, f)
+
+        if expected_error_type is mkdocs.exceptions.ConfigurationError:
+            with pytest.raises(expected_error_type) as exc:
+                mkdocs.config.load_config(config_filename)
+            assert 'Aborted with 1 Configuration Errors!' in str(exc)
+
+            assert len(caplog.records) == 1
+            error_log = caplog.records[0]
+            assert error_log.args[0] == 'plugins'
+
+            error = error_log.args[1]
+            assert isinstance(error, mkdocs.config.base.ValidationError)
+
+            error_message = error.args[0]
+            assert error_message == expected_error_message
+        else:
+            with pytest.raises(expected_error_type) as exc:
+                plugin.on_config(mkdocs_config)
