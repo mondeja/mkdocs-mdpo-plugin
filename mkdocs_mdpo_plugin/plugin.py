@@ -270,13 +270,24 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 self.config['default_language']
             )
 
-        for item in nav:
-            if item.title not in self._translated_nav:
-                continue
-            tr_title, tr_url = self._translated_nav[item.title][page._language]
-            if tr_title:
-                item.title = tr_title
-            item.file.url = tr_url
+        def _translate_nav_section(items):
+            for item in items:
+                if isinstance(item, mkdocs.structure.nav.Section):
+                    if item.children:
+                        _translate_nav_section(item.children)
+
+                if item.title not in self._translated_nav:
+                    continue
+
+                tr_title, tr_url = self._translated_nav[
+                    item.title
+                ][page._language]
+
+                if tr_title:
+                    item.title = tr_title
+                item.file.url = tr_url
+
+        _translate_nav_section(nav.items)
 
     # Useful for debugging.
     # def on_page_content(self, content, *args, **kwargs):

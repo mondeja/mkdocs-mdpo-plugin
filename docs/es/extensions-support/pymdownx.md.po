@@ -1,0 +1,140 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.3\n"
+
+msgid "PyMdown extensions"
+msgstr "Extensiones PyMdown"
+
+msgid ""
+"Code blocks are not translated by default, but you can include a [`<!-- "
+"mdpo-include-codeblock "
+"-->`](https://mdpo.readthedocs.io/en/master/commands.html#extracting-code-"
+"blocks) HTML comment before each code block that you want translate."
+msgstr ""
+"Los bloques de código no son traducidos por defecto, pero puedes incluir un "
+"comentario HTML [`<!-- mdpo-include-codeblock "
+"-->`](https://mdpo.readthedocs.io/en/master/commands.html#extracting-code-"
+"blocks) antes de cada bloque de código que quieres traducir."
+
+msgid ""
+"[PyMdown extensions](https://facelessuser.github.io/pymdown-"
+"extensions/extensions)"
+msgstr ""
+"[Extensiones PyMdown](https://facelessuser.github.io/pymdown-"
+"extensions/extensions)"
+
+msgid ""
+"There is no way of skip inline codespan blocks from being included in "
+"translations:"
+msgstr ""
+"No hay forma de ignorar bloques de código en línea de ser incluidos en las "
+"traducciones:"
+
+msgid ""
+"Sometimes the translation should edit links. See the next example linking to"
+" this documentation depending on the current active language:"
+msgstr ""
+"A veces la traducción debe editar enlaces. Observa el siguiente ejemplo "
+"enlazando a esta documentación dependiendo del idioma activo actual:"
+
+msgid "You must let one blank line between each progress bar."
+msgstr "Debes dejar una línea en blanco entre cada barra de progreso."
+
+msgid "Warning"
+msgstr "Precaución"
+
+msgid ""
+"Some content of certain extensions placed inside tabs will not be "
+"translated."
+msgstr ""
+"Cierto contenido de algunas extensiones colocadas dentro de etiquetas no "
+"será traducido."
+
+msgid "Output"
+msgstr "Salida"
+
+msgid "PO file content"
+msgstr "Contenido de archivo PO"
+
+msgid "Hello, I'm text with ^^an insert^^."
+msgstr "Hola, soy texto con ^^una inserción^^."
+
+msgid "Hello, I'm text with^a\\ superscript^"
+msgstr "Hola, soy texto con^un\\ superíndice^"
+
+msgid "Open styled details"
+msgstr "Detalles con estilo abierto"
+
+msgid "Nested details!"
+msgstr "¡Detalles anidados!"
+
+msgid "And more content."
+msgstr "Y más contenido."
+
+msgid "I :heart: mdpo"
+msgstr "Me encanta mdpo :heart:"
+
+msgid "Here is some code: `#!py3 import pymdownx; pymdownx.__version__`."
+msgstr ""
+"Aquí hay algo de código: `#!py3 import pymdownx; pymdownx.__version__`."
+
+msgid ""
+"The mock shebang will be treated like text here: ` #!js var test = 0;`."
+msgstr ""
+"El shebang simulado se tratará como texto aquí: ` #!js var test = 0;`."
+
+msgid ""
+"You can access to the mkdocs-mdpo-plugin documentation here: "
+"https://mondeja.github.io/mkdocs-mdpo-plugin"
+msgstr ""
+"Puedes acceder a la documentación de mkdocs-mdpo-plugin aquí: "
+"https://mondeja.github.io/mkdocs-mdpo-plugin/es"
+
+msgid "==mark me=="
+msgstr "==marcame=="
+
+msgid "[=0% \"0%\"]"
+msgstr "[=0% \"vacío\"]"
+
+msgid "[=45% \"45%\"]"
+msgstr "[=45% \"45 por ciento\"]"
+
+msgid "[=100% \"100%\"]"
+msgstr "[=100% \"lleno\"]"
+
+msgid "Here are some symbols: (tm) (c) (r)"
+msgstr "Aquí hay algunos símbolos: (tm) (c) (r)"
+
+msgid "Tab content"
+msgstr "Contenido de pestaña"
+
+msgid "~~Delete me~~"
+msgstr "~~Elimíname~~"
+
+msgid "Some inserted content from another file."
+msgstr "Algo de contenido insertado desde otro archivo."
+
+msgid "++ctrl+alt+delete++"
+msgstr "++ctrl+alt+f10++"
+
+msgid "CH~3~CH~2~OH"
+msgstr "H~2~O"
+
+msgid "You must let a blank line between the term and its definition:"
+msgstr "Debes dejar una línea en blanco entre el término y su definición:"
+
+msgid "Permanent link"
+msgstr "Link permanente"
+
+msgid "Markdown"
+msgstr "Markdown"

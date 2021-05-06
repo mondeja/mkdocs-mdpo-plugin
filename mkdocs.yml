@@ -24,7 +24,9 @@ theme:
 nav:
   - Home: index.md
   - Configuration: config.md
-  - Extensions support: extensions-support.md
+  - Extensions support:
+      - Official extensions: extensions-support/oficial.md
+      - PyMdown extensions: extensions-support/pymdownx.md
 
 markdown_extensions:
   - toc:

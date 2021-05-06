@@ -1,0 +1,129 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.3\n"
+
+msgid "Official extensions"
+msgstr "Extensiones oficiales"
+
+msgid "*[HTML]: Hyper Text Markup Language"
+msgstr "*[HTML]: Lenguaje de Marcado de Hipertexto"
+
+msgid "*[W3C]: World Wide Web Consortium"
+msgstr "*[W3C]: Consorcio Mundial de Internet"
+
+msgid "You must always let one newline between each reference:"
+msgstr "Siempre debes dejar una línea en blanco entre cada referencia:"
+
+msgid ""
+"[Officially supported extensions](https://python-"
+"markdown.github.io/extensions/#officially-supported-extensions)"
+msgstr ""
+"[Extensiones soportadas oficialmente](https://python-"
+"markdown.github.io/extensions/#officially-supported-extensions)"
+
+msgid ""
+"Code blocks are not translated by default, but you can include a [`<!-- "
+"mdpo-include-codeblock "
+"-->`](https://mdpo.readthedocs.io/en/master/commands.html#extracting-code-"
+"blocks) HTML comment before each code block that you want translate."
+msgstr ""
+"Los bloques de código no son traducidos por defecto, pero puedes incluir un "
+"comentario HTML [`<!-- mdpo-include-codeblock "
+"-->`](https://mdpo.readthedocs.io/en/master/commands.html#extracting-code-"
+"blocks) antes de cada bloque de código que quieres traducir."
+
+msgid "You must always let one newline between each footnote content:"
+msgstr ""
+"Siempre debes dejar una línea en blanco entre cada contenido de nota al pie:"
+
+msgid "[^1]: This is a footnote content."
+msgstr "[^1]: Este es un contenido de nota al pie."
+
+msgid "[^2]: This is another footnote content."
+msgstr "[^2]: Este es otro contenido de nota al pie."
+
+msgid ""
+"Only `title` attributes values are translated. Currently, this extension is "
+"a bit tricky because, if you want to see the `title` attribute value "
+"included in your PO file, you must add an attribute `mdpo`:"
+msgstr ""
+"Sólo los valores de los atributos `title` son traducidos. Actualmente, esta "
+"extensión es un poco complicada porque, si quieres ver el valor del atributo"
+" `title` incluído en un archivo PO, debes añadir un atributo `mdpo`:"
+
+msgid "You must let a blank line between the term and its definition:"
+msgstr "Debes dejar una línea en blanco entre el término y su definición:"
+
+msgid "Output"
+msgstr "Salida"
+
+msgid "The HTML specification is maintained by the W3C."
+msgstr ""
+
+msgid "PO file content"
+msgstr "Contenido de archivo PO"
+
+msgid ""
+"[link](https://mondeja.github.io/mkdocs-mdpo-plugin){: title=\"With a "
+"translated title!\" mdpo }"
+msgstr ""
+"[link](https://mondeja.github.io/mkdocs-mdpo-plugin/es){: title=\"¡Con un "
+"título traducido!\" mdpo }"
+
+msgid "Apple"
+msgstr "Manzana"
+
+msgid "Pomaceous fruit of plants of the genus Malus in the family Rosaceae."
+msgstr "Fruto de orujo de plantas del género Malus de la familia Rosaceae."
+
+msgid "Orange"
+msgstr "Naranja"
+
+msgid "The fruit of an evergreen tree of the genus Citrus."
+msgstr "El fruto de un árbol de hoja perenne del género Citrus."
+
+msgid "This is a footnote[^1]. This is another[^2]."
+msgstr "Esto es una nota al pie[^1]. Esto es otra[^2]."
+
+msgid "First header"
+msgstr "Primer encabezado"
+
+msgid "Second header"
+msgstr "Segundo encabezado"
+
+msgid "Content cell"
+msgstr "Contenido de celda"
+
+msgid "Admonition title"
+msgstr "Título de advertencia"
+
+msgid "The title will also be included in the PO file."
+msgstr "El título también será añadido en el archivo PO."
+
+msgid "Permanent link"
+msgstr "Link permanente"
+
+msgid "Jump back to footnote 1 in the text"
+msgstr "Volver a la nota al pie 1 en el texto"
+
+msgid "Jump back to footnote 2 in the text"
+msgstr "Volver a la nota al pie 2 en el texto"
+
+msgid "Note"
+msgstr "Nota"
+
+msgid "Even the implicit title, which in this case would be \"Note\"."
+msgstr "Incluso el título implícito, el cual en este caso sería \"Nota\"."
+
+msgid "Markdown"
+msgstr "Markdown"
