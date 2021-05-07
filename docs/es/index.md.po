@@ -92,6 +92,3 @@ msgstr ""
 "Traducciones para Mkdocs usando archivos PO, totalmente personalizable. "
 "Compatible con [mkdocs-material](https://squidfunk.github.io/mkdocs-"
 "material), basado en [mdpo](https://mdpo.readthedocs.io)."
-
-msgid "Permanent link"
-msgstr "Link permanente"

@@ -4,3 +4,36 @@ msgstr ""
 
 msgid "Extensions support"
 msgstr "Soporte de extensiones"
+
+msgid "Permanent link"
+msgstr "Link permanente"
+
+msgctxt "Page title"
+msgid "Configuration"
+msgstr "Configuración"
+
+msgid "Note"
+msgstr "Nota"
+
+msgid ""
+"Code blocks are not translated by default, but you can include a [`<!-- "
+"mdpo-include-codeblock "
+"-->`](https://mdpo.readthedocs.io/en/master/commands.html#extracting-code-"
+"blocks) HTML comment before each code block that you want translate."
+msgstr ""
+"Los bloques de código no son traducidos por defecto, pero puedes incluir un "
+"comentario HTML [`<!-- mdpo-include-codeblock "
+"-->`](https://mdpo.readthedocs.io/en/master/commands.html#extracting-code-"
+"blocks) antes de cada bloque de código que quieres traducir."
+
+msgid "Output"
+msgstr "Salida"
+
+msgid "PO file content"
+msgstr "Contenido de archivo PO"
+
+msgid "You must let a blank line between the term and its definition:"
+msgstr "Debes dejar una línea en blanco entre el término y su definición:"
+
+msgid "Markdown"
+msgstr "Markdown"

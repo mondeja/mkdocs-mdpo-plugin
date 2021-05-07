@@ -32,17 +32,6 @@ msgstr ""
 "[Extensiones soportadas oficialmente](https://python-"
 "markdown.github.io/extensions/#officially-supported-extensions)"
 
-msgid ""
-"Code blocks are not translated by default, but you can include a [`<!-- "
-"mdpo-include-codeblock "
-"-->`](https://mdpo.readthedocs.io/en/master/commands.html#extracting-code-"
-"blocks) HTML comment before each code block that you want translate."
-msgstr ""
-"Los bloques de código no son traducidos por defecto, pero puedes incluir un "
-"comentario HTML [`<!-- mdpo-include-codeblock "
-"-->`](https://mdpo.readthedocs.io/en/master/commands.html#extracting-code-"
-"blocks) antes de cada bloque de código que quieres traducir."
-
 msgid "You must always let one newline between each footnote content:"
 msgstr ""
 "Siempre debes dejar una línea en blanco entre cada contenido de nota al pie:"
@@ -62,17 +51,8 @@ msgstr ""
 "extensión es un poco complicada porque, si quieres ver el valor del atributo"
 " `title` incluído en un archivo PO, debes añadir un atributo `mdpo`:"
 
-msgid "You must let a blank line between the term and its definition:"
-msgstr "Debes dejar una línea en blanco entre el término y su definición:"
-
-msgid "Output"
-msgstr "Salida"
-
 msgid "The HTML specification is maintained by the W3C."
 msgstr ""
-
-msgid "PO file content"
-msgstr "Contenido de archivo PO"
 
 msgid ""
 "[link](https://mondeja.github.io/mkdocs-mdpo-plugin){: title=\"With a "
@@ -111,20 +91,11 @@ msgstr "Título de advertencia"
 msgid "The title will also be included in the PO file."
 msgstr "El título también será añadido en el archivo PO."
 
-msgid "Permanent link"
-msgstr "Link permanente"
-
 msgid "Jump back to footnote 1 in the text"
 msgstr "Volver a la nota al pie 1 en el texto"
 
 msgid "Jump back to footnote 2 in the text"
 msgstr "Volver a la nota al pie 2 en el texto"
 
-msgid "Note"
-msgstr "Nota"
-
 msgid "Even the implicit title, which in this case would be \"Note\"."
 msgstr "Incluso el título implícito, el cual en este caso sería \"Nota\"."
-
-msgid "Markdown"
-msgstr "Markdown"

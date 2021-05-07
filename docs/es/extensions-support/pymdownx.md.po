@@ -17,17 +17,6 @@ msgid "PyMdown extensions"
 msgstr "Extensiones PyMdown"
 
 msgid ""
-"Code blocks are not translated by default, but you can include a [`<!-- "
-"mdpo-include-codeblock "
-"-->`](https://mdpo.readthedocs.io/en/master/commands.html#extracting-code-"
-"blocks) HTML comment before each code block that you want translate."
-msgstr ""
-"Los bloques de código no son traducidos por defecto, pero puedes incluir un "
-"comentario HTML [`<!-- mdpo-include-codeblock "
-"-->`](https://mdpo.readthedocs.io/en/master/commands.html#extracting-code-"
-"blocks) antes de cada bloque de código que quieres traducir."
-
-msgid ""
 "[PyMdown extensions](https://facelessuser.github.io/pymdown-"
 "extensions/extensions)"
 msgstr ""
@@ -60,12 +49,6 @@ msgid ""
 msgstr ""
 "Cierto contenido de algunas extensiones colocadas dentro de etiquetas no "
 "será traducido."
-
-msgid "Output"
-msgstr "Salida"
-
-msgid "PO file content"
-msgstr "Contenido de archivo PO"
 
 msgid "Hello, I'm text with ^^an insert^^."
 msgstr "Hola, soy texto con ^^una inserción^^."
@@ -130,12 +113,3 @@ msgstr "++ctrl+alt+f10++"
 
 msgid "CH~3~CH~2~OH"
 msgstr "H~2~O"
-
-msgid "You must let a blank line between the term and its definition:"
-msgstr "Debes dejar una línea en blanco entre el término y su definición:"
-
-msgid "Permanent link"
-msgstr "Link permanente"
-
-msgid "Markdown"
-msgstr "Markdown"

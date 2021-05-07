@@ -12,10 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.4.3\n"
 
-msgctxt "Page title"
-msgid "Configuration"
-msgstr "Configuración"
-
 msgid ""
 "Always put `mdpo` plugin in `mkdocs.yml` file after other plugins which "
 "could edit the content of your files:"
@@ -107,12 +103,6 @@ msgstr ""
 "carpeta, puedes pasar una cadena, o incluso una ruta relativa para crear más"
 " de una carpeta entre el directorio de idioma y su contenido:"
 
-msgid "Permanent link"
-msgstr "Link permanente"
-
-msgid "Note"
-msgstr "Nota"
-
 msgid ""
 "If you are using [mkdocs-material](https://squidfunk.github.io/mkdocs-"
 "material) theme, can also be defined in the `extra.alternate` configuration "
@@ -170,4 +160,4 @@ msgstr ""
 " con las traducciones cargadas."
 
 msgid "Configuration"
-msgstr ""
+msgstr "Configuración"

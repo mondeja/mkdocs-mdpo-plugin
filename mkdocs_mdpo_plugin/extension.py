@@ -54,8 +54,6 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
         iterate_childs(root)
         current_page._po.save(current_page._po_filepath)
 
-        MkdocsBuild().mdpo_plugin.current_page = current_page
-
 
 class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
     def run(self, root):
