@@ -1,0 +1,6 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Extensions support"
+msgstr "Soporte de extensiones"

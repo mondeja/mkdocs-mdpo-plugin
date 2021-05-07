@@ -106,6 +106,11 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         # {original_title: {lang: {title: [translation, url]}}}
         self._translated_nav = {}
 
+        # {lang: compendium_pofile}
+        self._lang_compendiums = {}
+        self._lang_compendium_msgids = {}
+        self._lang_compendium_translated_msgstrs = {}
+
         # information needed by `mkdocs.mdpo` extension
         #
         #   instance that represents the run
@@ -197,9 +202,15 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         if 'tables' not in config['markdown_extensions']:
             if 'tables' in self._md4c_extensions:
                 self._md4c_extensions.remove('tables')
+        else:
+            if 'tables' not in self._md4c_extensions:
+                self._md4c_extensions.append('tables')
         if 'wikilinks' not in config['markdown_extensions']:
             if 'wikilinks' in self._md4c_extensions:
                 self._md4c_extensions.remove('wikilinks')
+        else:
+            if 'wikilinks' not in self._md4c_extensions:
+                self._md4c_extensions.append('wikilinks')
 
         # spaces after '#' are optional in Python-Markdown for headers,
         # but the extension 'pymdownx.saneheaders' makes them mandatory
@@ -225,7 +236,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 self._md4c_extensions.remove('strikethrough')
 
         # configure internal 'mkdocs.mdpo' extension
-        if 'mkdocs.mdpo' in config['markdown_extensions']:
+        if 'mkdocs.mdpo' in config['markdown_extensions']:  # pragma: no cover
             config['markdown_extensions'].remove('mkdocs.mdpo')
         config['markdown_extensions'].append('mkdocs.mdpo')
 
@@ -273,6 +284,42 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         def _translate_nav_section(items):
             for item in items:
                 if isinstance(item, mkdocs.structure.nav.Section):
+                    # translate section title
+                    if (
+                        item.title and item.title not in
+                        self._lang_compendium_msgids[page._language]
+                    ):
+                        compendium_filepath = self._lang_compendiums[
+                            page._language
+                        ]
+                        compendium_pofile = polib.pofile(compendium_filepath)
+
+                        _section_title_in_compendium = False
+                        for entry in compendium_pofile:
+                            if entry.msgid == item.title:
+                                _section_title_in_compendium = True
+                                entry.obsolete = False
+                                if entry.msgstr:
+                                    item.title = entry.msgstr
+                                    self._lang_compendium_translated_msgstrs[
+                                        page._language
+                                    ].append(
+                                        entry.msgstr,
+                                    )
+                                break
+                        if not _section_title_in_compendium:
+                            compendium_pofile.insert(
+                                0,
+                                polib.POEntry(
+                                    msgid=item.title,
+                                    msgstr='',
+                                ),
+                            )
+                            compendium_pofile.save(compendium_filepath)
+                        self._lang_compendium_msgids[page._language].append(
+                            item.title,
+                        )
+
                     if item.children:
                         _translate_nav_section(item.children)
 
@@ -315,12 +362,32 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             markdown,
             events=build_md4c_parser_events(config),
             mark_not_found_as_obsolete=False,
+            location=False,
         )
         original_po = md2po.extract()
 
         for language in self._non_default_languages():
+            lang_docs_dir = self._language_dir(config['docs_dir'], language)
+
+            # create compendium if doesn't exists, load to memory
+            if language not in self._lang_compendiums:
+                compendium_filepath = os.path.join(
+                    lang_docs_dir,
+                    '_compendium.po',
+                )
+                if not os.path.isfile(compendium_filepath):
+                    po = polib.POFile()
+                    po.save(compendium_filepath)
+                else:
+                    po = polib.pofile(compendium_filepath)
+                self._lang_compendiums[language] = compendium_filepath
+
+                # intialize compendium messages cache
+                self._lang_compendium_translated_msgstrs[language] = []
+                self._lang_compendium_msgids[language] = []
+
             po_filepath = os.path.join(
-                self._language_dir(config['docs_dir'], language),
+                lang_docs_dir,
                 f'{page.file.src_path}.po',
             )
             os.makedirs(
@@ -338,13 +405,28 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
             # translate title
             translated_page_title, _title_in_pofile = (None, False)
+            msgctxt = 'Page title'
             for entry in po:
-                if entry.msgid == page.title:
+                if entry.msgctxt == msgctxt:
                     _title_in_pofile = True
-                    entry.obsolete = False
-                    translated_page_title = entry.msgstr
+                    if entry.msgid == page.title:
+                        # matching title found
+                        entry.obsolete = False
+                        translated_page_title = entry.msgstr
+                    else:
+                        # title has changed
+                        if entry.msgstr:
+                            entry.fuzzy = True
+                    break
             if not _title_in_pofile:
-                po.insert(0, polib.POEntry(msgid=page.title, msgstr=''))
+                po.insert(
+                    0,
+                    polib.POEntry(
+                        msgid=page.title,
+                        msgstr='',
+                        msgctxt=msgctxt,
+                    ),
+                )
 
             po.save(po_filepath)
 

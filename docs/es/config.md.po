@@ -12,6 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.4.3\n"
 
+msgctxt "Page title"
 msgid "Configuration"
 msgstr "Configuración"
 
@@ -167,3 +168,6 @@ msgstr ""
 "`po`: Un objeto "
 "[`polib.POFile`](https://polib.readthedocs.io/en/latest/api.html#polib.POFile)"
 " con las traducciones cargadas."
+
+msgid "Configuration"
+msgstr ""

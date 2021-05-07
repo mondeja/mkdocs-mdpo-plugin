@@ -12,6 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.4.3\n"
 
+msgctxt "Page title"
 msgid "PyMdown extensions"
 msgstr "Extensiones PyMdown"
 
