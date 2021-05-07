@@ -51,9 +51,6 @@ msgstr ""
 "extensión es un poco complicada porque, si quieres ver el valor del atributo"
 " `title` incluído en un archivo PO, debes añadir un atributo `mdpo`:"
 
-msgid "The HTML specification is maintained by the W3C."
-msgstr ""
-
 msgid ""
 "[link](https://mondeja.github.io/mkdocs-mdpo-plugin){: title=\"With a "
 "translated title!\" mdpo }"
@@ -99,3 +96,6 @@ msgstr "Volver a la nota al pie 2 en el texto"
 
 msgid "Even the implicit title, which in this case would be \"Note\"."
 msgstr "Incluso el título implícito, el cual en este caso sería \"Nota\"."
+
+msgid "The HTML specification is maintained by the W3C."
+msgstr "La especificación HTML es mantenida por el W3C."

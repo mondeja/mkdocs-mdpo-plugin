@@ -24,9 +24,16 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
                         if entry.msgid == msgid:
                             if entry.msgstr:
                                 node.text = entry.msgstr
+                                (
+                                    current_page._translated_entries_msgstrs
+                                ).append(
+                                    entry.msgstr,
+                                )
                             entry.obsolete = False
+                            current_page._translated_entries_msgids.append(
+                                entry.msgid,
+                            )
                 elif msgid not in current_page._disabled_msgids:
-
                     current_page._po_msgids.append(msgid)
                     entry = polib.POEntry(msgid=msgid, msgstr='')
                     current_page._po.append(entry)
@@ -74,7 +81,15 @@ class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
                         if entry.msgid == msgid:
                             if entry.msgstr:
                                 node.attrib['title'] = entry.msgstr
+                                (
+                                    current_page._translated_entries_msgstrs
+                                ).append(
+                                    entry.msgstr,
+                                )
                             entry.obsolete = False
+                            current_page._translated_entries_msgids.append(
+                                entry.msgid,
+                            )
                 elif msgid not in current_page._disabled_msgids:
                     current_page._po_msgids.append(msgid)
                     entry = polib.POEntry(msgid=msgid, msgstr='')

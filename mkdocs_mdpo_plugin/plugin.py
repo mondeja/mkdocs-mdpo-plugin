@@ -505,17 +505,15 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             new_page._po = po
             new_page._po_filepath = po_filepath
 
-            new_page._po_msgids = []
+            new_page._po_msgids = [entry.msgid for entry in po]
             new_page._translated_entries_msgstrs = []
-            new_page._disabled_msgids = []
+            new_page._translated_entries_msgids = []
+            new_page._disabled_msgids = [
+                entry.msgid for entry in po2md.disabled_entries
+            ]
             for entry in po2md.translated_entries:
-                new_page._translated_entries_msgstrs.append(
-                    polib.unescape(entry.msgstr),
-                )
-            for entry in po:
-                new_page._po_msgids.append(polib.unescape(entry.msgid))
-            for entry in po2md.disabled_entries:
-                new_page._disabled_msgids.append(polib.unescape(entry.msgid))
+                new_page._translated_entries_msgstrs.append(entry.msgstr)
+                new_page._translated_entries_msgids.append(entry.msgid)
 
             files.append(new_file)
 
@@ -596,7 +594,20 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                     if _entry_found:
                         po.remove(_entry_found)
                         po.save(page._po_filepath)
+
+            for entry in compendium_pofile:
+                if entry.msgid not in repeated_msgids:
+                    entry.obsolete = True
             compendium_pofile.save(compendium_filepath)
+
+            # mark not found msgstrs as obsolete
+            for page in pages:
+                po = polib.pofile(page._po_filepath)
+                for entry in po:
+                    if entry.msgid not in page._translated_entries_msgids:
+                        if entry.msgctxt != 'Page title':
+                            entry.obsolete = True
+                po.save(page._po_filepath)
 
         # reset mkdocs build instance
         MkdocsBuild._instance = None
