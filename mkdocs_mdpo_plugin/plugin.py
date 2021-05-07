@@ -96,6 +96,13 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 default='{{language}}/{{page.file.dest_path}}',
             ),
         ),
+        (
+            'ignore_extensions',
+            mkdocs.config.config_options.Type(
+                list,
+                default=['.po', '.pot', '.mo'],
+            ),
+        ),
     )
 
     def __init__(self, *args, **kwargs):
@@ -117,6 +124,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         # {lang: [msgstrs]}
         self._lang_compendium_translated_msgstrs = {}
 
+        # translated page objects by language
         self._translated_pages_by_lang = {}
 
         # information needed by `mkdocs.mdpo` extension (`extension` module)
@@ -273,11 +281,11 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
               files which will simplify the code defined in this event.
         """
         new_files = mkdocs.structure.files.Files([])
+
+        ignore_extensions = self.config['ignore_extensions']
         for file in files:
             # exclude all files with PO related extensions
-            if os.path.splitext(file.src_path)[-1] not in (
-                '.po', '.pot', '.mo',
-            ):
+            if os.path.splitext(file.src_path)[-1] not in ignore_extensions:
                 new_files.append(file)
         return new_files
 

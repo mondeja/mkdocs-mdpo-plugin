@@ -161,3 +161,10 @@ msgstr ""
 
 msgid "Configuration"
 msgstr "Configuración"
+
+msgid ""
+"File extensions that are ignored from being added to site directory, "
+"defaults to `['.po', '.pot', '.mo']`."
+msgstr ""
+"Extensiones de archivos que son ignorados de ser añadidos al directorio del "
+"sitio, por defecto `['.po', '.pot', '.mo']`."

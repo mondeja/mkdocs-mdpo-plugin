@@ -186,3 +186,9 @@ The context for the template includes:
 - All the configuration settings of the plugin such as `languages`,
   `default_language`, `lc_messages`, `locale_dir`, `dest_filename_template`
   itself...
+
+<!-- mdpo-disable-next-line -->
+### **`ignore_extensions`** (*list*)
+
+File extensions that are ignored from being added to site directory, defaults to
+`['.po', '.pot', '.mo']`.
