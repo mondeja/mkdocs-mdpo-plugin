@@ -17,13 +17,6 @@ msgid "PyMdown extensions"
 msgstr "Extensiones PyMdown"
 
 msgid ""
-"[PyMdown extensions](https://facelessuser.github.io/pymdown-"
-"extensions/extensions)"
-msgstr ""
-"[Extensiones PyMdown](https://facelessuser.github.io/pymdown-"
-"extensions/extensions)"
-
-msgid ""
 "There is no way of skip inline codespan blocks from being included in "
 "translations:"
 msgstr ""
@@ -113,3 +106,13 @@ msgstr "++ctrl+alt+f10++"
 
 msgid "CH~3~CH~2~OH"
 msgstr "H~2~O"
+
+msgid "[PyMdown extensions][pymdown-extensions]"
+msgstr "[Extensiones PyMdown][pymdown-extensions]"
+
+msgid ""
+"[pymdown-extensions]: https://facelessuser.github.io/pymdown-"
+"extensions/extensions"
+msgstr ""
+"[pymdown-extensions]: https://facelessuser.github.io/pymdown-"
+"extensions/extensions"

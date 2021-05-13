@@ -60,6 +60,10 @@ def build_md4c_parser_events(mkdocs_build_config):
         if 'def_list' in md_extensions:
             if msgid.startswith(': '):
                 md2po_instance._disable_next_line = True
+        if 'footnotes' in md_extensions:
+            # footnotes are parsed like link references
+            if msgid.startswith('[^'):
+                md2po_instance._disable_next_line = True
 
     # load only those events required for the extensions
     events_functions = {

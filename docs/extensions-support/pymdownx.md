@@ -1,4 +1,4 @@
-## [PyMdown extensions](https://facelessuser.github.io/pymdown-extensions/extensions)
+## [PyMdown extensions][pymdown-extensions]
 
 <!-- mdpo-disable-next-line -->
 ### [**`pymdownx.caret`**](https://facelessuser.github.io/pymdown-extensions/extensions/caret)
@@ -409,3 +409,5 @@ You must let one blank line between each progress bar.
     msgid "CH~3~CH~2~OH"
     msgstr "H~2~O"
     ```
+
+[pymdown-extensions]: https://facelessuser.github.io/pymdown-extensions/extensions

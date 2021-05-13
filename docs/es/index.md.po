@@ -53,11 +53,6 @@ msgstr "Uso"
 msgid "Known limitations"
 msgstr "Limitaciones conocidas"
 
-msgid "Link references are not supported, all link addresses must be inlined."
-msgstr ""
-"Las referencias de enlaces no están soportadas, todas las direcciones de "
-"enlaces deben estar en línea."
-
 msgid "With [mkdocs-material](https://squidfunk.github.io/mkdocs-material)"
 msgstr "Con [mkdocs-material](https://squidfunk.github.io/mkdocs-material)"
 

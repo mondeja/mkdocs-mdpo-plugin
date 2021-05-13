@@ -25,13 +25,6 @@ msgstr "*[W3C]: Consorcio Mundial de Internet"
 msgid "You must always let one newline between each reference:"
 msgstr "Siempre debes dejar una línea en blanco entre cada referencia:"
 
-msgid ""
-"[Officially supported extensions](https://python-"
-"markdown.github.io/extensions/#officially-supported-extensions)"
-msgstr ""
-"[Extensiones soportadas oficialmente](https://python-"
-"markdown.github.io/extensions/#officially-supported-extensions)"
-
 msgid "You must always let one newline between each footnote content:"
 msgstr ""
 "Siempre debes dejar una línea en blanco entre cada contenido de nota al pie:"
@@ -99,3 +92,14 @@ msgstr "Incluso el título implícito, el cual en este caso sería \"Nota\"."
 
 msgid "The HTML specification is maintained by the W3C."
 msgstr "La especificación HTML es mantenida por el W3C."
+
+msgid "[Officially supported extensions][officially-supported-extensions]"
+msgstr ""
+"[Extensiones soportadas oficialmente][officially-supported-extensions]"
+
+msgid ""
+"[officially-supported-extensions]: https://python-"
+"markdown.github.io/extensions/#officially-supported-extensions"
+msgstr ""
+"[officially-supported-extensions]: https://python-"
+"markdown.github.io/extensions/#officially-supported-extensions"

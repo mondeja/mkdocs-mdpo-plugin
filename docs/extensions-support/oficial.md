@@ -1,4 +1,4 @@
-## [Officially supported extensions](https://python-markdown.github.io/extensions/#officially-supported-extensions)
+## [Officially supported extensions][officially-supported-extensions]
 
 <!-- mdpo-disable-next-line -->
 ### [**`abbr`**](https://python-markdown.github.io/extensions/abbreviations)
@@ -245,3 +245,5 @@ You must always let one newline between each footnote content:
     msgid "Even the implicit title, which in this case would be \"Note\"."
     msgstr "Incluso el título implícito, el cual en este caso sería \"Nota\"."
     ```
+
+[officially-supported-extensions]: https://python-markdown.github.io/extensions/#officially-supported-extensions

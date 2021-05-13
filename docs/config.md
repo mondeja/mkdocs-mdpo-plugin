@@ -16,13 +16,13 @@ edit the content of your files:
 ### **`languages`** (*list*)\*
 
 Languages to translate your files into. Commonly defined as
-[ISO 639 codes](https://en.wikipedia.org/wiki/ISO_639).
+[ISO 639 codes][iso-369].
 
 !!! note
 
-    If you are using [mkdocs-material](https://squidfunk.github.io/mkdocs-material)
-    theme, can also be defined in the `extra.alternate` configuration setting (see
-    [Site language selector](https://squidfunk.github.io/mkdocs-material/setup/changing-the-language/#site-language-selector)).
+    If you are using [mkdocs-material][mkdocs-material] theme, can also be
+    defined in the `extra.alternate` configuration setting (see
+    [Site language selector][mkdocs-material-site-language-selector]).
 
 <!-- mdpo-disable-next-line -->
 ### **`default_language`** (*str*)
@@ -32,9 +32,9 @@ Original language of your files. If not defined, the first language found in
 
 !!! note
 
-    If you are using [mkdocs-material](https://squidfunk.github.io/mkdocs-material)
-    theme, can also be defined in the `theme.language` configuration setting (see
-    [Site language](https://squidfunk.github.io/mkdocs-material/setup/changing-the-language/#site-language)).
+    If you are using [mkdocs-material][mkdocs-material] theme, can also be
+    defined in the `theme.language` configuration setting (see
+    [Site language][mkdocs-material-site-language]).
 
 ## Layout
 
@@ -169,9 +169,8 @@ and their content:
 ### **`dest_filename_template`** (*str*)
 
 Template for destination file name inside `site/` directory. This is a valid
-[Jinja2 template](https://jinja2docs.readthedocs.io/en/stable/templates.html)
-string that will be used to define where should be placed the generated
-translated file inside the `site/` directory.
+[Jinja2 template][jinja2-template] string that will be used to define where
+should be placed the generated translated file inside the `site/` directory.
 
 The default value is `{{language}}/{{page.file.dest_path}}`, being `page` the
 original documentation page and `language` the language of the translation.
@@ -181,8 +180,7 @@ The context for the template includes:
 - `language`: Translation language for the page.
 - `page`: The original Markdown page object inside your documentation directory.
 - `po_filepath`: The path of the PO file wich contains the translations.
-- `po`: A [`polib.POFile`](https://polib.readthedocs.io/en/latest/api.html#polib.POFile)
-   object with the translations loaded.
+- `po`: A [`polib.POFile`][polib.POFile] object with the translations loaded.
 - All the configuration settings of the plugin such as `languages`,
   `default_language`, `lc_messages`, `locale_dir`, `dest_filename_template`
   itself...
@@ -192,3 +190,11 @@ The context for the template includes:
 
 File extensions that are ignored from being added to site directory, defaults to
 `['.po', '.pot', '.mo']`.
+
+
+[iso-369]: https://en.wikipedia.org/wiki/ISO_639
+[mkdocs-material]: https://squidfunk.github.io/mkdocs-material
+[mkdocs-material-site-language]: https://squidfunk.github.io/mkdocs-material/setup/changing-the-language/#site-language
+[mkdocs-material-site-language-selector]: https://squidfunk.github.io/mkdocs-material/setup/changing-the-language/#site-language-selector
+[jinja2-template]: https://jinja2docs.readthedocs.io/en/stable/templates.html
+[polib.POFile]: https://polib.readthedocs.io/en/latest/api.html#polib.POFile
