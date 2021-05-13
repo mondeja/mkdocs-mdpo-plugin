@@ -530,8 +530,8 @@ edit the content of your files:</p>
 <a href="https://en.wikipedia.org/wiki/ISO_639">ISO 639 codes</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you are using <a href="https://squidfunk.github.io/mkdocs-material">mkdocs-material</a>
-theme, can also be defined in the <code>extra.alternate</code> configuration setting (see
+<p>If you are using <a href="https://squidfunk.github.io/mkdocs-material">mkdocs-material</a> theme, can also be
+defined in the <code>extra.alternate</code> configuration setting (see
 <a href="https://squidfunk.github.io/mkdocs-material/setup/changing-the-language/#site-language-selector">Site language selector</a>).</p>
 </div>
 <h3 id="default_language-str"><strong><code>default_language</code></strong> (<em>str</em>)<a class="headerlink" href="#default_language-str" title="Permanent link">&para;</a></h3>
@@ -539,8 +539,8 @@ theme, can also be defined in the <code>extra.alternate</code> configuration set
 <a href="#languages-list"><code>languages</code></a> will be used.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you are using <a href="https://squidfunk.github.io/mkdocs-material">mkdocs-material</a>
-theme, can also be defined in the <code>theme.language</code> configuration setting (see
+<p>If you are using <a href="https://squidfunk.github.io/mkdocs-material">mkdocs-material</a> theme, can also be
+defined in the <code>theme.language</code> configuration setting (see
 <a href="https://squidfunk.github.io/mkdocs-material/setup/changing-the-language/#site-language">Site language</a>).</p>
 </div>
 <h2 id="layout">Layout<a class="headerlink" href="#layout" title="Permanent link">&para;</a></h2>
@@ -654,9 +654,8 @@ and their content:</p>
 </div>
 <h3 id="dest_filename_template-str"><strong><code>dest_filename_template</code></strong> (<em>str</em>)<a class="headerlink" href="#dest_filename_template-str" title="Permanent link">&para;</a></h3>
 <p>Template for destination file name inside <code>site/</code> directory. This is a valid
-<a href="https://jinja2docs.readthedocs.io/en/stable/templates.html">Jinja2 template</a>
-string that will be used to define where should be placed the generated
-translated file inside the <code>site/</code> directory.</p>
+<a href="https://jinja2docs.readthedocs.io/en/stable/templates.html">Jinja2 template</a> string that will be used to define where
+should be placed the generated translated file inside the <code>site/</code> directory.</p>
 <p>The default value is <code>{{language}}/{{page.file.dest_path}}</code>, being <code>page</code> the
 original documentation page and <code>language</code> the language of the translation.</p>
 <p>The context for the template includes:</p>
@@ -664,8 +663,7 @@ original documentation page and <code>language</code> the language of the transl
 <li><code>language</code>: Translation language for the page.</li>
 <li><code>page</code>: The original Markdown page object inside your documentation directory.</li>
 <li><code>po_filepath</code>: The path of the PO file wich contains the translations.</li>
-<li><code>po</code>: A <a href="https://polib.readthedocs.io/en/latest/api.html#polib.POFile"><code>polib.POFile</code></a>
-   object with the translations loaded.</li>
+<li><code>po</code>: A <a href="https://polib.readthedocs.io/en/latest/api.html#polib.POFile"><code>polib.POFile</code></a> object with the translations loaded.</li>
 <li>All the configuration settings of the plugin such as <code>languages</code>,
   <code>default_language</code>, <code>lc_messages</code>, <code>locale_dir</code>, <code>dest_filename_template</code>
   itself...</li>

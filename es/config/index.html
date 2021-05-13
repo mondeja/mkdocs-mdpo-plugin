@@ -20,7 +20,7 @@
     
     
       
-        <title>Configuración - mkdocs-mdpo-plugin</title>
+        <title>Configuration - mkdocs-mdpo-plugin</title>
       
     
     
@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#configuracion" class="md-skip">
+        <a href="#configuration" class="md-skip">
           Skip to content
         </a>
       
@@ -97,7 +97,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Configuración
+              Configuration
             
           </span>
         </div>
@@ -415,7 +415,7 @@
                   </a>
                 
                 
-                <h1 id="configuracion">Configuración<a class="headerlink" href="#configuracion" title="Link permanente">&para;</a></h1>
+                <h1 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Link permanente">&para;</a></h1>
 <p>Siempre pon el plugin <code>mdpo</code> en el archivo <code>mkdocs.yml</code> después de otros plugins
 que pudieran editar el contenido de tus archivos:</p>
 <div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">plugins</span>
@@ -429,21 +429,21 @@ que pudieran editar el contenido de tus archivos:</p>
 639</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Nota</p>
-<p>Si estás usando el tema <a href="https://squidfunk.github.io/mkdocs-material">mkdocs-material</a>, también puede ser definido en el ajuste de configuración <code>extra.alternate</code> (ver <a href="https://squidfunk.github.io/mkdocs-material/setup/changing-the-language/#site-language-selector">Selector de lenguaje</a>).</p>
+<p>Si estás usando el tema <a href="https://squidfunk.github.io/mkdocs-material">mkdocs-material</a>, también puede ser definido en el ajuste de configuración <code>extra.alternate</code> (ver <a href="https://squidfunk.github.io/mkdocs-material/setup/changing-the-language/#site-language-selector">Selector de idioma</a>).</p>
 </div>
 <h3 id="default_language-str"><strong><code>default_language</code></strong> (<em>str</em>)<a class="headerlink" href="#default_language-str" title="Link permanente">&para;</a></h3>
 <p>Idioma original de tus archivos. Si no se define, el primer idioma encontrado en
 <a href="#languages-list"><code>languages</code></a> será usado.</p>
 <div class="admonition note">
 <p class="admonition-title">Nota</p>
-<p>Si estás usando el tema <a href="https://squidfunk.github.io/mkdocs-material">mkdocs-material</a>, también puede ser definido en el ajuste de configuración <code>theme.language</code> (ver <a href="https://squidfunk.github.io/mkdocs-material/setup/changing-the-language/#site-language">Idioma de sitio</a>).</p>
+<p>Si estás usando el tema <a href="https://squidfunk.github.io/mkdocs-material">mkdocs-material</a>, también puede ser definido en el ajuste de configuración <code>theme.language</code> (ver <a href="https://squidfunk.github.io/mkdocs-material/setup/changing-the-language/#site-language">Selector de idioma</a>).</p>
 </div>
 <h2 id="estructura">Estructura<a class="headerlink" href="#estructura" title="Link permanente">&para;</a></h2>
 <h3 id="locale_dir-str"><strong><code>locale_dir</code></strong> (<em>str</em>)<a class="headerlink" href="#locale_dir-str" title="Link permanente">&para;</a></h3>
 <p>Directorio dentro de tu documentación donde los archivos PO de traducción serán
 colocados. Si no se define, se usará la raíz de <code>docs</code> (configuración
 <code>docs_dir</code>), por lo que la estructura por defecto sería algo como:</p>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Configuración</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Configuration</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">mdpo</span><span class="p">:</span>
       <span class="nt">languages</span><span class="p">:</span>
@@ -465,7 +465,7 @@ colocados. Si no se define, se usará la raíz de <code>docs</code> (configuraci
 <p>Definiéndolo a <code>locale</code>, la estructura cambiará un poco, pero esto no significa
 que esta nueva carpeta <code>locale/</code> será incluida en el directorio <code>site/</code> (ver
 <a href="#dest_filename_template-str"><code>dest_filename_template</code></a>).</p>
-<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Configuración</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Configuration</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">mdpo</span><span class="p">:</span>
       <span class="nt">languages</span><span class="p">:</span>
@@ -493,7 +493,7 @@ este ajuste como <code>true</code>, pero si quieres otro nombre de carpeta, pued
 una cadena, o incluso una ruta relativa para crear más de una carpeta entre el
 directorio de idioma y su contenido:</p>
 <div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">true</label><div class="tabbed-content">
-<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Configuración</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Configuration</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">mdpo</span><span class="p">:</span>
       <span class="nt">languages</span><span class="p">:</span>
@@ -519,7 +519,7 @@ directorio de idioma y su contenido:</p>
 </div>
 </div>
 <input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Valor personalizado</label><div class="tabbed-content">
-<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Configuración</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Configuration</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">mdpo</span><span class="p">:</span>
       <span class="nt">languages</span><span class="p">:</span>
@@ -549,8 +549,7 @@ directorio de idioma y su contenido:</p>
 </div>
 <h3 id="dest_filename_template-str"><strong><code>dest_filename_template</code></strong> (<em>str</em>)<a class="headerlink" href="#dest_filename_template-str" title="Link permanente">&para;</a></h3>
 <p>Plantilla para el nombre del archivo destino dentro del directorio <code>site/</code>. Esto
-es una cadena para una plantilla <a href="https://jinja2docs.readthedocs.io/en/stable/templates.html">Jinja2
-template</a> válida que
+es una cadena para una plantilla <a href="https://jinja2docs.readthedocs.io/en/stable/templates.html">Jinja2 template</a> válida que
 será usada para definir donde debe ser colocado el archivo traducido generado
 dentro del directorio <code>site/</code>.</p>
 <p>El valor por defecto es <code>{{language}}/{{page.file.dest_path}}</code>, siendo <code>page</code> la
@@ -561,9 +560,7 @@ página de documentación original y <code>language</code> el idioma de la tradu
 <li><code>page</code>: El objeto de la página Markdown original dentro de tu directorio de
 documentación.</li>
 <li><code>po_filepath</code>: La ruta del archivo PO el cual contiene las traducciones.</li>
-<li><code>po</code>: Un objeto
-<a href="https://polib.readthedocs.io/en/latest/api.html#polib.POFile"><code>polib.POFile</code></a>
-con las traducciones cargadas.</li>
+<li><code>po</code>: Un objeto <a href="https://polib.readthedocs.io/en/latest/api.html#polib.POFile"><code>polib.POFile</code></a> con las traducciones cargadas.</li>
 <li>Todos los ajustes de configuración del plugin, como <code>languages</code>,
 <code>default_language</code>, <code>lc_messages</code>, <code>locale_dir</code>, <code>dest_filename_template</code>...</li>
 </ul>
