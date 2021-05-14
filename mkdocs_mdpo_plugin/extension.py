@@ -131,7 +131,7 @@ class MkdocsMdpoExtension(Extension):
         md.treeprocessors.register(
             MkdocsMdpoTreeProcessor(self),
             'mkdocs-mdpo-tree',
-            88887,
+            88888,
         )
 
         # run latest
