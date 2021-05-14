@@ -6,7 +6,7 @@
 var removePyMdownxSnippetsMarkdownDemoEscapeChar = function() {
   var pyMdownSnippetsSection = document.getElementById('pymdownxsnippets');
   if (pyMdownSnippetsSection) {
-    var markdownCodeBlock = pyMdownSnippetsSection.nextElementSibling.nextElementSibling.children[5].children[0].children[0];
+    var markdownCodeBlock = pyMdownSnippetsSection.nextElementSibling.children[5].children[0].children[0].children[1];
     markdownCodeBlock.innerHTML = markdownCodeBlock.innerHTML.replace('\\', '');
   }
 }
