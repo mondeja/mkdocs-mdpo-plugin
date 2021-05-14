@@ -9,7 +9,7 @@
 
 Translations for Mkdocs using PO files, fully customizable.
 Compatible with [mkdocs-material](https://squidfunk.github.io/mkdocs-material),
-based on [mdpo](https://mdpo.readthedocs.io).
+based on [mdpo][mdpo-docs].
 
 <!--description-end-->
 
@@ -103,3 +103,5 @@ site
 Simple and easy. The extraction of messages process and the produced
 layout are fully customizable, you can even translate code blocks!
 [Check the full documentation here](https://mondeja.github.io/mkdocs-mdpo-plugin).
+
+[mdpo-docs]: https://mdpo.readthedocs.io

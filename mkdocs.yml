@@ -27,8 +27,8 @@ nav:
   - Extensions support:
       - Official extensions: extensions-support/oficial.md
       - PyMdown extensions: extensions-support/pymdownx.md
-  - Plugins support:
-      - Navigation and page building: plugins-support/navigation-and-page-building.md
+  - Tested plugins:
+      - Navigation and page building: tested-plugins/navigation-and-page-building.md
 
 markdown_extensions:
   - toc:

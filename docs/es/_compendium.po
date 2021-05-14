@@ -31,14 +31,8 @@ msgstr "Debes dejar una línea en blanco entre el término y su definición:"
 msgid "Markdown"
 msgstr "Markdown"
 
-msgid "Plugins support"
-msgstr "Soporte de plugins"
-
 msgid "Extensions support"
 msgstr "Soporte de extensiones"
 
-#~ msgid "[^1]: This \"is a footnote content.\""
-#~ msgstr ""
-
-#~ msgid "[^2]: This \"is another footnote content.\""
-#~ msgstr ""
+msgid "Tested plugins"
+msgstr "Plugins testeados"

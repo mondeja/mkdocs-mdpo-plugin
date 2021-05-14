@@ -1,5 +1,6 @@
 """mkdocs-mdpo-plugin module"""
 
+import math
 import os
 import re
 import sys
@@ -473,6 +474,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             po2md = Po2Md(
                 [po_filepath, compendium_filepath],
                 events=po2md_events,
+                wrapwidth=math.inf,
             )
             content = po2md.translate(markdown)
 

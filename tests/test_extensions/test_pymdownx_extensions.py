@@ -206,7 +206,7 @@ TESTS = (
         {
             'index.md': (
                 'You can access to the mkdocs-mdpo-plugin documentation here:'
-                ' https://mondeja.github.io/mkdocs-mdpo-plugin'
+                ' https://mondeja.github.io/mkdocs-mdpo-plugin\n'
             ),
         },
         {
@@ -228,8 +228,8 @@ TESTS = (
         {
             'es/index.html': [
                 '<p>Puedes acceder a la documentación de mkdocs-mdpo-plugin'
-                ' aquí:\n'
-                '<a href="https://mondeja.github.io/mkdocs-mdpo-plugin/es">'
+                ' aquí:'
+                ' <a href="https://mondeja.github.io/mkdocs-mdpo-plugin/es">'
                 'https://mondeja.github.io/mkdocs-mdpo-plugin/es</a>'
                 '</p>',
             ],
