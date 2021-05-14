@@ -167,10 +167,10 @@ You must always let one newline between each footnote content:
     msgstr "Esto es una nota al pie[^1]. Esto es otra[^2]."
 
     msgid "[^1]: This is a footnote content."
-    msgstr "[^1]: Este es un contenido de nota al pie."
+    msgstr "[^1]: Esto es el contenido de una nota al pie."
 
     msgid "[^2]: This is another footnote content."
-    msgstr "[^2]: Este es otro contenido de nota al pie."
+    msgstr "[^2]: Esto es el contenido de otra nota al pie"
     ```
 
 <!-- mdpo-disable-next-line -->

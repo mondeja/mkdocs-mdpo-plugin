@@ -1,3 +1,5 @@
+"""Mkdocs builds tests for mkdocs-mdpo-plugin PyMdown extensions support."""
+
 import pytest
 
 

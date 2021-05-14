@@ -26,6 +26,7 @@ def _mkdocs_build(
     additional_config,
     expected_output_files,
     callback_after_first_build=None,
+    insert_plugin_config_at_position=-1,
 ):
     with TemporaryDirectory() as site_dir, TemporaryDirectory() as docs_dir, \
             TemporaryDirectory() as config_dir:
@@ -42,7 +43,7 @@ def _mkdocs_build(
 
         mdpo_config = {}
         if plugin_config:
-            for (mdpo_plugin_config_field, _) in MdpoPlugin.config_scheme:
+            for mdpo_plugin_config_field, _ in MdpoPlugin.config_scheme:
                 if mdpo_plugin_config_field in plugin_config:
                     mdpo_config[mdpo_plugin_config_field] = plugin_config.get(
                         mdpo_plugin_config_field,
@@ -52,12 +53,17 @@ def _mkdocs_build(
             'site_name': 'My site',
             'docs_dir': docs_dir,
             'site_dir': site_dir,
-            'plugins': [
-                {'mdpo': mdpo_config},
-            ],
+            'plugins': [],
         }
         if additional_config:
             mkdocs_config.update(additional_config)
+        if insert_plugin_config_at_position == -1:
+            mkdocs_config['plugins'].append({'mdpo': mdpo_config})
+        else:
+            mkdocs_config['plugins'].insert(
+                insert_plugin_config_at_position,
+                {'mdpo': mdpo_config},
+            )
 
         config_filename = os.path.join(config_dir, 'mkdocs.yml')
         with open(config_filename, 'w') as f:
@@ -71,7 +77,7 @@ def _mkdocs_build(
             raise
 
         if callback_after_first_build:
-            locals().update(callback_after_first_build())
+            callback_after_first_build(locals())
 
         # translate PO files
         for po_filename, translation_messages in translations.items():
@@ -79,7 +85,17 @@ def _mkdocs_build(
             assert os.path.isfile(po_filename)
             po = polib.pofile(po_filename)
 
-            for msgid, msgstr in translation_messages.items():
+            for msgid_or_msgctxt, msgstr in translation_messages.items():
+                if isinstance(msgstr, dict):
+                    # case when msgctxt is passed as key
+                    # and msgid-msgstr as value in a dict
+                    msgid = list(msgstr.keys())[0]
+                    msgstr = msgstr[msgid]
+                    msgctxt = msgid_or_msgctxt
+                else:
+                    msgid = msgid_or_msgctxt
+                    msgctxt = None
+
                 _msgid_in_pofile = False
                 for entry in po:
                     if entry.msgid == msgid:
@@ -93,6 +109,8 @@ def _mkdocs_build(
                 for entry in po:
                     if entry.msgid == msgid:
                         entry.msgstr = msgstr
+                        if msgctxt:
+                            entry.msgctxt = msgctxt
                         break
 
             for entry in po:

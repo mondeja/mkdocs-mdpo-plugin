@@ -16,7 +16,10 @@ from mkdocs_mdpo_plugin.io import (
     remove_empty_directories_from_dirtree,
     remove_file_and_parent_dir_if_empty,
 )
-from mkdocs_mdpo_plugin.md4c_events import build_md4c_parser_events
+from mkdocs_mdpo_plugin.mdpo_events import (
+    build_md2po_events,
+    build_po2md_events,
+)
 
 
 COMMAND_SEARCH_RE_AT_LINE_START = re.compile(
@@ -218,6 +221,10 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             else:
                 self.config['default_language'] = self.config['languages'][0]
 
+        # ----------------------------------------------------------
+
+        # extensions configuration
+
         # configure MD4C extensions
         if 'tables' not in config['markdown_extensions']:
             if 'tables' in self._md4c_extensions:
@@ -259,6 +266,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         if 'mkdocs.mdpo' in config['markdown_extensions']:  # pragma: no cover
             config['markdown_extensions'].remove('mkdocs.mdpo')
         config['markdown_extensions'].append('mkdocs.mdpo')
+
+        # ----------------------------------------------------------
 
         # store reference in plugin to configuration
         self.mkdocs_build_config = config
@@ -355,10 +364,6 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         # (pages titles and section titles)
         _translate_nav_section(nav.items)
 
-    # Useful for debugging.
-    # def on_page_content(self, content, *args, **kwargs):
-        # print(content)
-
     def on_page_markdown(self, markdown, page, config, files):
         """Event executed when markdown content of a page is collected.
 
@@ -384,11 +389,13 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         # extract translations from original Markdown file
         md2po = Md2Po(
             markdown,
-            events=build_md4c_parser_events(config),
+            events=build_md2po_events(config),
             mark_not_found_as_obsolete=False,
             location=False,
         )
         original_po = md2po.extract()
+
+        po2md_events = build_po2md_events(config)
 
         for language in self._non_default_languages():
             lang_docs_dir = self._language_dir(config['docs_dir'], language)
@@ -429,30 +436,29 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 if entry not in po:
                     po.append(entry)
 
+            _translated_entries_msgids = []
+            _translated_entries_msgstrs = []
+
             # translate title
             translated_page_title, _title_in_pofile = (None, False)
-            msgctxt = 'Page title'
             for entry in po:
-                if entry.msgctxt == msgctxt:
+                if entry.msgid == page.title:
+                    # matching title found
+                    entry.obsolete = False
+                    translated_page_title = entry.msgstr
                     _title_in_pofile = True
-                    if entry.msgid == page.title:
-                        # matching title found
-                        entry.obsolete = False
-                        translated_page_title = entry.msgstr
-                    else:
-                        # title has changed
-                        if entry.msgstr:
-                            entry.fuzzy = True
-                    break
+                    _translated_entries_msgids.append(page.title)
+                    if entry.msgstr:
+                        _translated_entries_msgstrs.append(page.title)
             if not _title_in_pofile:
                 po.insert(
                     0,
                     polib.POEntry(
                         msgid=page.title,
                         msgstr='',
-                        msgctxt=msgctxt,
                     ),
                 )
+                _translated_entries_msgids.append(page.title)
 
             # add temporally compendium entries to language pofiles
             for entry in compendium_pofile:
@@ -464,7 +470,10 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             # translate part of the markdown producing a translated file
             # content (the rest of the translations are handled by extensions,
             # see `extension` module)
-            po2md = Po2Md([po_filepath, compendium_filepath])
+            po2md = Po2Md(
+                [po_filepath, compendium_filepath],
+                events=po2md_events,
+            )
             content = po2md.translate(markdown)
 
             # create site language dir if not exists
@@ -514,8 +523,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             new_page._po_filepath = po_filepath
 
             new_page._po_msgids = [entry.msgid for entry in po]
-            new_page._translated_entries_msgstrs = []
-            new_page._translated_entries_msgids = []
+            new_page._translated_entries_msgstrs = _translated_entries_msgstrs
+            new_page._translated_entries_msgids = _translated_entries_msgids
             new_page._disabled_msgids = [
                 entry.msgid for entry in po2md.disabled_entries
             ]
@@ -613,8 +622,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 po = polib.pofile(page._po_filepath)
                 for entry in po:
                     if entry.msgid not in page._translated_entries_msgids:
-                        if entry.msgctxt != 'Page title':
-                            entry.obsolete = True
+                        entry.obsolete = True
                 po.save(page._po_filepath)
 
         # reset mkdocs build instance

@@ -21,7 +21,7 @@ except ImportError:  # pragma: no cover
     pass
 
 
-EVENT_EXTENSIONS = {
+MD2PO_EVENT_EXTENSIONS = {
     'text': [
         'admonition',
         'def_list',
@@ -32,10 +32,19 @@ EVENT_EXTENSIONS = {
     'msgid': [
         'def_list',
     ],
+    'link_reference': [
+        'footnotes',
+    ],
+}
+
+PO2MD_EVENT_EXTENSIONS = {
+    'link_reference': [
+        'footnotes',
+    ],
 }
 
 
-def build_md4c_parser_events(mkdocs_build_config):
+def build_md2po_events(mkdocs_build_config):
     md_extensions = mkdocs_build_config['markdown_extensions']
 
     def text_event(md2po_instance, block, text):
@@ -57,22 +66,47 @@ def build_md4c_parser_events(mkdocs_build_config):
                 return False
 
     def msgid_event(md2po_instance, msgid):
-        if 'def_list' in md_extensions:
-            if msgid.startswith(': '):
-                md2po_instance._disable_next_line = True
-        if 'footnotes' in md_extensions:
-            # footnotes are parsed like link references
-            if msgid.startswith('[^'):
-                md2po_instance._disable_next_line = True
+        if msgid.startswith(': '):
+            md2po_instance._disable_next_line = True
+
+    def link_reference_event(md2po_instance, target, *args):
+        if target.startswith('^'):
+            return False
 
     # load only those events required for the extensions
     events_functions = {
         'text': text_event,
         'msgid': msgid_event,
+        'link_reference': link_reference_event,
     }
 
     events = {}
-    for event_name, extensions in EVENT_EXTENSIONS.items():
+    for event_name, extensions in MD2PO_EVENT_EXTENSIONS.items():
+        for extension in extensions:
+            if extension in md_extensions:
+                events[event_name] = events_functions[event_name]
+                break
+
+    return events
+
+
+def build_po2md_events(mkdocs_build_config):
+    md_extensions = mkdocs_build_config['markdown_extensions']
+
+    def link_reference_event(po2md_instance, target, href, title):
+        # footnotes
+        if target.startswith('^'):
+            # footnotes are treated as text blocks, so we don't need to
+            # translate them here
+            return False
+
+    # load only those events required for the extensions
+    events_functions = {
+        'link_reference': link_reference_event,
+    }
+
+    events = {}
+    for event_name, extensions in PO2MD_EVENT_EXTENSIONS.items():
         for extension in extensions:
             if extension in md_extensions:
                 events[event_name] = events_functions[event_name]

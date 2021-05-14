@@ -1,4 +1,4 @@
-"""Mkdocs builds tests for mkdocs-mdpo-plugin configuration."""
+"""Mkdocs builds tests for mkdocs-mdpo-plugin official extensions support."""
 
 import pytest
 
@@ -196,9 +196,9 @@ TESTS = (
                 'This is a footnote[^1]. This is another[^2].':
                 'Esto es una nota al pie[^1]. Esto es otra[^2].',
                 '[^1]: This is a footnote content.':
-                '[^1]: Este es un contenido de nota al pie.',
+                '[^1]: Esto es el contenido de una nota al pie',
                 '[^2]: This is another footnote content.':
-                '[^2]: Este es otro contenido de nota al pie.',
+                '[^2]: Este es el contenido de otra nota al pie.',
                 'Jump back to footnote 1 in the text':
                 'Volver a la nota al pie 1 en el texto',
                 'Jump back to footnote 2 in the text':
@@ -221,14 +221,14 @@ TESTS = (
                 '<a class="footnote-ref" href="#fn:2">2</a></sup>.</p>',
                 '<ol>\n'
                 '<li id="fn:1">\n'
-                '<p>Este es un contenido de nota al pie.&#160;'
+                '<p>Esto es el contenido de una nota al pie&#160;'
                 '<a class="footnote-backref"'
                 ' href="#fnref:1"'
                 ' title="Volver a la nota al pie 1 en el texto">&#8617;</a>'
                 '</p>\n'
                 '</li>\n'
                 '<li id="fn:2">\n'
-                '<p>Este es otro contenido de nota al pie.&#160;'
+                '<p>Este es el contenido de otra nota al pie.&#160;'
                 '<a class="footnote-backref" href="#fnref:2"'
                 ' title="Volver a la nota al pie 2 en el texto">&#8617;</a>'
                 '</p>\n'

@@ -2,15 +2,8 @@
 msgid ""
 msgstr ""
 
-msgid "Extensions support"
-msgstr "Soporte de extensiones"
-
 msgid "Permanent link"
 msgstr "Link permanente"
-
-msgctxt "Page title"
-msgid "Configuration"
-msgstr "Configuración"
 
 msgid "Note"
 msgstr "Nota"
@@ -37,3 +30,15 @@ msgstr "Debes dejar una línea en blanco entre el término y su definición:"
 
 msgid "Markdown"
 msgstr "Markdown"
+
+msgid "Plugins support"
+msgstr "Soporte de plugins"
+
+msgid "Extensions support"
+msgstr "Soporte de extensiones"
+
+#~ msgid "[^1]: This \"is a footnote content.\""
+#~ msgstr ""
+
+#~ msgid "[^2]: This \"is another footnote content.\""
+#~ msgstr ""

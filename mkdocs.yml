@@ -27,6 +27,8 @@ nav:
   - Extensions support:
       - Official extensions: extensions-support/oficial.md
       - PyMdown extensions: extensions-support/pymdownx.md
+  - Plugins support:
+      - Navigation and page building: plugins-support/navigation-and-page-building.md
 
 markdown_extensions:
   - toc:
@@ -67,6 +69,8 @@ plugins:
       glob:
         - file-to-be-inserted.txt
   - mdpo
+  - minify:
+      minify_html: true
 
 extra:
   alternate:

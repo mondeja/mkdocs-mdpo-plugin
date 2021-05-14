@@ -1,0 +1,18 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Navigation and page building"
+msgstr "Navegación y construcción de páginas"
+
+msgid ""
+"[navigation-and-page-building]: "
+"https://github.com/mkdocs/mkdocs/wiki/MkDocs-Plugins#navigation--page-"
+"building"
+msgstr ""
+"[navigation-and-page-building]: "
+"https://github.com/mkdocs/mkdocs/wiki/MkDocs-Plugins#navigation--page-"
+"building"
+
+msgid "[Navigation and page building][navigation-and-page-building]"
+msgstr "[Navegación y construcción de páginas][navigation-and-page-building]"
