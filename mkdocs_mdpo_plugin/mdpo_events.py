@@ -52,7 +52,7 @@ def build_md2po_events(mkdocs_build_config):
     def build_event(event_type):
         parameters = {
             'text': 'md2po_instance, block, text',
-            'msgid': 'md2po_instance, msgid',
+            'msgid': 'md2po_instance, msgid, *args',
             'link_reference': 'md2po_instance, target, *args',
         }[event_type]
 
