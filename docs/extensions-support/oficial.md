@@ -112,7 +112,7 @@ You must let a blank line between the term and its definition:
 ### [**`fenced_code`**](https://python-markdown.github.io/extensions/fenced_code)
 
 Code blocks are not translated by default, but you can include a
-[`<!-- mdpo-include-codeblock -->`](https://mdpo.readthedocs.io/en/master/commands.html#extracting-code-blocks)
+[`<!-- mdpo-include-codeblock -->`](https://mdpo.readthedocs.io/en/master/commands.html#code-blocks-extraction)
 HTML comment before each code block that you want translate.
 
 === "Output"
