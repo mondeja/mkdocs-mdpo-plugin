@@ -38,25 +38,41 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
                     entry = polib.POEntry(msgid=msgid, msgstr='')
                     current_page._po.append(entry)
 
-        def node_should_be_processed(node):
-            if 'pymdownx.tasklist' in current_build_extensions and \
-                    node.tag == 'li' and \
-                    node.text[:3] in ['[ ]', '[x]', '[X]']:
-                return False
-            return True
+        if 'pymdownx.tasklist' in current_build_extensions:
+            node_should_be_processed = lambda node: False if (
+                node.tag == 'li' and node.text[:3] in ['[ ]', '[x]', '[X]']
+            ) else True
 
-        def iterate_childs(_root):
-            for child in _root:
-                # print(child.tag, child.text, child.attrib)
+            def iterate_childs(_root):
+                for child in _root:
+                    # print(child.tag, child.text, child.attrib)
 
-                if child.text and not child.text[1:].startswith('wzxhzdk:'):
-                    if node_should_be_processed(child):
+                    if (
+                        child.text
+                        and not child.text[1:].startswith('wzxhzdk:')
+                    ):
+                        if node_should_be_processed(child):
+                            process_translation(
+                                child,
+                                ' '.join(child.text.split('\n')),
+                            )
+
+                    iterate_childs(child)
+        else:
+            def iterate_childs(_root):
+                for child in _root:
+                    # print(child.tag, child.text, child.attrib)
+
+                    if (
+                        child.text
+                        and not child.text[1:].startswith('wzxhzdk:')
+                    ):
                         process_translation(
                             child,
                             ' '.join(child.text.split('\n')),
                         )
 
-                iterate_childs(child)
+                    iterate_childs(child)
 
         iterate_childs(root)
         current_page._po.save(current_page._po_filepath)
@@ -95,30 +111,45 @@ class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
                     entry = polib.POEntry(msgid=msgid, msgstr='')
                     current_page._po.append(entry)
 
-        def node_should_be_processed(node):
-            if node.tag == 'abbr' and 'abbr' in current_build_extensions:
-                # abbreviations titles would be duplicated in msgids
-                return False
-            elif node.get('class') in ['emojione', 'twemoji', 'gemoji'] and \
-                    'pymdownx.emoji' in current_build_extensions:
-                # don't add ':+1:' or ':heart:' as msgid
-                return False
-            return True
+        if 'abbr' in current_build_extensions:
+            if 'pymdownx.emoji' in current_build_extensions:
+                node_should_be_processed = lambda node: False if (
+                    node.tag == 'abbr'
+                    or node.get('class') in ['emojione', 'twemoji', 'gemoji']
+                ) else True
+            else:
+                node_should_be_processed = lambda node: node.tag != 'attr'
+        elif 'pymdownx.emoji' in current_build_extensions:
+            node_should_be_processed = lambda node: (
+                node.get('class') not in ['emojione', 'twemoji', 'gemoji']
+            )
 
-        def iterate_childs(_root):
-            for child in _root:
-                # print("TITLE", child.tag, child.text, child.attrib)
+        if (
+            'abbr' in current_build_extensions
+            or 'pymdownx.emoji' in current_build_extensions
+        ):
+            def iterate_childs(_root):
+                for child in _root:
+                    # print("TITLE", child.tag, child.text, child.attrib)
 
-                # TODO: add support for other attribute names translation
-                #       globally (any element including that attribute)
-                #       and for `attr_list` officialed supported extension
-                if 'title' in child.attrib and 'mdpo' not in child.attrib:
-                    if node_should_be_processed(child):
+                    if 'title' in child.attrib and 'mdpo' not in child.attrib:
+                        if node_should_be_processed(child):
+                            process_translation(
+                                child,
+                                child.attrib['title'],
+                            )
+                    iterate_childs(child)
+        else:
+            def iterate_childs(_root):
+                for child in _root:
+                    # print("TITLE", child.tag, child.text, child.attrib)
+
+                    if 'title' in child.attrib and 'mdpo' not in child.attrib:
                         process_translation(
                             child,
                             child.attrib['title'],
                         )
-                iterate_childs(child)
+                    iterate_childs(child)
 
         iterate_childs(root)
 
