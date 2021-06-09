@@ -13,6 +13,7 @@ from mdpo.command import COMMAND_SEARCH_RE
 from mdpo.md2po import Md2Po
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po2md import Po2Md
+from mkdocs.config.config_options import Type
 
 from mkdocs_mdpo_plugin.io import (
     remove_empty_directories_from_dirtree,
@@ -78,40 +79,16 @@ class MkdocsBuild:
 
 class MdpoPlugin(mkdocs.plugins.BasePlugin):
     config_scheme = (
-        (
-            'locale_dir',
-            mkdocs.config.config_options.Type(str, default=''),
-        ),
-        (
-            'default_language',
-            mkdocs.config.config_options.Type(str, required=False),
-        ),
-        (
-            'languages',
-            mkdocs.config.config_options.Type(list, required=False),
-        ),
-        (
-            'lc_messages',
-            mkdocs.config.config_options.Type((str, bool), default=''),
-        ),
+        ('locale_dir', Type(str, default='')),
+        ('default_language', Type(str, required=False)),
+        ('languages', Type(list, required=False)),
+        ('lc_messages', Type((str, bool), default='')),
         (
             'dest_filename_template',
-            mkdocs.config.config_options.Type(
-                str,
-                default='{{language}}/{{page.file.dest_path}}',
-            ),
+            Type(str, default='{{language}}/{{page.file.dest_path}}'),
         ),
-        (
-            'ignore_extensions',
-            mkdocs.config.config_options.Type(
-                list,
-                default=['.po', '.pot', '.mo'],
-            ),
-        ),
-        (
-            'relative_material_language_selector',
-            mkdocs.config.config_options.Type(bool, default=False),
-        ),
+        ('ignore_extensions', Type(list, default=['.po', '.pot', '.mo'])),
+        ('relative_material_language_selector', Type(bool, default=False)),
     )
 
     def __init__(self, *args, **kwargs):

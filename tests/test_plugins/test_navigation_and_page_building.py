@@ -1,6 +1,6 @@
 """Mkdocs builds tests for mkdocs-mdpo-plugin Navigation and page building
 plugins support:
-https://github.com/mkdocs/mkdocs/wiki/MkDocs-Plugins#navigation--page-building)
+https://github.com/mkdocs/mkdocs/wiki/MkDocs-Plugins#navigation--page-building
 """
 
 import os

@@ -28,6 +28,7 @@ nav:
       - PyMdown extensions: extensions-support/pymdownx.md
   - Tested plugins:
       - Navigation and page building: tested-plugins/navigation-and-page-building.md
+      - API documentation building: tested-plugins/api-documentation-building.md
 
 markdown_extensions:
   - toc:
@@ -67,6 +68,13 @@ plugins:
   - exclude:
       glob:
         - file-to-be-inserted.txt
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          rendering:
+            show_source: false
+            show_root_toc_entry: false
   - mdpo:
       relative_material_language_selector: true
   - minify:

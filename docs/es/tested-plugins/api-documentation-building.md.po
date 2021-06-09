@@ -1,0 +1,16 @@
+#
+msgid ""
+msgstr ""
+
+msgid "API documentation building"
+msgstr "Construcción de documentación de API"
+
+msgid "[API documentation building][api-documentation-building]"
+msgstr "[Construcción de documentación de API][api-documentation-building]"
+
+msgid ""
+"[api-documentation-building]: https://github.com/mkdocs/mkdocs/wiki/MkDocs-"
+"Plugins#api-documentation-building"
+msgstr ""
+"[api-documentation-building]: https://github.com/mkdocs/mkdocs/wiki/MkDocs-"
+"Plugins#api-documentation-building"

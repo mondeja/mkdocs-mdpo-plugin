@@ -21,23 +21,14 @@ try:
     from pymdownx.tabbed import TabbedProcessor  # noqa: F401
 except ImportError:  # pragma: no cover
     pass
+try:
+    from mkdocstrings.extension import (  # noqa: F401
+        AutoDocProcessor as MkDocsStringsProcessor,
+        MkdocstringsExtension,
+    )
+except ImportError:  # pragma: no cover
+    pass
 
-
-MD2PO_EVENT_EXTENSIONS = {
-    'text': [
-        'admonition',
-        'def_list',
-        'pymdownx.details',
-        'pymdownx.snippets',
-        'pymdownx.tabbed',
-    ],
-    'msgid': [
-        'def_list',
-    ],
-    'link_reference': [
-        'footnotes',
-    ],
-}
 
 PO2MD_EVENT_EXTENSIONS = {
     'link_reference': [
@@ -47,7 +38,17 @@ PO2MD_EVENT_EXTENSIONS = {
 
 
 def build_md2po_events(mkdocs_build_config):
-    md_extensions = mkdocs_build_config['markdown_extensions']
+    _md_extensions = mkdocs_build_config['markdown_extensions']
+
+    md_extensions = []
+    for ext in _md_extensions:
+        if not isinstance(ext, str):
+            if isinstance(ext, MkdocstringsExtension):
+                md_extensions.append('mkdocstrings')
+            else:
+                md_extensions.append(ext)
+        else:
+            md_extensions.append(ext)
 
     def build_event(event_type):
         parameters = {
@@ -64,6 +65,7 @@ def build_md2po_events(mkdocs_build_config):
                     're.match(SnippetPreprocessor.RE_ALL_SNIPPETS, text)'
                 ),
                 'pymdownx.tabbed': 're.match(TabbedProcessor.START, text)',
+                'mkdocstrings': 're.match(MkDocsStringsProcessor.regex, text)',
             }
 
             body = ''
