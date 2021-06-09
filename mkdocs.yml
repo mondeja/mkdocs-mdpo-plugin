@@ -9,7 +9,6 @@ edit_uri: tree/master/docs
 copyright: Copyright &copy; 2021 Álvaro Mondéjar Rubio
 
 extra_javascript:
-  - assets/javascripts/language-selector.js
   - assets/javascripts/extensions-support.js
 extra_css:
   - assets/stylesheets/pymdownx.progressbar.css
@@ -68,7 +67,8 @@ plugins:
   - exclude:
       glob:
         - file-to-be-inserted.txt
-  - mdpo
+  - mdpo:
+      relative_material_language_selector: true
   - minify:
       minify_html: true
 

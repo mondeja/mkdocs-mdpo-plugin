@@ -1,2 +1,3 @@
 include README.md
 include LICENSE
+recursive-include mkdocs_mdpo_plugin *
