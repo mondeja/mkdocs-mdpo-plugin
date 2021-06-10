@@ -11,6 +11,7 @@ copyright: Copyright &copy; 2021 Álvaro Mondéjar Rubio
 extra_javascript:
   - assets/javascripts/extensions-support.js
 extra_css:
+  - assets/stylesheets/theme-overrides.css
   - assets/stylesheets/pymdownx.progressbar.css
 
 docs_dir: docs
