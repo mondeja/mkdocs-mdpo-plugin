@@ -6,7 +6,6 @@ site_author: Álvaro Mondéjar Rubio
 repo_url: https://github.com/mondeja/mkdocs-mdpo-plugin
 repo_name: mkdocs-mdpo-plugin
 edit_uri: tree/master/docs
-copyright: Copyright &copy; 2021 Álvaro Mondéjar Rubio
 
 extra_javascript:
   - assets/javascripts/extensions-support.js

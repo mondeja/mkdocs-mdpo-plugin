@@ -1,6 +1,15 @@
 :root {
-  --md-primary-fg-color: #bc0013;
-  --md-accent-fg-color: #bc0013;
+  --md-primary-fg-color: #f70019;
+  --md-accent-fg-color: #f70019;
+}
+
+article a {
+  color: #bc0013 !important;
+}
+
+article a.headerlink,
+article .md-icon {
+  color: #f70019 !important;
 }
 
 .md-source:hover {
