@@ -13,7 +13,7 @@ based on [mdpo][mdpo-docs].
 
 <!--description-end-->
 
-Check the [full documentation here](https://mondeja.github.io/mkdocs-mdpo-plugin).
+Check the [full documentation here](https://mkdocs-mdpo.ga).
 
 <!--intro-start-->
 
@@ -102,6 +102,6 @@ site
 
 Simple and easy. The extraction of messages process and the produced
 layout are fully customizable, you can even translate code blocks!
-[Check the full documentation here](https://mondeja.github.io/mkdocs-mdpo-plugin).
+[Check the full documentation here](https://mkdocs-mdpo.ga).
 
 [mdpo-docs]: https://mdpo.readthedocs.io
