@@ -2,7 +2,7 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/mkdocs-mdpo-plugin?label=version)](https://pypi.org/project/mkdocs-mdpo-plugin)
 [![Test](https://img.shields.io/github/workflow/status/mondeja/mkdocs-mdpo-plugin/CI?label=tests&logo=github)](https://github.com/mondeja/mkdocs-mdpo-plugin/actions?query=workflow%3ACI)
-[![Documentation](https://img.shields.io/github/workflow/status/mondeja/mkdocs-mdpo-plugin/Github%20Pages?label=docs&logo=github)](https://mondeja.github.io/mkdocs-mdpo-plugin)
+[![Documentation](https://img.shields.io/github/workflow/status/mondeja/mkdocs-mdpo-plugin/Github%20Pages?label=docs&logo=github)](https://mkdocs-mdpo.ga)
 [![Coverage status](https://img.shields.io/coveralls/github/mondeja/mkdocs-mdpo-plugin?logo=coveralls)](https://coveralls.io/github/mondeja/mkdocs-mdpo-plugin)
 
 <!--description-start-->
@@ -13,7 +13,7 @@ based on [mdpo][mdpo-docs].
 
 <!--description-end-->
 
-Check the [full documentation here](https://mkdocs-mdpo.ga).
+## Documentation: [en](https://mkdocs-mdpo.ga) - [es](https://mkdocs-mdpo.ga/es/)
 
 <!--intro-start-->
 
