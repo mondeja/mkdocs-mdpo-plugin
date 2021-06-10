@@ -38,6 +38,10 @@ PO2MD_EVENT_EXTENSIONS = {
 
 
 def build_md2po_events(mkdocs_build_config):
+    """Build dinamically those mdpo events executed at certain moments of the
+    Markdown file parsing extrating messages from pages, different depending on
+    active extensions and plugins.
+    """
     _md_extensions = mkdocs_build_config['markdown_extensions']
 
     md_extensions = []

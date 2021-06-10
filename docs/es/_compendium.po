@@ -36,3 +36,8 @@ msgstr "Soporte de extensiones"
 
 msgid "Tested plugins"
 msgstr "Plugins testeados"
+
+msgid ""
+"[mkdocs-exclude-github-link]: https://github.com/apenwarr/mkdocs-exclude"
+msgstr ""
+"[mkdocs-exclude-github-link]: https://github.com/apenwarr/mkdocs-exclude"
