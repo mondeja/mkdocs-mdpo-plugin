@@ -287,9 +287,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
         # using mkdocs-material, configure the language for each page
         if context['config']['theme'].name == 'material':
-            context['config']['theme']['language'] = self.config[
-                'default_language'
-            ]
+            context['config']['theme']['language'] = page._language
 
         def _translate_section_title(section):
             if section.title and section.title not in \
