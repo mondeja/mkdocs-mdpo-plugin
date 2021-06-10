@@ -25,7 +25,7 @@ nav:
   - Home: index.md
   - Configuration: config.md
   - Extensions support:
-      - Official extensions: extensions-support/oficial.md
+      - Official extensions: extensions-support/official.md
       - PyMdown extensions: extensions-support/pymdownx.md
   - Tested plugins:
       - Navigation and page building: tested-plugins/navigation-and-page-building.md
