@@ -23,13 +23,13 @@ You must always let one newline between each reference:
 
     ```po
     msgid "The HTML specification is maintained by the W3C."
-    msgstr ""
+    msgstr "La especificación HTML es mantenida por el W3C."
 
     msgid "*[HTML]: Hyper Text Markup Language"
-    msgstr ""
+    msgstr "*[HTML]: Lenguaje de Marcado de Hipertexto"
 
     msgid "*[W3C]: World Wide Web Consortium"
-    msgstr ""
+    msgstr "*[W3C]: Consorcio Mundial de Internet"
     ```
 
 *[HTML]: Hyper Text Markup Language
