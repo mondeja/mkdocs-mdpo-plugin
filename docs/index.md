@@ -6,6 +6,7 @@
    start="<!--description-start-->"
    end="<!--description-end-->"
    rewrite_relative_urls=false
+   comments=false
 %}
 
 {%
@@ -13,6 +14,7 @@
    start="<!--intro-start-->"
    end="<!--intro-end-->"
    rewrite_relative_urls=false
+   comments=false
 %}
 
 ## How does it works

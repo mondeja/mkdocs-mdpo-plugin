@@ -18,9 +18,10 @@ docs_dir: docs
 
 theme:
   name: material
+  custom_dir: docs/overrides
+  language: en
   icon:
     repo: fontawesome/brands/github
-  language: en
 
 nav:
   - Home: index.md
