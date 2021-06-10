@@ -1,27 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
-     <loc>https://mondeja.github.io/mkdocs-mdpo-plugin/</loc>
-     <lastmod>2021-06-09</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://mondeja.github.io/mkdocs-mdpo-plugin/config/</loc>
-     <lastmod>2021-06-09</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://mondeja.github.io/mkdocs-mdpo-plugin/extensions-support/oficial/</loc>
-     <lastmod>2021-06-09</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://mondeja.github.io/mkdocs-mdpo-plugin/extensions-support/pymdownx/</loc>
-     <lastmod>2021-06-09</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://mondeja.github.io/mkdocs-mdpo-plugin/tested-plugins/navigation-and-page-building/</loc>
-     <lastmod>2021-06-09</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://mondeja.github.io/mkdocs-mdpo-plugin/tested-plugins/api-documentation-building/</loc>
-     <lastmod>2021-06-09</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </urlset>
