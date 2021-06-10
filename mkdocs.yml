@@ -1,6 +1,6 @@
 site_name: mkdocs-mdpo-plugin
-site_url: https://mondeja.github.io/mkdocs-mdpo-plugin/
-site_description: Multilanguage HTTP request code snippet generator.
+site_url: https://mkdocs-mdpo.ga
+site_description: Mkdocs plugin for translations using PO files
 site_author: Álvaro Mondéjar Rubio
 
 repo_url: https://github.com/mondeja/mkdocs-mdpo-plugin
