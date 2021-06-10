@@ -8,9 +8,11 @@ article a {
 }
 
 article a.headerlink,
-article .md-icon {
+article .md-icon:not(.md-clipboard) {
   color: #f70019 !important;
 }
+
+article md-icon
 
 .md-source:hover {
   opacity: 1;
