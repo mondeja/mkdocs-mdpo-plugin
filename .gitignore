@@ -9,6 +9,7 @@ prueba.html
 prueba.po
 prueba.md
 output.txt
+/src/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
