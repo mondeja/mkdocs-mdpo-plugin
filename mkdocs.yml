@@ -14,6 +14,7 @@ extra_css:
   - assets/stylesheets/pymdownx.progressbar.css
 
 docs_dir: docs
+
 theme:
   name: material
   icon:
@@ -75,8 +76,8 @@ plugins:
           rendering:
             show_source: false
             show_root_toc_entry: false
-  - mdpo:
-      relative_material_language_selector: true
+  - material-relative-language-selector
+  - mdpo
   - minify:
       minify_html: true
 

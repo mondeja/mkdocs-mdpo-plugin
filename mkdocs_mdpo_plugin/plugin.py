@@ -3,7 +3,6 @@
 import math
 import os
 import re
-import shutil
 import sys
 
 import mkdocs
@@ -88,7 +87,6 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             Type(str, default='{{language}}/{{page.file.dest_path}}'),
         ),
         ('ignore_extensions', Type(list, default=['.po', '.pot', '.mo'])),
-        ('relative_material_language_selector', Type(bool, default=False)),
     )
 
     def __init__(self, *args, **kwargs):
@@ -113,9 +111,6 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         # translated page objects by language
         self._translated_pages_by_lang = {}
 
-        # relative material language selector javascript path
-        self._relative_material_language_selector = None
-
         # information needed by `mkdocs.mdpo` extension (`extension` module)
         #
         #   instance that represents the run
@@ -124,8 +119,6 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         self.current_page = None
         #   configuration of the build (loaded at `on_config` method)
         self.mkdocs_build_config = None
-        #   current build is using material theme
-        self._using_material_theme = None
 
         super().__init__(*args, **kwargs)
 
@@ -157,41 +150,41 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         elif not self.config['lc_messages']:
             self.config['lc_messages'] = ''
 
-        self._using_material_theme = config['theme'].name == 'material'
+        _using_material_theme = config['theme'].name == 'material'
 
         # load language selection settings from material or mdpo configuration
         def _languages_required():
             msg = (
                 'You must define the languages you will translate the'
                 ' content into using'
-                f"{' either' if self._using_material_theme else ' the'}"
+                f"{' either' if _using_material_theme else ' the'}"
                 " 'plugins.mdpo.languages'"
             )
-            if self._using_material_theme:
+            if _using_material_theme:
                 msg += " or 'extra.alternate'"
             msg += (
                 ' configuration setting'
-                f"{'s' if self._using_material_theme else ''}."
+                f"{'s' if _using_material_theme else ''}."
             )
             return mkdocs.config.base.ValidationError(msg)
 
         def _default_language_required():
             msg = (
                 'You must define the original language for translations using'
-                f" {'either ' if self._using_material_theme else 'the '}"
+                f" {'either ' if _using_material_theme else 'the '}"
                 " 'plugins.mdpo.default_language'"
             )
-            if self._using_material_theme:
+            if _using_material_theme:
                 msg += " or 'theme.language'"
             msg += (
                 ' configuration setting'
-                f"{'s' if self._using_material_theme else ''}."
+                f"{'s' if _using_material_theme else ''}."
             )
             return mkdocs.config.base.ValidationError(msg)
 
         languages = self.config.get('languages')
         if not languages:
-            if self._using_material_theme:
+            if _using_material_theme:
                 if 'extra' not in config:
                     raise _languages_required()
                 alternate = config['extra'].get('alternate')
@@ -284,68 +277,6 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             # exclude all files with PO related extensions
             if os.path.splitext(file.src_path)[-1] not in ignore_extensions:
                 new_files.append(file)
-
-        if self.config.get('relative_material_language_selector'):
-            if not self._using_material_theme:
-                msg = (
-                    'relative_material_language_selector only available with'
-                    ' mkdocs-material theme'
-                )
-                raise mkdocs.config.base.ValidationError(msg)
-
-            if config.get('extra_javascript'):
-                docs_assets_javascripts_dir = os.path.abspath(
-                    os.path.join(
-                        config['docs_dir'],
-                        os.path.dirname(config['extra_javascript'][0]),
-                    ),
-                )
-            else:
-                docs_assets_dir = os.path.join(config['docs_dir'], 'assets')
-                if not os.path.isdir(docs_assets_dir):
-                    os.mkdir(docs_assets_dir)
-                docs_assets_javascripts_dir = os.path.join(
-                    docs_assets_dir,
-                    'javascripts',
-                )
-
-                config['extra_javascript'] = []
-
-            if not os.path.isdir(docs_assets_javascripts_dir):
-                os.mkdir(docs_assets_javascripts_dir)
-
-            filename = 'relative-material-language-selector.js'
-            docs_assets_javascript_path = os.path.join(
-                docs_assets_javascripts_dir,
-                filename,
-            )
-            if not os.path.isfile(docs_assets_javascript_path):
-                shutil.copy(
-                    os.path.join(
-                        os.path.abspath(os.path.dirname(__file__)),
-                        filename,
-                    ),
-                    docs_assets_javascript_path,
-                )
-
-            rel_assets_javascript_path = os.path.relpath(
-                docs_assets_javascript_path,
-                config['docs_dir'],
-            )
-
-            config['extra_javascript'].append(rel_assets_javascript_path)
-
-            rel_mls_filepath = mkdocs.structure.files.File(
-                rel_assets_javascript_path,
-                config['docs_dir'],
-                config['site_dir'],
-                config['use_directory_urls'],
-            )
-            new_files.append(rel_mls_filepath)
-
-            self._relative_material_language_selector = (
-                docs_assets_javascript_path
-            )
 
         return new_files
 
@@ -679,17 +610,6 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
         # reset mkdocs build instance
         MkdocsBuild._instance = None
-
-        # remove relative material language selector javascript file
-        if self._relative_material_language_selector is not None:
-            if os.path.isfile(self._relative_material_language_selector):
-                try:
-                    os.remove(self._relative_material_language_selector)
-                except PermissionError:
-                    pass
-            self._relative_material_language_selector = None
-
-        self._using_material_theme = None
 
 
 # mkdocs>=1.2.0 includes a `build_error` event executed when the build
