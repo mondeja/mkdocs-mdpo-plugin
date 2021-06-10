@@ -1,4 +1,8 @@
-var ORIGINAL_LANG = "en";
+var ORIGINAL_LANG = "en",
+    GITHUB_PAGES = false,
+    ROOT_DOMAIN = true;
+
+var PATH_SPLITTER_INDEX = ROOT_DOMAIN ? 1 : 2;
 
 var getCurrentLang = function() {
   var pathSplit = window.location.pathname.split("/");
@@ -29,9 +33,9 @@ document.addEventListener("DOMContentLoaded", function(){
         languageItemsToRemove.push(languageItem);
       } else {
         var pathSplit = window.location.pathname.split("/");
-        var newLink = pathSplit.slice(0, 2).join('/') + '/' + linkLang + '/';
+        var newLink = pathSplit.slice(0, PATH_SPLITTER_INDEX).join('/') + '/' + linkLang + '/';
         if (pathSplit.length > 3) {
-          newLink += pathSplit.slice(2).join("/")
+          newLink += pathSplit.slice(PATH_SPLITTER_INDEX).join("/")
         }
         link.setAttribute("href", newLink);
       }
@@ -43,12 +47,12 @@ document.addEventListener("DOMContentLoaded", function(){
           linkLang = '';
         }
         var pathSplit = window.location.pathname.split("/");
-        var newLink = pathSplit.slice(0, 2).join('/') + '/';
+        var newLink = pathSplit.slice(0, PATH_SPLITTER_INDEX).join('/') + '/';
         if (linkLang.length && linkLang != ORIGINAL_LANG) {
           newLink += (linkLang + '/');
         }
         if (pathSplit.length > 4) {
-          newLink += pathSplit.slice(3).join("/")
+          newLink += pathSplit.slice(PATH_SPLITTER_INDEX + 1).join("/")
         }
 
         link.setAttribute("href", newLink);
