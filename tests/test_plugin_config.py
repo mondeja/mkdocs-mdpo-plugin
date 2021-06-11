@@ -286,25 +286,13 @@ def test_config(
                 'languages': 5,
             },
             None,
-            mkdocs.exceptions.ConfigurationError,
+            mkdocs.config.base.ValidationError,
             (
-                "Plugin value: 'languages'. Error: Expected type:"
-                " <class 'list'> but received: <class 'int'>"
+                'You must define the languages you will translate the content'
+                " into using the 'plugins.mdpo.languages' configuration"
+                ' setting.'
             ),
             id='languages:<int>',
-        ),
-        pytest.param(
-            {
-                'languages': ['en', 'es'],
-                'default_language': 5,
-            },
-            None,
-            mkdocs.exceptions.ConfigurationError,
-            (
-                "Plugin value: 'default_language'. Error: Expected type:"
-                " <class 'str'> but received: <class 'int'>"
-            ),
-            id='default_language:<int>',
         ),
         pytest.param(
             {
@@ -412,6 +400,7 @@ def test_plugin_config_errors(
 
         mkdocs_config = {
             'site_name': 'My site',
+            'site_url': 'https://foo.bar',
             'docs_dir': docs_dir,
             'site_dir': site_dir,
             'plugins': [

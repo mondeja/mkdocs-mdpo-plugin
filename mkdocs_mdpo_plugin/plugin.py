@@ -150,7 +150,10 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         elif not self.config['lc_messages']:
             self.config['lc_messages'] = ''
 
-        _using_material_theme = config['theme'].name == 'material'
+        try:
+            _using_material_theme = config['theme'].name == 'material'
+        except KeyError:
+            _using_material_theme = None
 
         # load language selection settings from material or mdpo configuration
         def _languages_required():
@@ -197,56 +200,68 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         default_language = self.config.get('default_language')
         if not default_language:
             # use mkdocs>=v1.2.0 theme localization setting
-            if hasattr(config['theme'], 'locale') and config['theme'].locale:
+            if (
+                config.get('theme')
+                and hasattr(config['theme'], 'locale')
+                and config['theme'].locale
+            ):
                 self.config['default_language'] = config['theme'].locale
             else:
+                if (
+                    not isinstance(self.config['languages'], list)
+                    or not self.config['languages']
+                ):
+                    raise _languages_required()
+
                 self.config['default_language'] = self.config['languages'][0]
 
         # ----------------------------------------------------------
 
         # extensions configuration
+        markdown_extensions = config.get('markdown_extensions')
 
         # configure MD4C extensions
-        if 'tables' not in config['markdown_extensions']:
-            if 'tables' in self._md4c_extensions:
-                self._md4c_extensions.remove('tables')
-        else:
-            if 'tables' not in self._md4c_extensions:
-                self._md4c_extensions.append('tables')
-        if 'wikilinks' not in config['markdown_extensions']:
-            if 'wikilinks' in self._md4c_extensions:
-                self._md4c_extensions.remove('wikilinks')
-        else:
-            if 'wikilinks' not in self._md4c_extensions:
-                self._md4c_extensions.append('wikilinks')
+        if markdown_extensions:
+            if 'tables' not in markdown_extensions:
+                if 'tables' in self._md4c_extensions:
+                    self._md4c_extensions.remove('tables')
+            else:
+                if 'tables' not in self._md4c_extensions:
+                    self._md4c_extensions.append('tables')
+            if 'wikilinks' not in markdown_extensions:
+                if 'wikilinks' in self._md4c_extensions:
+                    self._md4c_extensions.remove('wikilinks')
+            else:
+                if 'wikilinks' not in self._md4c_extensions:
+                    self._md4c_extensions.append('wikilinks')
 
-        # spaces after '#' are optional in Python-Markdown for headers,
-        # but the extension 'pymdownx.saneheaders' makes them mandatory
-        if 'pymdownx.saneheaders' in config['markdown_extensions']:
-            if 'permissive_atx_headers' in self._md4c_extensions:
-                self._md4c_extensions.remove('permissive_atx_headers')
-        else:
-            if 'permissive_atx_headers' not in self._md4c_extensions:
-                self._md4c_extensions.append('permissive_atx_headers')
+            # spaces after '#' are optional in Python-Markdown for headers,
+            # but the extension 'pymdownx.saneheaders' makes them mandatory
+            if 'pymdownx.saneheaders' in markdown_extensions:
+                if 'permissive_atx_headers' in self._md4c_extensions:
+                    self._md4c_extensions.remove('permissive_atx_headers')
+            else:
+                if 'permissive_atx_headers' not in self._md4c_extensions:
+                    self._md4c_extensions.append('permissive_atx_headers')
 
-        # 'pymdownx.tasklist' enables 'tasklists' MD4C extentsion
-        if 'pymdownx.tasklist' in config['markdown_extensions']:
-            if 'tasklists' not in self._md4c_extensions:
-                self._md4c_extensions.append('tasklists')
-        else:
-            if 'tasklists' in self._md4c_extensions:
-                self._md4c_extensions.remove('tasklists')
+            # 'pymdownx.tasklist' enables 'tasklists' MD4C extentsion
+            if 'pymdownx.tasklist' in markdown_extensions:
+                if 'tasklists' not in self._md4c_extensions:
+                    self._md4c_extensions.append('tasklists')
+            else:
+                if 'tasklists' in self._md4c_extensions:
+                    self._md4c_extensions.remove('tasklists')
 
-        # 'pymdownx.tilde' enables strikethrough syntax, but only works
-        # if the MD4C extension is disabled
-        if 'pymdownx.tilde' in config['markdown_extensions']:
-            if 'strikethrough' in self._md4c_extensions:
-                self._md4c_extensions.remove('strikethrough')
+            # 'pymdownx.tilde' enables strikethrough syntax, but only works
+            # if the MD4C extension is disabled
+            if 'pymdownx.tilde' in markdown_extensions:
+                if 'strikethrough' in self._md4c_extensions:
+                    self._md4c_extensions.remove('strikethrough')
 
-        # configure internal 'mkdocs.mdpo' extension
-        if 'mkdocs.mdpo' in config['markdown_extensions']:  # pragma: no cover
-            config['markdown_extensions'].remove('mkdocs.mdpo')
-        config['markdown_extensions'].append('mkdocs.mdpo')
+            # configure internal 'mkdocs.mdpo' extension
+            if 'mkdocs.mdpo' in markdown_extensions:  # pragma: no cover
+                config['markdown_extensions'].remove('mkdocs.mdpo')
+            config['markdown_extensions'].append('mkdocs.mdpo')
 
         # ----------------------------------------------------------
 

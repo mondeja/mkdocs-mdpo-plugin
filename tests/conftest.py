@@ -51,6 +51,7 @@ def _mkdocs_build(
 
         mkdocs_config = {
             'site_name': 'My site',
+            'site_url': 'https://foo.bar',
             'docs_dir': docs_dir,
             'site_dir': site_dir,
             'plugins': [],
