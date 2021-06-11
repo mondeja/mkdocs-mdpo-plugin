@@ -76,7 +76,7 @@ msgid ""
 "files."
 msgstr ""
 "**mkdocs-mdpo-plugin** está basado en [mdpo][mdpo-docs] el cual es un "
-"programa para traducir contenido Markdown complacimente con "
+"programa para traducir contenido Markdown complaciente con "
 "[CommonMark][commonmark] usando archivos PO."
 
 msgid "[mdpo-docs]: https://mdpo.readthedocs.io"
