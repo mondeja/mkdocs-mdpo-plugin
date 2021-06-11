@@ -338,7 +338,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
                 if tr_title:
                     item.title = tr_title
-                item.file.url = tr_url
+                if item.is_page:
+                    item.file.url = tr_url
 
         # recursively translate navigation sections
         # (pages titles and section titles)
