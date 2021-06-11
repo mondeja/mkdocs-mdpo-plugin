@@ -170,9 +170,45 @@ msgstr ""
 "soportadas correctamente (ver [Soporte de extensiones][extensions-support-"
 "official])."
 
+msgid "Immprove the mkdocs-material's language selector"
+msgstr "Mejora el selector de idioma de mkdocs-material"
+
+msgid "[mkdocs-material]: https://squidfunk.github.io/mkdocs-material/"
+msgstr "[mkdocs-material]: https://squidfunk.github.io/mkdocs-material/"
+
 msgid ""
 "[extensions-support-official]: https://mondeja.github.io/mkdocs-mdpo-"
-"plugin/extensions-support/oficial/"
+"plugin/es/extensions-support/oficial/"
 msgstr ""
 "[extensions-support-official]: https://mondeja.github.io/mkdocs-mdpo-"
 "plugin/es/extensions-support/oficial/"
+
+msgid ""
+"[mmrls]: https://github.com/mondeja/mkdocs-material-relative-language-"
+"selector"
+msgstr ""
+"[mmrls]: https://github.com/mondeja/mkdocs-material-relative-language-"
+"selector"
+
+msgid "Github Pages configuration"
+msgstr "Configuración para Github Pages"
+
+msgid "Custom root domain configuration"
+msgstr "Configuración con dominio raíz personalizado"
+
+msgid ""
+"If you are using the [mkdocs-material theme][mkdocs-material], you can "
+"install the [`mkdocs-material-relative-language-selector` plugin][mmrls] to "
+"make relative links between languages inside the same page and remove the "
+"current displayed language from the language selector:"
+msgstr ""
+"Si estás usando el [tema de mkdocs-material][mkdocs-material], puedes "
+"instalar el [plugin `mkdocs-material-relative-language-selector`][mmrls] "
+"para hacer relativos los links entre idiomas dentro de la misma página y "
+"eliminar el idioma actualmente desplegado del selector de idiomas:"
+
+msgid "Projects using mkdocs-mdpo-plugin"
+msgstr "Proyectos usando mkdocs-mdpo-plugin"
+
+msgid "[hrcgen-docs]: https://hrcgen.ml"
+msgstr "[hrcgen-docs]: https://hrcgen.ml/es/"
