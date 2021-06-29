@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  auto-update:
+  website-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,7 +16,7 @@ jobs:
           python-version: 3.x
       - name: Install pre-commit
         run: pip install pre-commit
-      - name: Run pre-commit --config .website.yaml
-        run: pre-commit --config .website.yaml
+      - name: Run pre-commit
+        run: pre-commit run -a --config .website.yaml
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
