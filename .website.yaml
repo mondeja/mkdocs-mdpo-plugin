@@ -1,0 +1,11 @@
+repos:
+  - repo: https://github.com/mondeja/pre-commit-hooks
+    rev: v1.5.1
+    hooks:
+      - id: cloudflare-nameservers
+        args:
+          - -domain=mkdocs-mdpo.ga
+      - id: cloudflare-gh-pages-dns
+        args:
+          - -domain=mkdocs-mdpo.ga
+          - -username=mondeja
