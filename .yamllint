@@ -30,6 +30,7 @@ rules:
     ignore: |
       .pre-commit-config.yaml
       .github
+      .website.yaml
       mkdocs.yml
   line-length:
     allow-non-breakable-words: true

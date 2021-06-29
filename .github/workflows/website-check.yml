@@ -1,0 +1,22 @@
+name: website-check
+
+on:
+  schedule:
+    - cron: 0 3 1 1/6 *
+  workflow_dispatch:
+
+jobs:
+  auto-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - name: Install pre-commit
+        run: pip install pre-commit
+      - name: Run pre-commit --config .website.yaml
+        run: pre-commit --config .website.yaml
+        env:
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
