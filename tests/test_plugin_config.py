@@ -11,8 +11,7 @@ from mkdocs_mdpo_plugin.plugin import MdpoPlugin
 
 
 tests = (
-    (
-        # basic example with default configuration
+    pytest.param(  # basic example with default configuration
         {
             'index.md': '# Foo\n\nbar\n',
         },
@@ -37,9 +36,9 @@ tests = (
                 '<p>bar es</p>',
             ],
         },
+        id='default-config',
     ),
-    (
-        # nested files
+    pytest.param(  # nested files
         {
             'index.md': 'foo\n',
             'foo/bar/baz.md': 'hello\n',
@@ -63,9 +62,9 @@ tests = (
             'foo/bar/baz/index.html': ['<p>hello</p>'],
             'es/foo/bar/baz/index.html': ['<p>hola</p>'],
         },
+        id='nested-files',
     ),
-    (
-        # custom locale_dir
+    pytest.param(  # custom locale_dir
         {
             'index.md': 'foo\n',
         },
@@ -83,9 +82,9 @@ tests = (
             'index.html': ['<p>foo</p>'],
             'es/index.html': ['<p>foo es</p>'],
         },
+        id='custom-locale_dir',
     ),
-    (
-        # custom dest_filename_template
+    pytest.param(  # custom dest_filename_template
         {
             'index.md': 'foo\n',
         },
@@ -107,9 +106,9 @@ tests = (
             'index.html': ['<p>foo</p>'],
             'index-es/index.html': ['<p>foo es</p>'],
         },
+        id='custom-dest_filename_template',
     ),
-    (
-        # custom locale_dir + dest_filename_template
+    pytest.param(  # custom locale_dir + dest_filename_template
         {
             'index.md': 'foo\n',
         },
@@ -129,9 +128,9 @@ tests = (
             'index.html': ['<p>foo</p>'],
             'index_es/index.html': ['<p>foo es</p>'],
         },
+        id='custom-locale_dir+dest_filename_template',
     ),
-    (
-        # configuration from 'material' theme
+    pytest.param(  # configuration from 'material' theme
         {
             'index.md': '# Foo\n\nbar\n',
         },
@@ -167,9 +166,9 @@ tests = (
                 '<p>bar es</p>',
             ],
         },
+        id='material-theme',
     ),
-    (
-        # boolean lc_messages
+    pytest.param(  # boolean lc_messages
         {
             'index.md': '# Foo\n\nbar\n',
         },
@@ -194,9 +193,9 @@ tests = (
                 '<p>bar es</p>',
             ],
         },
+        id='bool-lc_messages',
     ),
-    (
-        # custom lc_messages
+    pytest.param(  # custom lc_messages
         {
             'index.md': 'foo\n',
         },
@@ -214,9 +213,9 @@ tests = (
             'index.html': ['<p>foo</p>'],
             'es/index.html': ['<p>foo es</p>'],
         },
+        id='custom-lc_messages',
     ),
-    (
-        # title translation
+    pytest.param(  # nav title translation
         {
             'index.md': 'foo\n',
         },
@@ -228,7 +227,6 @@ tests = (
         },
         {
             'languages': ['en', 'es'],
-
         },
         {
             'nav': [
@@ -242,6 +240,7 @@ tests = (
                 '<title>Introducción - My site</title>',
             ],
         },
+        id='nav-title-translation',
     ),
 )
 
@@ -256,7 +255,7 @@ tests = (
     ),
     tests,
 )
-def test_config(
+def test_plugin_config(
     input_files_contents,
     translations,
     plugin_config,
@@ -292,7 +291,7 @@ def test_config(
                 " into using the 'plugins.mdpo.languages' configuration"
                 ' setting.'
             ),
-            id='languages:<int>',
+            id='languages=<int>',
         ),
         pytest.param(
             {
@@ -311,7 +310,7 @@ def test_config(
                 " into using the 'plugins.mdpo.languages' configuration"
                 ' setting.'
             ),
-            id='languages:undefined-readthedocs',
+            id='languages=undefined-theme=readthedocs',
         ),
         pytest.param(
             {
@@ -330,29 +329,7 @@ def test_config(
                 " into using either 'plugins.mdpo.languages' or"
                 " 'extra.alternate' configuration settings."
             ),
-            id='languages:undefined-material.extra:undefined',
-        ),
-        pytest.param(
-            {
-                'default_language': 'es',
-            },
-            {
-                'theme': type(
-                    'Theme', (), {
-                        'name': 'material',
-                    },
-                ),
-                'extra': {
-                    'alternate': [],
-                },
-            },
-            mkdocs.config.base.ValidationError,
-            (
-                'You must define the languages you will translate the content'
-                " into using either 'plugins.mdpo.languages' or"
-                " 'extra.alternate' configuration settings."
-            ),
-            id='languages:undefined-material.extra.alternate:undefined',
+            id='languages=undefined-theme=material-extra=undefined',
         ),
         pytest.param(
             {
@@ -374,7 +351,46 @@ def test_config(
                 " into using either 'plugins.mdpo.languages' or"
                 " 'extra.alternate' configuration settings."
             ),
-            id='languages:undefined-material.extra.alternate:undefined',
+            id='languages=undefined-theme=material-extra.alternate=undefined',
+        ),
+        pytest.param(
+            {
+                'default_language': 'es',
+            },
+            {
+                'theme': type(
+                    'Theme', (), {
+                        'name': 'material',
+                    },
+                ),
+                'extra': {
+                    'alternate': [],
+                },
+            },
+            mkdocs.config.base.ValidationError,
+            (
+                'You must define the languages you will translate the content'
+                " into using either 'plugins.mdpo.languages' or"
+                " 'extra.alternate' configuration settings."
+            ),
+            id='languages=undefined-theme=material-extra.alternate=undefined',
+        ),
+        pytest.param(
+            {},
+            {
+                'theme': type(
+                    'Theme', (), {
+                        'name': 'material',
+                    },
+                ),
+            },
+            mkdocs.config.base.ValidationError,
+            (
+                'You must define the languages you will translate the content'
+                " into using either 'plugins.mdpo.languages' or"
+                " 'extra.alternate' configuration settings."
+            ),
+            id='languages=undefined-theme=material',
         ),
     ),
 )

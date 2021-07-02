@@ -7,6 +7,7 @@ TESTS = (
     pytest.param(  # abbr
         {
             'index.md': (
+                'Some text [with a link](https://tonowhere.foo).\n\n'
                 'The HTML specification is maintained by the W3C.\n\n'
                 '*[HTML]: Hyper Text Markup Language\n\n'
                 '*[W3C]: World Wide Web Consortium'
@@ -14,6 +15,8 @@ TESTS = (
         },
         {
             'es/index.md.po': {
+                'Some text [with a link](https://tonowhere.foo).':
+                'Algo de texto [con un enlace](https://tonowhere.foo).',
                 'The HTML specification is maintained by the W3C.':
                 'La especificación HTML es mantenida por el W3C.',
                 '*[HTML]: Hyper Text Markup Language':
@@ -32,21 +35,19 @@ TESTS = (
         },
         {
             'index.html': [
-                (
-                    '<p>The <abbr title="Hyper Text Markup Language">HTML'
-                    '</abbr> specification is maintained by the'
-                    ' <abbr title="World Wide Web Consortium">W3C</abbr>.'
-                    '</p>'
-                ),
+                '<p>The <abbr title="Hyper Text Markup Language">HTML'
+                '</abbr> specification is maintained by the'
+                ' <abbr title="World Wide Web Consortium">W3C</abbr>.'
+                '</p>',
             ],
             'es/index.html': [
-                (
-                    '<p>La especificación <abbr'
-                    ' title="Lenguaje de Marcado de Hipertexto">HTML</abbr>'
-                    ' es mantenida por el'
-                    ' <abbr title="Consorcio Mundial de Internet">W3C</abbr>.'
-                    '</p>'
-                ),
+                '<p>Algo de texto'
+                ' <a href="https://tonowhere.foo">con un enlace</a>.</p>',
+                '<p>La especificación <abbr'
+                ' title="Lenguaje de Marcado de Hipertexto">HTML</abbr>'
+                ' es mantenida por el'
+                ' <abbr title="Consorcio Mundial de Internet">W3C</abbr>.'
+                '</p>',
             ],
         },
         id='abbr',

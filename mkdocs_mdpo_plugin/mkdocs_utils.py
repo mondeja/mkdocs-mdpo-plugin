@@ -1,0 +1,61 @@
+"""Mkdocs utilities"""
+
+from mkdocs import __version__ as __mkdocs_version__
+
+from mkdocs_mdpo_plugin.io import remove_file_and_parent_dir_if_empty
+
+
+MKDOCS_MINOR_VERSION_INFO = tuple(
+    int(n) for n in __mkdocs_version__.split('.')[:2]
+)
+
+
+class MkdocsBuild:
+    """Represents the Mkdocs build process.
+
+    Is a singleton, so only accepts one build. Should be initialized using
+    the `instance` class method, which accepts an instance of the plugin class.
+    """
+    _instance = None
+
+    @classmethod
+    def instance(cls, mdpo_plugin):
+        if cls._instance is None:
+            cls._instance = cls.__new__(cls)
+            cls.mdpo_plugin = mdpo_plugin
+        return cls._instance
+
+
+def __on_build_error(_self):
+    for filepath in _self._temp_pages_to_remove:
+        try:
+            remove_file_and_parent_dir_if_empty(filepath)
+        except FileNotFoundError:
+            pass
+
+    MkdocsBuild._instance = None
+
+
+def set_on_build_error_event(MdpoPlugin):
+    """mkdocs>=1.2.0 includes a ``build_error`` event executed when the build
+    triggers a exception.
+
+    This function patch provides the same cleanup functionality if the
+    `build_error` event is not supported.
+    """
+    if MKDOCS_MINOR_VERSION_INFO >= (1, 2):
+        if not hasattr(MdpoPlugin, 'on_build_error'):
+            def _on_build_error(self, error):
+                return __on_build_error(self)
+
+            MdpoPlugin.on_build_error = _on_build_error
+    else:
+        import atexit
+
+        def _on_build_error():  # pragma: no cover
+            build_instance = MkdocsBuild()
+            if hasattr(build_instance, 'mdpo_plugin'):
+                return __on_build_error(build_instance.mdpo_plugin)
+
+        atexit.unregister(_on_build_error)
+        atexit.register(_on_build_error)

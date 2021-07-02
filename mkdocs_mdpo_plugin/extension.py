@@ -13,10 +13,6 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
         if not hasattr(current_page, '_language'):
             return
 
-        current_build_extensions = (
-            mdpo_plugin.mkdocs_build_config['markdown_extensions']
-        )
-
         def process_translation(node, msgid):
             if msgid not in current_page._translated_entries_msgstrs:
                 if msgid in current_page._po_msgids:
@@ -38,7 +34,7 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
                     entry = polib.POEntry(msgid=msgid, msgstr='')
                     current_page._po.append(entry)
 
-        if 'pymdownx.tasklist' in current_build_extensions:
+        if 'pymdownx.tasklist' in mdpo_plugin._markdown_extensions:
             node_should_be_processed = lambda node: False if (
                 node.tag == 'li' and node.text[:3] in ['[ ]', '[x]', '[X]']
             ) else True
@@ -86,10 +82,6 @@ class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
         if not hasattr(current_page, '_language'):
             return
 
-        current_build_extensions = (
-            mdpo_plugin.mkdocs_build_config['markdown_extensions']
-        )
-
         def process_translation(node, msgid):
             if msgid not in current_page._translated_entries_msgstrs:
                 if msgid in current_page._po_msgids:
@@ -111,22 +103,22 @@ class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
                     entry = polib.POEntry(msgid=msgid, msgstr='')
                     current_page._po.append(entry)
 
-        if 'abbr' in current_build_extensions:
-            if 'pymdownx.emoji' in current_build_extensions:
-                node_should_be_processed = lambda node: False if (
-                    node.tag == 'abbr'
-                    or node.get('class') in ['emojione', 'twemoji', 'gemoji']
-                ) else True
+        if 'abbr' in mdpo_plugin._markdown_extensions:
+            if 'pymdownx.emoji' in mdpo_plugin._markdown_extensions:
+                node_should_be_processed = lambda node: (
+                    node.tag != 'abbr' and
+                    node.get('class') not in ['emojione', 'twemoji', 'gemoji']
+                )
             else:
-                node_should_be_processed = lambda node: node.tag != 'attr'
-        elif 'pymdownx.emoji' in current_build_extensions:
+                node_should_be_processed = lambda node: node.tag != 'abbr'
+        elif 'pymdownx.emoji' in mdpo_plugin._markdown_extensions:
             node_should_be_processed = lambda node: (
                 node.get('class') not in ['emojione', 'twemoji', 'gemoji']
             )
 
         if (
-            'abbr' in current_build_extensions
-            or 'pymdownx.emoji' in current_build_extensions
+            'abbr' in mdpo_plugin._markdown_extensions
+            or 'pymdownx.emoji' in mdpo_plugin._markdown_extensions
         ):
             def iterate_childs(_root):
                 for child in _root:

@@ -390,6 +390,7 @@ TESTS = (
     pytest.param(  # pymdownx.tasklist
         {
             'index.md': (
+                'Some text before tasks list.\n\n'
                 '- [X] Task 1\n'
                 '    * [X] Task A\n'
                 '    * [ ] Task B\n'
@@ -404,6 +405,8 @@ TESTS = (
         },
         {
             'es/index.md.po': {
+                'Some text before tasks list.':
+                'Algo de texto antes de lista de tareas.',
                 'Task 1': 'Tarea 1',
                 'Task A': 'Tarea A',
                 'Task B more text': 'Tarea B más texto',
@@ -425,6 +428,7 @@ TESTS = (
         },
         {
             'es/index.html': [
+                '<p>Algo de texto antes de lista de tareas.</p>\n'
                 '<ul class="task-list">\n'
                 '<li class="task-list-item"><input type="checkbox"'
                 ' disabled checked/> Tarea 1</li>\n'

@@ -27,6 +27,7 @@ def _mkdocs_build(
     expected_output_files,
     callback_after_first_build=None,
     insert_plugin_config_at_position=-1,
+    interrupt_after_first_build=False,
 ):
     with TemporaryDirectory() as site_dir, TemporaryDirectory() as docs_dir, \
             TemporaryDirectory() as config_dir:
@@ -79,6 +80,10 @@ def _mkdocs_build(
 
         if callback_after_first_build:
             callback_after_first_build(locals())
+
+        if interrupt_after_first_build:
+            os.remove(config_filename)
+            return
 
         # translate PO files
         for po_filename, translation_messages in translations.items():

@@ -37,15 +37,13 @@ PO2MD_EVENT_EXTENSIONS = {
 }
 
 
-def build_md2po_events(mkdocs_build_config):
+def build_md2po_events(markdown_extensions):
     """Build dinamically those mdpo events executed at certain moments of the
     Markdown file parsing extrating messages from pages, different depending on
     active extensions and plugins.
     """
-    _md_extensions = mkdocs_build_config['markdown_extensions']
-
     md_extensions = []
-    for ext in _md_extensions:
+    for ext in markdown_extensions:
         if not isinstance(ext, str):
             if isinstance(ext, MkdocstringsExtension):
                 md_extensions.append('mkdocstrings')
@@ -109,9 +107,7 @@ def build_md2po_events(mkdocs_build_config):
     return events
 
 
-def build_po2md_events(mkdocs_build_config):
-    md_extensions = mkdocs_build_config['markdown_extensions']
-
+def build_po2md_events(markdown_extensions):
     def link_reference_event(po2md_instance, target, href, title):
         # footnotes
         if target.startswith('^'):
@@ -127,7 +123,7 @@ def build_po2md_events(mkdocs_build_config):
     events = {}
     for event_name, extensions in PO2MD_EVENT_EXTENSIONS.items():
         for extension in extensions:
-            if extension in md_extensions:
+            if extension in markdown_extensions:
                 events[event_name] = events_functions[event_name]
                 break
 
