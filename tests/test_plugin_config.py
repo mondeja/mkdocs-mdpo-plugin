@@ -242,6 +242,34 @@ tests = (
         },
         id='nav-title-translation',
     ),
+    pytest.param(  # ignore msgids
+        {
+            'index.md': 'foo\n\nbar\n\nbaz\n',
+        },
+        {
+            'es/index.md.po': {
+                'foo': 'foo es',
+            },
+        },
+        {
+            'languages': ['en', 'es'],
+            'ignore_msgids': ['bar', 'baz'],
+        },
+        None,
+        {
+            'index.html': [
+                '<p>foo</p>',
+                '<p>bar</p>',
+                '<p>baz</p>',
+            ],
+            'es/index.html': [
+                '<p>foo es</p>',
+                '<p>bar</p>',
+                '<p>baz</p>',
+            ],
+        },
+        id='ignore_msgids',
+    ),
 )
 
 

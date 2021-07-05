@@ -191,6 +191,11 @@ The context for the template includes:
 File extensions that are ignored from being added to site directory, defaults to
 `['.po', '.pot', '.mo']`.
 
+<!-- mdpo-disable-next-line -->
+### **`ignore_msgids`** (*list*)
+
+You can ignore certain messages from being dumped into PO files adding them to
+this list.
 
 [iso-369]: https://en.wikipedia.org/wiki/ISO_639
 [mkdocs-material]: https://squidfunk.github.io/mkdocs-material

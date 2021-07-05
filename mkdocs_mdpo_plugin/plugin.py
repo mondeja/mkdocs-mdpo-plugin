@@ -11,8 +11,8 @@ from jinja2 import Template
 from mdpo.md2po import Md2Po
 from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po2md import Po2Md
-from mkdocs.config.config_options import Type
 
+from mkdocs_mdpo_plugin.config import CONFIG_SCHEME, on_config_event
 from mkdocs_mdpo_plugin.io import (
     remove_empty_directories_from_dirtree,
     remove_file_and_parent_dir_if_empty,
@@ -28,21 +28,10 @@ from mkdocs_mdpo_plugin.mkdocs_utils import (
     MkdocsBuild,
     set_on_build_error_event,
 )
-from mkdocs_mdpo_plugin.on_config import on_config_event
 
 
 class MdpoPlugin(mkdocs.plugins.BasePlugin):
-    config_scheme = (
-        ('locale_dir', Type(str, default='')),
-        ('default_language', Type(str, required=False)),
-        ('languages', Type(list, required=False)),
-        ('lc_messages', Type((str, bool), default='')),
-        (
-            'dest_filename_template',
-            Type(str, default='{{language}}/{{page.file.dest_path}}'),
-        ),
-        ('ignore_extensions', Type(list, default=['.po', '.pot', '.mo'])),
-    )
+    config_scheme = CONFIG_SCHEME
 
     def __init__(self, *args, **kwargs):
         #  temporal translated pages created by the plugin at runtime
@@ -99,7 +88,6 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
     def on_pre_build(self, config):
         """Create locales folders inside documentation directory."""
-
         for language in self._non_default_languages():
             os.makedirs(
                 os.path.join(
@@ -217,6 +205,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             events=build_md2po_events(self._markdown_extensions),
             mark_not_found_as_obsolete=False,
             location=False,
+            ignore_msgids=self.config['ignore_msgids'],
         )
         original_po = md2po.extract()
 
@@ -354,6 +343,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             new_page._disabled_msgids = [
                 entry.msgid for entry in po2md.disabled_entries
             ]
+            new_page._disabled_msgids.extend(self.config['ignore_msgids'])
             for entry in po2md.translated_entries:
                 new_page._translated_entries_msgstrs.append(entry.msgstr)
                 new_page._translated_entries_msgids.append(entry.msgid)

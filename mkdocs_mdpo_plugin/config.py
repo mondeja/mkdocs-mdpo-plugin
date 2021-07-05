@@ -1,6 +1,21 @@
 """Configuration event for 'mkdocs-mdpo-plugin'."""
 
-import mkdocs
+from mkdocs.config.base import ValidationError
+from mkdocs.config.config_options import Type
+
+
+CONFIG_SCHEME = (
+    ('locale_dir', Type(str, default='')),
+    ('default_language', Type(str, required=False)),
+    ('languages', Type(list, required=False)),
+    ('lc_messages', Type((str, bool), default='')),
+    (
+        'dest_filename_template',
+        Type(str, default='{{language}}/{{page.file.dest_path}}'),
+    ),
+    ('ignore_extensions', Type(list, default=['.po', '.pot', '.mo'])),
+    ('ignore_msgids', Type(list, default=[])),
+)
 
 
 def on_config_event(plugin, config, **kwargs):
@@ -38,7 +53,7 @@ def on_config_event(plugin, config, **kwargs):
             ' configuration setting'
             f"{'s' if _using_material_theme else ''}."
         )
-        return mkdocs.config.base.ValidationError(msg)
+        return ValidationError(msg)
 
     languages = plugin.config.get('languages')
     if not languages:

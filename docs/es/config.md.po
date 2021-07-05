@@ -181,3 +181,10 @@ msgstr ""
 
 msgid "Configuration"
 msgstr "Configuración"
+
+msgid ""
+"You can ignore certain messages from being dumped into PO files adding them "
+"to this list."
+msgstr ""
+"Puedes ignorar ciertos mensajes de ser volcados a los archivos PO añadiéndolos"
+" a esta lista."
