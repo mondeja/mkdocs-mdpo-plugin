@@ -4,6 +4,7 @@ import functools
 import math
 import os
 import sys
+import tempfile
 
 import mkdocs
 import polib
@@ -34,8 +35,12 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
     config_scheme = CONFIG_SCHEME
 
     def __init__(self, *args, **kwargs):
-        #  temporal translated pages created by the plugin at runtime
+        # temporal translated pages created by the plugin at runtime
+        self._temp_pages = {}
+        self._temp_dir = tempfile.TemporaryDirectory(prefix='mkdocs_mdpo_')
+
         self._temp_pages_to_remove = []
+
 
         # md4c extensions used in mdpo translation (depend on Python-Markdown
         # configured extensions in `mkdocs.yml`)
@@ -109,6 +114,32 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             # exclude all files with PO related extensions
             if os.path.splitext(file.src_path)[-1] not in ignore_extensions:
                 new_files.append(file)
+
+            if file.is_documentation_page():
+                self._temp_pages[file.src_path] = {}
+
+                for language in self._non_default_languages():
+                    # create temporal documentation directory for generated pages
+                    context = {'file': file, 'language': language}
+                    context.update(self.config)
+                    dest_path = Template(
+                        self.config['dest_filename_template'],
+                    ).render(**context)
+                    src_path = f"{dest_path.rstrip('.html')}.md"
+
+                    new_file = mkdocs.structure.files.File(
+                        src_path,
+                        self._temp_dir.name,
+                        config['site_dir'],
+                        config['use_directory_urls'],
+                    )
+                    new_file._language = True
+                    new_files.append(new_file)
+
+                    self._temp_pages[file.src_path][language] = os.path.join(
+                        self._temp_dir.name,
+                        src_path,
+                    )
 
         return new_files
 
@@ -189,12 +220,12 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         """
         # only process original files, pages created for translation
         # are ignored
-        if hasattr(page, '_language'):
+        if hasattr(page.file, '_language'):
             return
 
         # navigation pages titles translations and new pages urls are stored
         # in dictionaries by language, so we can translate the titles in their
-        # own po files and then change the URLs (see `on_page_context` event)
+        # own PO files and then change the URLs (see `on_page_context` event)
         if page.title not in self._nav_pages_titles_translations:
             # lang: [title, url]
             self._nav_pages_titles_translations[page.title] = {}
@@ -287,9 +318,25 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             po2md = Po2Md(
                 [po_filepath, compendium_filepath],
                 events=po2md_events,
-                wrapwidth=math.inf,
+                wrapwidth=math.inf,  # generated file so ignore line wrapping
             )
             content = po2md.translate(markdown)
+
+            temp_abs_path = self._temp_pages[page.file.src_path][language]
+            os.makedirs(os.path.dirname(temp_abs_path), exist_ok=True)
+            with open(temp_abs_path, 'w') as f:
+                f.write(content)
+
+
+
+            """
+            os.makedirs(os.path.dirname(src_abs_path), exist_ok=True)
+            with open(src_abs_path, 'w') as f:
+                f.write(content)
+            print(content)
+            """
+
+            """
 
             # create site language dir if not exists
             os.makedirs(
@@ -365,10 +412,13 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                     '-c' not in sys.argv and '--clean' not in sys.argv
                 ),
             )
+            """
 
+            """
             if language not in self._translated_pages_by_lang:
                 self._translated_pages_by_lang[language] = []
             self._translated_pages_by_lang[language].append(new_page)
+            """
 
         self.current_page = page
 
@@ -380,6 +430,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             remove_file_and_parent_dir_if_empty(filepath)
 
     def on_post_build(self, config):
+        self._temp_dir.cleanup()
+
         # remove temporal created pages
         self._remove_temp_pages()
 
