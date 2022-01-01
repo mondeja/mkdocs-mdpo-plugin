@@ -83,7 +83,7 @@ def build_md2po_events(markdown_extensions):
         elif event_type == 'msgid':
             body = (
                 "    if msgid.startswith(': '):"
-                'md2po_instance._disable_next_line = True\n'
+                'md2po_instance.disable_next_block = True\n'
             )
         else:  # link_reference
             body = "    if target.startswith('^'):return False;\n"

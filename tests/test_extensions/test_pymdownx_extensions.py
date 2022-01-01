@@ -60,10 +60,10 @@ TESTS = (
         },
         {
             'es/index.html': [
-                '<details class="note" open="open">'
-                '<summary>Detalles con estilo abierto</summary>'
-                '<details class="danger">'
-                '<summary>¡Detalles anidados!</summary>'
+                '<details class="note" open="open">\n'
+                '<summary>Detalles con estilo abierto</summary>\n'
+                '<details class="danger">\n'
+                '<summary>¡Detalles anidados!</summary>\n'
                 '<p>Y más contenido.</p>\n'
                 '</details>\n'
                 '</details>',

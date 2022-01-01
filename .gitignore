@@ -1,14 +1,14 @@
-# Scripts
+# Developmenr
 /__main__.py
 /__dev__.*
 /cases/
 package.json
 package-lock.json
 /node_modules/
-prueba.html
-prueba.po
 prueba.md
-output.txt
+/*.html
+/*.po
+/*.txt
 /src/
 
 # Byte-compiled / optimized / DLL files
