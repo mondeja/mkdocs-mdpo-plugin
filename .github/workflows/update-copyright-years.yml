@@ -24,6 +24,6 @@ jobs:
           fetch-depth: 0
       - uses: FantasticFiasco/action-update-license-year@v2
         with:
-          path: docs/overrides/main.yml
+          path: docs/overrides/main.html
           transform: (?<=Copyright &copy; )(?<from>\d{4})?-?(\d{4})?
           token: ${{ secrets.GITHUB_TOKEN }}
