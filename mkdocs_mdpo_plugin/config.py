@@ -11,7 +11,7 @@ CONFIG_SCHEME = (
     ('lc_messages', Type((str, bool), default='')),
     (
         'dest_filename_template',
-        Type(str, default='{{language}}/{{page.file.dest_path}}'),
+        Type(str, default='{{language}}/{{file.dest_path}}'),
     ),
     ('ignore_extensions', Type(list, default=['.po', '.pot', '.mo'])),
     ('ignore_msgids', Type(list, default=[])),
