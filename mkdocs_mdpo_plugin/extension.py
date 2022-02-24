@@ -8,31 +8,30 @@ from mkdocs_mdpo_plugin.plugin import MkdocsBuild
 class MkdocsMdpoTreeProcessor(Treeprocessor):
     def run(self, root):
         mdpo_plugin = MkdocsBuild().mdpo_plugin
-
-        current_page = mdpo_plugin.current_page
-        if not hasattr(current_page, '_language'):
+        tr = mdpo_plugin.translations.current
+        if tr is None:
             return
 
         def process_translation(node, msgid):
-            if msgid not in current_page._translated_entries_msgstrs:
-                if msgid in current_page._po_msgids:
-                    for entry in current_page._po:
+            if msgid not in tr.translated_msgstrs:
+                if msgid in tr.po_msgids:
+                    for entry in tr.po:
                         if entry.msgid == msgid:
                             if entry.msgstr:
                                 node.text = entry.msgstr
                                 (
-                                    current_page._translated_entries_msgstrs
+                                    tr.translated_msgstrs
                                 ).append(
                                     entry.msgstr,
                                 )
                             entry.obsolete = False
-                            current_page._translated_entries_msgids.append(
+                            tr.translated_msgids.append(
                                 entry.msgid,
                             )
-                elif msgid not in current_page._disabled_msgids:
-                    current_page._po_msgids.append(msgid)
+                elif msgid not in tr.disabled_msgids:
+                    tr.po_msgids.append(msgid)
                     entry = polib.POEntry(msgid=msgid, msgstr='')
-                    current_page._po.append(entry)
+                    tr.po.append(entry)
 
         if 'pymdownx.tasklist' in mdpo_plugin._markdown_extensions:
             node_should_be_processed = lambda node: False if (
@@ -71,37 +70,37 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
                     iterate_childs(child)
 
         iterate_childs(root)
-        current_page._po.save(current_page._po_filepath)
+        tr.po.save(tr.po_filepath)
 
 
 class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
     def run(self, root):
         mdpo_plugin = MkdocsBuild().mdpo_plugin
 
-        current_page = mdpo_plugin.current_page
-        if not hasattr(current_page, '_language'):
+        tr = mdpo_plugin.translations.current
+        if tr is None:
             return
 
         def process_translation(node, msgid):
-            if msgid not in current_page._translated_entries_msgstrs:
-                if msgid in current_page._po_msgids:
-                    for entry in current_page._po:
+            if msgid not in tr.translated_msgstrs:
+                if msgid in tr.po_msgids:
+                    for entry in tr.po:
                         if entry.msgid == msgid:
                             if entry.msgstr:
                                 node.attrib['title'] = entry.msgstr
                                 (
-                                    current_page._translated_entries_msgstrs
+                                    tr.translated_msgstrs
                                 ).append(
                                     entry.msgstr,
                                 )
                             entry.obsolete = False
-                            current_page._translated_entries_msgids.append(
+                            tr.translated_msgids.append(
                                 entry.msgid,
                             )
-                elif msgid not in current_page._disabled_msgids:
-                    current_page._po_msgids.append(msgid)
+                elif msgid not in tr.disabled_msgids:
+                    tr.po_msgids.append(msgid)
                     entry = polib.POEntry(msgid=msgid, msgstr='')
-                    current_page._po.append(entry)
+                    tr.po.append(entry)
 
         if 'abbr' in mdpo_plugin._markdown_extensions:
             if 'pymdownx.emoji' in mdpo_plugin._markdown_extensions:
@@ -144,8 +143,7 @@ class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
                     iterate_childs(child)
 
         iterate_childs(root)
-
-        current_page._po.save(current_page._po_filepath)
+        tr.po.save(tr.po_filepath)
 
 
 class MkdocsMdpoExtension(Extension):

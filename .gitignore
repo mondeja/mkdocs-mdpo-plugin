@@ -10,6 +10,7 @@ prueba.md
 /*.po
 /*.txt
 /src/
+examples/**/site/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

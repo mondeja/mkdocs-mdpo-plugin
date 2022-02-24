@@ -1,0 +1,12 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Home"
+msgstr ""
+
+msgid "Welcome to MkDocs"
+msgstr ""
+
+msgid "Some content"
+msgstr ""
