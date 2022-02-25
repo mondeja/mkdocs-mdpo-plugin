@@ -380,7 +380,10 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 page.file.url,
             )
             if config['use_directory_urls']:
-                render_path += 'index.html'
+                if render_path.endswith(('/', os.sep)):
+                    render_path += 'index.html'
+                elif not render_path.endswith('.html'):
+                    render_path += '.html'
 
             with open(render_path, 'w') as f:
                 f.write(output)
