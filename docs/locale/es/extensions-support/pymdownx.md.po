@@ -64,7 +64,7 @@ msgstr ""
 "https://mondeja.github.io/mkdocs-mdpo-plugin/es"
 
 msgid "==mark me=="
-msgstr "==marcame=="
+msgstr "==márcame=="
 
 msgid "[=0% \"0%\"]"
 msgstr "[=0% \"vacío\"]"
@@ -102,3 +102,9 @@ msgstr ""
 
 msgid "PyMdown extensions"
 msgstr "Extensiones PyMdown"
+
+msgid "Some inserted content from another file."
+msgstr "Algo de contenido insertado de otro archivo."
+
+msgid "Tab title"
+msgstr "Título de pestaña"

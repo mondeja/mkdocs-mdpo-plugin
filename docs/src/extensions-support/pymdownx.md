@@ -78,7 +78,7 @@
 
     ```po
     msgid "I :heart: mdpo"
-    msgstr "Me encanta mdpo :+1:"
+    msgstr "Me encanta mdpo :heart:"
     ```
 
 <!-- mdpo-disable-next-line -->
@@ -275,12 +275,12 @@ You must let one blank line between each progress bar.
 
 === "Output"
 
-    --8<-- "docs/file-to-be-inserted.txt"
+    --8<-- "docs/src/file-to-be-inserted.txt"
 
 === "Markdown"
 
     ```markdown
-    \--8<-- "docs/file-to-be-inserted.txt"
+    \--8<-- "docs/src/file-to-be-inserted.txt"
     ```
 
 === "PO file content"
@@ -295,14 +295,14 @@ You must let one blank line between each progress bar.
 
 === "Output"
 
-    === "Output"
+    === "Tab title"
 
         Tab content
 
 === "Markdown"
 
     ```markdown
-    === "Output"
+    === "Tab title"
 
         Tab content
     ```
@@ -310,8 +310,8 @@ You must let one blank line between each progress bar.
 === "PO file content"
 
     ```po
-    msgid "Output"
-    msgstr "Salida"
+    msgid "Tab title"
+    msgstr "Título de pestaña"
 
     msgid "Tab content"
     msgstr "Contenido de pestaña"

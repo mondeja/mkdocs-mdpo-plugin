@@ -93,6 +93,6 @@ displayed language from the language selector:
 [xml.etree.ElementTree]: https://docs.python.org/3/library/xml.etree.elementtree.html
 [mkdocs#2061]: https://github.com/mkdocs/mkdocs#2061
 [xgettext-docs]: https://www.gnu.org/software/gettext/manual/gettext.html#xgettext-Invocation
-[extensions-support-official]: https://mondeja.github.io/mkdocs-mdpo-plugin/es/extensions-support/oficial/
+[extensions-support-official]: https://mondeja.github.io/mkdocs-mdpo-plugin/es/extensions-support/official/
 [mmrls]: https://github.com/mondeja/mkdocs-material-relative-language-selector
 [hrcgen-docs]: https://hrcgen.ml
