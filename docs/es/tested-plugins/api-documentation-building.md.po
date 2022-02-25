@@ -26,39 +26,10 @@ msgid "[mkdocstrings-github-link]: https://github.com/pawamoy/mkdocstrings"
 msgstr "[mkdocstrings-github-link]: https://github.com/pawamoy/mkdocstrings"
 
 msgid "Value to check."
-msgstr ""
+msgstr "Valor a comprobar."
 
 msgid "Function documentation."
-msgstr ""
+msgstr "Documentación de función."
 
 msgid "**`mkdocs_mdpo_plugin.docs_helper.function`**"
-msgstr ""
-
-#~ msgid "Remove empty directories walking through all nested subdirectories."
-#~ msgstr ""
-#~ "Elimina los directorios vacíos iterando por todos los subdirectorios "
-#~ "anidados."
-
-#~ msgid "**`mkdocs_mdpo_plugin.io.remove_empty_directories_from_dirtree`**"
-#~ msgstr "**`mkdocs_mdpo_plugin.io.remove_empty_directories_from_dirtree`**"
-
-#~ msgid "Top directory tree path."
-#~ msgstr "Ruta al directorio padre de todos."
-
-#~ msgid "File path/glob/content disambiguator."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Check if the value passed is a glob, a set of files in a list or is string "
-#~ "content."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Two values being the first a boolean that indicates if ``value`` is a list "
-#~ "of files (``True``) or string content (``False``) and the second value is "
-#~ "the content, which could be an iterator (if a glob or a list of files is "
-#~ "passed or a string)."
-#~ msgstr ""
-
-#~ msgid "**`mdpo.io.to_files_or_content`**"
-#~ msgstr ""
+msgstr "**`mkdocs_mdpo_plugin.docs_helper.function`**"

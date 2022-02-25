@@ -20,7 +20,7 @@ TESTS = (
                 'Bye': 'Adios',
                 'Function documentation.': 'Documentación de función.',
                 'Value to check.':  'Valor a comprobar.',
-            }
+            },
         },
         {
             'languages': ['en', 'es'],

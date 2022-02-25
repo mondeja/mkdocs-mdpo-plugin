@@ -24,7 +24,7 @@ from mkdocs_mdpo_plugin.mkdocs_utils import (
     MkdocsBuild,
     set_on_build_error_event,
 )
-from mkdocs_mdpo_plugin.translations import (Translation, Translations)
+from mkdocs_mdpo_plugin.translations import Translation, Translations
 
 
 class MdpoPlugin(mkdocs.plugins.BasePlugin):
@@ -94,7 +94,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 self.translations.files[file.src_path] = {}
 
                 for language in self._non_default_languages():
-                    # create temporal documentation directory for generated pages
+                    # render destination path
                     context = {'file': file, 'language': language}
                     context.update(self.config)
                     dest_path = Template(
@@ -102,9 +102,11 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                     ).render(**context)
                     src_path = f"{dest_path.rstrip('.html')}.md"
 
-                    self.translations.files[file.src_path][language] = os.path.join(
-                        self.translations.tempdir.name,
-                        src_path,
+                    self.translations.files[file.src_path][language] = (
+                        os.path.join(
+                            self.translations.tempdir.name,
+                            src_path,
+                        )
                     )
         return new_files
 
@@ -224,7 +226,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 if not os.path.isfile(compendium_filepath):
                     compendium_pofile = polib.POFile()
                     compendium_pofile.save(compendium_filepath)
-                self.translations.compendium_files[language] = compendium_filepath
+                self.translations.compendium_files[language] = \
+                    compendium_filepath
 
                 # intialize compendium messages cache
                 self.translations.compendium_msgstrs_tr[language] = []
@@ -291,7 +294,9 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             )
             content = po2md.translate(markdown)
 
-            temp_abs_path = self.translations.files[page.file.src_path][language]
+            temp_abs_path = self.translations.files[
+                page.file.src_path
+            ][language]
             temp_abs_dirpath = os.path.dirname(temp_abs_path)
             os.makedirs(temp_abs_dirpath, exist_ok=True)
             with open(temp_abs_path, 'w') as f:
@@ -360,13 +365,16 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         if hasattr(page.file, '_mdpo_language'):
             # write translated HTML file to 'site' directory
             os.makedirs(
-                os.path.join(config['site_dir'], os.path.dirname(page.file.url)),
+                os.path.join(
+                    config['site_dir'],
+                    os.path.dirname(page.file.url),
+                ),
                 exist_ok=True,
             )
 
             render_path = os.path.join(
                 config['site_dir'],
-                page.file.url
+                page.file.url,
             ).rstrip('.md') + '.html'
 
             with open(render_path, 'w') as f:

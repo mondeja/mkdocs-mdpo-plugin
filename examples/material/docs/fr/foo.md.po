@@ -10,9 +10,3 @@ msgstr "Bar fr"
 
 msgid "Baz"
 msgstr "Baz fr"
-
-msgid "Puedo"
-msgstr ""
-
-msgid "Some content"
-msgstr ""

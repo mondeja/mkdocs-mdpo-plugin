@@ -24,7 +24,7 @@ def test_set_on_build_error_event(mkdocs_minor_version_info):
     class FakeTranslations:
         def __init__(self):
             self.tempdir = tempfile.TemporaryDirectory(
-                prefix='mkdocs_mdpo__test_set_on_build_error_event'
+                prefix='mkdocs_mdpo__test_set_on_build_error_event',
             )
 
     class MkdocsFakeMdpoPlugin:

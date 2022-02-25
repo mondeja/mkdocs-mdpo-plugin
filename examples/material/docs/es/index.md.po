@@ -7,6 +7,3 @@ msgstr "Inicio"
 
 msgid "Welcome to MkDocs"
 msgstr "Bienvenido a Mkdocs"
-
-msgid "Some content"
-msgstr ""

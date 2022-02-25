@@ -1,5 +1,6 @@
 import tempfile
 
+
 class Translation:
     def __init__(
             self,
@@ -25,7 +26,8 @@ class Translation:
             f' po=polib.POFile(...{str(len(self.po)) + " entries"}...)'
             f' po_filepath="{self.po_filepath}",'
             f' po_msgids=[...{len(self.po_msgids)} msgids...],'
-            f' translated_msgstrs=[...{len(self.translated_msgstrs)} msgstrs...],'
+            ' translated_msgstrs=['
+            f'...{len(self.translated_msgstrs)} msgstrs...],'
             f' translated_msgids=[...{len(self.translated_msgids)} msgids...],'
             f' disabled_msgids=[...{len(self.disabled_msgids)} msgids...]'
             ')'
@@ -62,12 +64,14 @@ class Translations:
         self.all = {}
 
     def __str__(self):
+        current = 'None' if self.current is None else 'Translation(...)'
         return (
             f'Translations(tempdir="{self.tempdir}",'
             f' files={str(self.files)}, nav={str(self.nav)},'
             f' compendium_files={str(self.compendium_files)},'
             f' compendium_msgids={str(self.compendium_msgids)},'
-            f' compendium_msgstrs_tr={str(self.compendium_msgstrs_tr)},'
-            f' current={"None" if self.current is None else "Translation(...)"}'
+            ' compendium_msgstrs_tr='
+            f'{str(self.compendium_msgstrs_tr)},'
+            f' current={current}'
             ')'
         )
