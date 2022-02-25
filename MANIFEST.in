@@ -1,2 +1,3 @@
 include README.md
 include LICENSE
+include mkdocs_mdpo_plugin/custom_mdpo_sitemap/sitemap.xml
