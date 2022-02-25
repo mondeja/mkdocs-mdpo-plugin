@@ -189,6 +189,8 @@ The context for the template includes:
   `default_language`, `lc_messages`, `locale_dir`, `dest_filename_template`
   itself...
 
+## Content
+
 <!-- mdpo-disable-next-line -->
 ### **`ignore_extensions`** (*list*)
 

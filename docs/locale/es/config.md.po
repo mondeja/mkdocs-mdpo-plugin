@@ -185,3 +185,6 @@ msgstr ""
 "La práctica recomendada es organizar tu directorio típico `docs/` con "
 "múltiples subdirectorios, uno para archivos de documentación, otro para "
 "archivos de traducción, otro para sobreescritura de temas..."
+
+msgid "Content"
+msgstr "Contenido"
