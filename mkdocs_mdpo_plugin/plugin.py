@@ -365,6 +365,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
         self.translations.current = None
 
+        # set languages to render in sitemap.xml
         page.file._mdpo_languages = _mdpo_languages
 
         return remove_mdpo_commands_preserving_escaped(markdown)
