@@ -11,6 +11,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://mkdocs-mdpo.ga/useful-recipes/</loc>
+         <lastmod>2022-02-25</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://mkdocs-mdpo.ga/extensions-support/official/</loc>
          <lastmod>2022-02-25</lastmod>
          <changefreq>daily</changefreq>
@@ -37,6 +42,11 @@
     </url>
     <url>
          <loc>https://mkdocs-mdpo.ga/es/config/index.md</loc>
+         <lastmod>2022-02-25</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mkdocs-mdpo.ga/es/useful-recipes/index.md</loc>
          <lastmod>2022-02-25</lastmod>
          <changefreq>daily</changefreq>
     </url>

@@ -363,6 +363,21 @@
   
 
     
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="useful-recipes/" class="md-nav__link">
+        Recetas útiles
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -389,8 +404,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#instalacion" class="md-nav__link">
-    Instalación
+  <a href="#instalar" class="md-nav__link">
+    Instalar
   </a>
   
 </li>
@@ -450,13 +465,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mejora-el-selector-de-idioma-de-mkdocs-material" class="md-nav__link">
-    Mejora el selector de idioma de mkdocs-material
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#proyectos-usando-mkdocs-mdpo-plugin" class="md-nav__link">
     Proyectos usando mkdocs-mdpo-plugin
   </a>
@@ -475,14 +483,14 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mondeja/mkdocs-mdpo-plugin/tree/master/docs/src/tmp/mkdocs_mdpo_i_tryy19/es/index.md" title="Editar esta página" class="md-content__button md-icon">
+                  <a href="https://github.com/mondeja/mkdocs-mdpo-plugin/tree/master/docs/src/tmp/mkdocs_mdpo_xgyszrs6/es/index.md" title="Editar esta página" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
                 <h1 id="mkdocs-mdpo-plugin">mkdocs-mdpo-plugin<a class="headerlink" href="#mkdocs-mdpo-plugin" title="Link permanente">&para;</a></h1>
 <p>Traducciones para Mkdocs usando archivos PO, totalmente personalizable. Compatible con <a href="https://squidfunk.github.io/mkdocs-material">mkdocs-material</a>, basado en <a href="https://mdpo.readthedocs.io">mdpo</a>.</p>
-<h2 id="instalacion">Instalación<a class="headerlink" href="#instalacion" title="Link permanente">&para;</a></h2>
+<h2 id="instalar">Instalar<a class="headerlink" href="#instalar" title="Link permanente">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>pip install mkdocs-mdpo-plugin
 </code></pre></div>
 <h2 id="uso">Uso<a class="headerlink" href="#uso" title="Link permanente">&para;</a></h2>
@@ -549,28 +557,6 @@
 <li>El comando <code>mkdocs serve</code> no funciona si almacenas los archivos PO dentro del directorio de documentación. Usa otro layout como el explicado en <a href="config/#locale_dir-str">la configuration <code>locale_dir</code></a>.</li>
 <li>Actualmente, los mensajes editados no son marcados como fuzzy como hace <a href="https://www.gnu.org/software/gettext/manual/gettext.html#xgettext-Invocation">xgtettext</a>.</li>
 </ul>
-<h2 id="mejora-el-selector-de-idioma-de-mkdocs-material">Mejora el selector de idioma de mkdocs-material<a class="headerlink" href="#mejora-el-selector-de-idioma-de-mkdocs-material" title="Link permanente">&para;</a></h2>
-<p>Si estás usando el <a href="https://squidfunk.github.io/mkdocs-material/">tema de mkdocs-material</a>, puedes instalar el <a href="https://github.com/mondeja/mkdocs-material-relative-language-selector">plugin <code>mkdocs-material-relative-language-selector</code></a> para hacer relativos los links entre idiomas dentro de la misma página y eliminar el idioma actualmente desplegado del selector de idiomas:</p>
-<div class="tabbed-set" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Instalación</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>pip install mkdocs-material-relative-language-selector
-</code></pre></div>
-</div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Configuración para Github Pages</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">search</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">material-relative-language-selector</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mdpo</span><span class="w"></span>
-</code></pre></div>
-</div>
-<input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">Configuración con dominio raíz personalizado</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">search</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">material-relative-language-selector</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">root_domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mdpo</span><span class="w"></span>
-</code></pre></div>
-</div>
-</div>
 <h2 id="proyectos-usando-mkdocs-mdpo-plugin">Proyectos usando mkdocs-mdpo-plugin<a class="headerlink" href="#proyectos-usando-mkdocs-mdpo-plugin" title="Link permanente">&para;</a></h2>
 <ul>
 <li><a href="https://hrcgen.ml/es/">http-request-codegen</a></li>
