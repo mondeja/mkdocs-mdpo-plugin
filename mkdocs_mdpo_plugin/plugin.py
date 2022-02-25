@@ -337,8 +337,14 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             )
             self.translations.current = translation
 
+            url = new_page.url
+            if config['use_directory_urls']:
+                url = url.rstrip('index.md')
+            else:
+                url = url.rstrip('.md') + '.html'
+
             self.translations.nav[page.title][language] = [
-                translated_page_title, new_page.url,
+                translated_page_title, url,
             ]
             mkdocs.commands.build._populate_page(
                 new_page,
