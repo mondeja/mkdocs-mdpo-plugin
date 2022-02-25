@@ -1,6 +1,4 @@
-var ORIGINAL_LANG = "en";
-
-var PATH_SPLITTER_INDEX = true ? 1 : 2;
+var __MMRLSP_ORIGINAL_LANG = "en";
 
 var getCurrentLang = function() {
   var pathSplit = window.location.pathname.split("/");
@@ -9,10 +7,12 @@ var getCurrentLang = function() {
       return pathSplit[i];
     }
   }
-  return ORIGINAL_LANG;
+  return __MMRLSP_ORIGINAL_LANG;
 }
 
 document.addEventListener("DOMContentLoaded", function(){
+  var MMRLSP_PATH_SPLITTER_INDEX = true ? 1 : 2;
+
   if (window.location.protocol == "file:") {
     return;
   }
@@ -26,32 +26,28 @@ document.addEventListener("DOMContentLoaded", function(){
     var link = languageItem.childNodes[1];
 
     var linkLang = link.getAttribute("hreflang");
-    if (currentLang == ORIGINAL_LANG) {
-      if (linkLang == ORIGINAL_LANG) {
+    if (currentLang == __MMRLSP_ORIGINAL_LANG) {
+      if (linkLang == __MMRLSP_ORIGINAL_LANG) {
         languageItemsToRemove.push(languageItem);
       } else {
         var pathSplit = window.location.pathname.split("/");
-        var newLink = pathSplit.slice(0, PATH_SPLITTER_INDEX).join('/') + '/' + linkLang + '/';
-        if (pathSplit.length > 3) {
-          newLink += pathSplit.slice(PATH_SPLITTER_INDEX).join("/")
-        }
+        var newLink = pathSplit.slice(0, MMRLSP_PATH_SPLITTER_INDEX).join('/') + '/' + linkLang + '/';
+        newLink += pathSplit.slice(MMRLSP_PATH_SPLITTER_INDEX).join("/")
         link.setAttribute("href", newLink);
       }
     } else {
       if (linkLang == currentLang) {
         languageItemsToRemove.push(languageItem);
       } else {
-        if (linkLang == ORIGINAL_LANG) {
+        if (linkLang == __MMRLSP_ORIGINAL_LANG) {
           linkLang = '';
         }
         var pathSplit = window.location.pathname.split("/");
-        var newLink = pathSplit.slice(0, PATH_SPLITTER_INDEX).join('/') + '/';
-        if (linkLang.length && linkLang != ORIGINAL_LANG) {
+        var newLink = pathSplit.slice(0, MMRLSP_PATH_SPLITTER_INDEX).join('/') + '/';
+        if (linkLang.length && linkLang != __MMRLSP_ORIGINAL_LANG) {
           newLink += (linkLang + '/');
         }
-        if (pathSplit.length > 4) {
-          newLink += pathSplit.slice(PATH_SPLITTER_INDEX + 1).join("/")
-        }
+        newLink += pathSplit.slice(MMRLSP_PATH_SPLITTER_INDEX + 1).join("/")
 
         link.setAttribute("href", newLink);
       }
