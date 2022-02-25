@@ -12,8 +12,20 @@ article .md-icon:not(.md-clipboard) {
   color: #f70019 !important;
 }
 
-article md-icon
-
 .md-source:hover {
   opacity: 1;
+}
+
+/* Search bar with lower opacity only when is closed */
+.md-search__input {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-md-toggle=search]:checked~.md-header .md-search__input  {
+  background-color: var(--md-default-bg-color) !important;
+}
+
+/* Reduce opacity of Github tag, stars and forks */
+.md-source__facts {
+  opacity: .85 !important;
 }
