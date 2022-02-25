@@ -1,7 +1,7 @@
 import tempfile
 
 
-class Translation:
+class Translation:  # pragma: no cover
     __slots__ = {
         'language',
         'po',
@@ -44,7 +44,7 @@ class Translation:
         )
 
 
-class Translations:
+class Translations:  # pragma: no cover
     __slots__ = {
         'files',
         'tempdir',
