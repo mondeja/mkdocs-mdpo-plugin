@@ -3,7 +3,6 @@
 import importlib
 import os
 import tempfile
-import uuid
 
 import pytest
 
@@ -22,21 +21,15 @@ import pytest
     ),
 )
 def test_set_on_build_error_event(mkdocs_minor_version_info):
-    # patch plugin instance
-    file_to_remove = os.path.join(
-        tempfile.gettempdir(),
-        f'mkdocs-mdpo-plugin--{uuid.uuid4().hex[:8]}.txt',
-    )
-    unexistent_file = os.path.join(
-        tempfile.gettempdir(),
-        f'mkdocs-mdpo-plugin--{uuid.uuid4().hex[:8]}.txt',
-    )
-    with open(file_to_remove, 'w') as f:
-        f.write('foo\n')
+    class FakeTranslations:
+        def __init__(self):
+            self.tempdir = tempfile.TemporaryDirectory(
+                prefix='mkdocs_mdpo__test_set_on_build_error_event'
+            )
 
     class MkdocsFakeMdpoPlugin:
         def __init__(self):
-            self._temp_pages_to_remove = [file_to_remove, unexistent_file]
+            self.translations = FakeTranslations()
 
     try:
         plugin = MkdocsFakeMdpoPlugin()
@@ -46,13 +39,11 @@ def test_set_on_build_error_event(mkdocs_minor_version_info):
         module.MkdocsBuild.instance(plugin)
         module.set_on_build_error_event(plugin)
 
-        assert os.path.isfile(file_to_remove)
-        assert not os.path.isfile(unexistent_file)
+        assert os.path.isdir(plugin.translations.tempdir.name)
 
         if mkdocs_minor_version_info >= (1, 2):
             plugin.on_build_error(plugin, 'foo')
 
-            assert not os.path.isfile(file_to_remove)
-            assert not os.path.isfile(unexistent_file)
+            assert not os.path.isdir(plugin.translations.tempdir.name)
     finally:
         module.MkdocsBuild._instance = None

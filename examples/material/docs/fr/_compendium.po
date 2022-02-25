@@ -1,0 +1,6 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Some content"
+msgstr "Du contenu"

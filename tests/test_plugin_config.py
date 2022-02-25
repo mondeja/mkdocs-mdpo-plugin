@@ -97,14 +97,14 @@ tests = (
             'languages': ['en', 'es'],
             'locale_dir': '',
             'dest_filename_template': (
-                '{{page.file.dest_path|replace(".html", "")}}-'
+                '{{file.dest_path|replace(".html", "")}}-'
                 '{{language}}.html'
             ),
         },
         None,
         {
             'index.html': ['<p>foo</p>'],
-            'index-es/index.html': ['<p>foo es</p>'],
+            'index-es.html': ['<p>foo es</p>'],
         },
         id='custom-dest_filename_template',
     ),
@@ -121,12 +121,12 @@ tests = (
             'locale_dir': 'locales',
             'languages': ['en', 'es'],
             'dest_filename_template':
-            '{{page.file.dest_path|replace(".html", "")}}_{{language}}.html',
+            '{{file.dest_path|replace(".html", "")}}_{{language}}.html',
         },
         None,
         {
             'index.html': ['<p>foo</p>'],
-            'index_es/index.html': ['<p>foo es</p>'],
+            'index_es.html': ['<p>foo es</p>'],
         },
         id='custom-locale_dir+dest_filename_template',
     ),

@@ -3,10 +3,10 @@ msgid ""
 msgstr ""
 
 msgid "Home"
-msgstr ""
+msgstr "Accueil"
 
 msgid "Welcome to MkDocs"
-msgstr ""
+msgstr "Bienvenue sur mkdocs"
 
 msgid "Some content"
 msgstr ""

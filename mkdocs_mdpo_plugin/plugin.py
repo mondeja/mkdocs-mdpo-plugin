@@ -4,7 +4,6 @@ import functools
 import math
 import os
 import sys
-import tempfile
 
 import mkdocs
 import polib
@@ -363,11 +362,17 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
     def on_post_page(self, output, page, config):
         if hasattr(page.file, '_mdpo_language'):
-            os.makedirs(os.path.join(config['site_dir'], os.path.dirname(page.file.url)))
+            # write translated HTML file to 'site' directory
+            os.makedirs(
+                os.path.join(config['site_dir'], os.path.dirname(page.file.url)),
+                exist_ok=True,
+            )
+
             render_path = os.path.join(
                 config['site_dir'],
                 page.file.url
             ).rstrip('.md') + '.html'
+
             with open(render_path, 'w') as f:
                 f.write(output)
         return output
@@ -375,8 +380,9 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
     def on_post_build(self, config):
         self.translations.tempdir.cleanup()
 
-        # remove empty directories from site_dir
-        remove_empty_directories_from_dirtree(config['site_dir'])
+        for translations in self.translations.all.values():
+            for translation in translations:
+                translation.po.save(translation.po_filepath)
 
         # dump repeated msgids from language files to compendium and
         # remove them from language files

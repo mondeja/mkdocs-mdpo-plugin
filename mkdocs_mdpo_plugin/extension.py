@@ -70,7 +70,6 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
                     iterate_childs(child)
 
         iterate_childs(root)
-        tr.po.save(tr.po_filepath)
 
 
 class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
@@ -143,7 +142,6 @@ class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
                     iterate_childs(child)
 
         iterate_childs(root)
-        tr.po.save(tr.po_filepath)
 
 
 class MkdocsMdpoExtension(Extension):
