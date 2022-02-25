@@ -172,15 +172,13 @@ Template for destination file name inside `site/` directory. This is a valid
 [Jinja2 template][jinja2-template] string that will be used to define where
 should be placed the generated translated file inside the `site/` directory.
 
-The default value is `{{language}}/{{page.file.dest_path}}`, being `page` the
-original documentation page and `language` the language of the translation.
+The default value is `{{language}}/{{file.dest_path}}`, being `file` the
+original documentation file and `language` the language of the translation.
 
 The context for the template includes:
 
-- `language`: Translation language for the page.
-- `page`: The original Markdown page object inside your documentation directory.
-- `po_filepath`: The path of the PO file wich contains the translations.
-- `po`: A [`polib.POFile`][polib.POFile] object with the translations loaded.
+- `language`: Translation language for the file.
+- `file`: The original Markdown file object inside your documentation directory.
 - All the configuration settings of the plugin such as `languages`,
   `default_language`, `lc_messages`, `locale_dir`, `dest_filename_template`
   itself...
