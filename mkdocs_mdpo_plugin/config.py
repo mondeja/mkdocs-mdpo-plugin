@@ -23,7 +23,7 @@ def on_config_event(plugin, config, **kwargs):
 
     * Define properly `lc_messages`, `languages` and `locale_dir`
       configuration settings.
-    * Loads `mkdocs.mdpo` extension.
+    * Loads `mkdocs-mdpo` extension.
     * Configures md4c extensions accordingly to Python-Markdown extensions.
     * Stores the Markdown extensions used in the build in the
       ``extensions.markdown`` property of the plugin instance.
@@ -128,10 +128,10 @@ def on_config_event(plugin, config, **kwargs):
             if 'strikethrough' in plugin.extensions.md4c:
                 plugin.extensions.md4c.remove('strikethrough')
 
-        # configure internal 'mkdocs.mdpo' extension
-        if 'mkdocs.mdpo' in markdown_extensions:  # pragma: no cover
-            config['markdown_extensions'].remove('mkdocs.mdpo')
-        config['markdown_extensions'].append('mkdocs.mdpo')
+        # configure internal 'mkdocs-mdpo' extension
+        if 'mkdocs-mdpo' in markdown_extensions:  # pragma: no cover
+            config['markdown_extensions'].remove('mkdocs-mdpo')
+        config['markdown_extensions'].append('mkdocs-mdpo')
 
     # store reference in plugin to markdown_extensions for later usage
     plugin.extensions.markdown = markdown_extensions

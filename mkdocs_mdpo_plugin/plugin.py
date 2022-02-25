@@ -38,7 +38,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         self.extensions = Extensions()
 
         # instance that represents the run
-        # (needed by `mkdocs.mdpo` extension)
+        # (needed by `mkdocs-mdpo` extension)
         MkdocsBuild.instance(self)
 
         super().__init__(*args, **kwargs)
@@ -183,7 +183,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
         * For each documentation page, creates another documentation page
           for each language that will be translated (part here and part
-          inside the `mkdocs.mdpo` extension, see
+          inside the `mkdocs-mdpo` extension, see
           :py:mod:`mkdocs_mdpo_plugin.extension` module).
         """
         # only process original files, pages created for translation
