@@ -365,20 +365,6 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
         self.translations.current = None
 
-        for lang, file in _mdpo_languages.items():
-            if file.page.canonical_url.endswith('.md'):
-                if config['use_directory_urls']:
-                    file.page.canonical_url = (
-                        page.canonical_url
-                            .rstrip('.md')
-                            .rstrip('index')
-                            .rstrip('/') + '/'
-                    )
-                else:
-                    file.page.canonical_url = (
-                        page.canonical_url.rstrip('.md') + '.html'
-                    )
-
         page.file._mdpo_languages = _mdpo_languages
 
         return remove_mdpo_commands_preserving_escaped(markdown)
