@@ -2,7 +2,7 @@
 # mkdocs-mdpo-plugin
 
 {%
-   include-markdown "../README.md"
+   include-markdown "../../README.md"
    start="<!--description-start-->"
    end="<!--description-end-->"
    rewrite_relative_urls=false
@@ -10,7 +10,7 @@
 %}
 
 {%
-   include-markdown "../README.md"
+   include-markdown "../../README.md"
    start="<!--intro-start-->"
    end="<!--intro-end-->"
    rewrite_relative_urls=false
@@ -38,7 +38,9 @@ adjusted somewhat to be supported correctly (see
 
 ## Known limitations
 
-- The command `mkdocs serve` doesn't work.
+- The command `mkdocs serve` doesn't work if you store the PO files inside
+ the documentation folder. Use another layout like the explained in
+ [`locale_dir` configuration](config/#locale_dir-str).
 - Currently, edited messages are not marked as fuzzy like
  [xgtettext][xgettext-docs] does.
 

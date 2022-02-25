@@ -3,9 +3,10 @@ site_url: https://mkdocs-mdpo.ga
 site_description: Mkdocs plugin for translations using PO files
 site_author: Álvaro Mondéjar Rubio
 
+docs_dir: docs/src
 repo_url: https://github.com/mondeja/mkdocs-mdpo-plugin
 repo_name: mkdocs-mdpo-plugin
-edit_uri: tree/master/docs
+edit_uri: tree/master/docs/src
 
 extra_javascript:
   - assets/javascripts/extensions-support.js
@@ -13,11 +14,9 @@ extra_css:
   - assets/stylesheets/theme-overrides.css
   - assets/stylesheets/pymdownx.progressbar.css
 
-docs_dir: docs
-
 theme:
   name: material
-  custom_dir: docs/overrides
+  custom_dir: docs/theme-overrides
   language: en
   icon:
     repo: fontawesome/brands/github
@@ -77,9 +76,10 @@ plugins:
           rendering:
             show_source: false
             show_root_toc_entry: false
-  - material-relative-language-selector:
-      root_domain: true
-  - mdpo
+  # - material-relative-language-selector:
+  #     root_domain: true
+  - mdpo:
+      locale_dir: ../locale
   - minify:
       minify_html: true
 

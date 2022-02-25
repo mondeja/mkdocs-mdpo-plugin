@@ -149,9 +149,6 @@ msgstr ""
 "[xgettext-docs]: "
 "https://www.gnu.org/software/gettext/manual/gettext.html#xgettext-Invocation"
 
-msgid "The command `mkdocs serve` doesn't work."
-msgstr "El comando `mkdocs serve` no funciona."
-
 msgid ""
 "As with [mkdocs][mkdocs-docs] you write [Python-Markdown][python-markdown-"
 "docs]'s implementation of Markdown, **mkdocs-mdpo-plugin** uses the "
@@ -212,3 +209,12 @@ msgstr "[hrcgen-docs]: https://hrcgen.ml/es/"
 
 msgid "Improve the mkdocs-material's language selector"
 msgstr "Mejora el selector de idioma de mkdocs-material"
+
+msgid ""
+"The command `mkdocs serve` doesn't work if you store the PO files inside the"
+" documentation folder. Use another layout like the explained in "
+"[`locale_dir` configuration](config/#locale_dir-str)."
+msgstr ""
+"El comando `mkdocs serve` no funciona si almacenas los archivos PO dentro"
+" del directorio de documentación. Usa otro layout como el explicado en"
+" [la configuration `locale_dir`](config/#locale_dir-str)."

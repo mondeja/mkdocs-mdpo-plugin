@@ -41,9 +41,10 @@ Original language of your files. If not defined, the first language found in
 <!-- mdpo-disable-next-line -->
 ### **`locale_dir`** (*str*)
 
-Directory inside your documentation where the PO translation files will be
-placed. If not defined, the root of `docs` (`docs_dir` setting) will be used,
-so the default layout would be something like:
+Directory where the PO translation files will be placed. If not defined,
+the root of your documentation (`docs_dir` setting) will be used,
+which will not allow you to use the command `mkdocs serve`. The default
+layout would be something like:
 
 === "Configuration"
 
@@ -67,20 +68,25 @@ so the default layout would be something like:
     └── index.md
     ```
 
-Defining it to `locale`, the layout will change a bit, but this doesn't mean
-that this new `locale/` folder will be included in the `site/` directory
-(see [`dest_filename_template`](#dest_filename_template-str)).
+The problem with this layout is that doesn't allow you to use the
+command `mkdocs serve`.
+
+The recommended practice is to organize your tipical `docs/` directory
+with multiple subdirectories, one for documentation files, other for
+translation files, other for theme overrides...
 
 === "Configuration"
 
     ```yaml
+    docs_dir: docs/src
+
     plugins:
       - mdpo:
           languages:
             - en
             - es
             - fr
-          locale_dir: locale
+          locale_dir: ../locale
     ```
 
 === "Documentation directories tree"
@@ -89,12 +95,12 @@ that this new `locale/` folder will be included in the `site/` directory
     docs
     ├── locale
     │   ├── es
-    │   │   └── index.md.po
-    |   └── fr
-    |       └── index.md.po
-    └── index.md
+    │   │   └── index.md.po
+    │   └── fr
+    │       └── index.md.po
+    └── src
+        └── index.md
     ```
-
 
 <!-- mdpo-disable-next-line -->
 ### **`lc_messages`** (*bool* or *str*)

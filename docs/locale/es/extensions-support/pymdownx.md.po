@@ -2,9 +2,6 @@
 msgid ""
 msgstr ""
 
-msgid "PyMdown extensions"
-msgstr "Extensiones PyMdown"
-
 msgid ""
 "There is no way of skip inline codespan blocks from being included in "
 "translations:"
@@ -87,9 +84,6 @@ msgstr "Contenido de pestaña"
 msgid "~~Delete me~~"
 msgstr "~~Elimíname~~"
 
-msgid "Some inserted content from another file."
-msgstr "Algo de contenido insertado desde otro archivo."
-
 msgid "++ctrl+alt+delete++"
 msgstr "++ctrl+alt+f10++"
 
@@ -105,3 +99,6 @@ msgid ""
 msgstr ""
 "[pymdown-extensions]: https://facelessuser.github.io/pymdown-"
 "extensions/extensions"
+
+msgid "PyMdown extensions"
+msgstr "Extensiones PyMdown"

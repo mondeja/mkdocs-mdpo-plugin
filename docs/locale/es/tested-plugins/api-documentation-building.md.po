@@ -2,9 +2,6 @@
 msgid ""
 msgstr ""
 
-msgid "API documentation building"
-msgstr "Construcción de documentación de API"
-
 msgid "[API documentation building][api-documentation-building]"
 msgstr "[Construcción de documentación de API][api-documentation-building]"
 
@@ -21,7 +18,6 @@ msgstr ""
 "Puedes traducir tus cadenas de documentación usando este plugin con mkdocs-"
 "mdpo-plugin."
 
-#, fuzzy
 msgid "[mkdocstrings-github-link]: https://github.com/pawamoy/mkdocstrings"
 msgstr "[mkdocstrings-github-link]: https://github.com/pawamoy/mkdocstrings"
 
@@ -33,3 +29,6 @@ msgstr "Documentación de función."
 
 msgid "**`mkdocs_mdpo_plugin.docs_helper.function`**"
 msgstr "**`mkdocs_mdpo_plugin.docs_helper.function`**"
+
+msgid "API documentation building"
+msgstr "Construcción de documentación de API"

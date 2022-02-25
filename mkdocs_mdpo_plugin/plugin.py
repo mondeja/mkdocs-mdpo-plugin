@@ -9,10 +9,10 @@ import mkdocs
 import polib
 from jinja2 import Template
 from mdpo.md2po import Md2Po
-from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po2md import Po2Md
 
 from mkdocs_mdpo_plugin.config import CONFIG_SCHEME, on_config_event
+from mkdocs_mdpo_plugin.extensions import Extensions
 from mkdocs_mdpo_plugin.mdpo_events import (
     build_md2po_events,
     build_po2md_events,
@@ -34,14 +34,11 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         # temporal translation files
         self.translations = Translations()
 
-        # md4c extensions used in mdpo translation (depend on Python-Markdown
-        # configured extensions in `mkdocs.yml`)
-        self._md4c_extensions = DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
-        # markdown extensions used by the build (loaded on config event)
-        self._markdown_extensions = None
+        # Markdown extensions configuration
+        self.extensions = Extensions()
 
         # instance that represents the run
-        # (needed by `mkdocs.mdpo` extensions)
+        # (needed by `mkdocs.mdpo` extension)
         MkdocsBuild.instance(self)
 
         super().__init__(*args, **kwargs)
@@ -204,14 +201,14 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         # extract translations from original Markdown file
         md2po = Md2Po(
             markdown,
-            events=build_md2po_events(self._markdown_extensions),
+            events=build_md2po_events(self.extensions.markdown),
             mark_not_found_as_obsolete=False,
             location=False,
             ignore_msgids=self.config['ignore_msgids'],
         )
         original_po = md2po.extract()
 
-        po2md_events = build_po2md_events(self._markdown_extensions)
+        po2md_events = build_po2md_events(self.extensions.markdown)
 
         for language in self._non_default_languages():
             lang_docs_dir = self._language_dir(config['docs_dir'], language)
@@ -453,6 +450,21 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
         # reset mkdocs build instance
         MkdocsBuild._instance = None
+
+    def on_serve(self, server, builder, **kwargs):
+        """When serving with livereload server, prevent a infinite loop
+        if the user edits a PO file if is placed inside documentation
+        directory.
+        """
+        if '..' not in self.config['locale_dir']:
+            sys.stderr.write(
+                'ERROR    -  '
+                "You need to set 'locale_dir' configuration setting"
+                ' pointing to a directory placed outside'
+                " the documentation directory ('docs_dir') in order to"
+                ' use the Mkdocs livereload server.\n',
+            )
+            sys.exit(1)
 
 
 set_on_build_error_event(MdpoPlugin)

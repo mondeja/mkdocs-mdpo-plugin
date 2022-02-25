@@ -2,9 +2,6 @@
 msgid ""
 msgstr ""
 
-msgid "Official extensions"
-msgstr "Extensiones oficiales"
-
 msgid "*[HTML]: Hyper Text Markup Language"
 msgstr "*[HTML]: Lenguaje de Marcado de Hipertexto"
 
@@ -92,3 +89,6 @@ msgstr "[^1]: Esto es el contenido de una nota al pie."
 
 msgid "[^2]: This is another footnote content."
 msgstr "[^2]: Esto es el contenido de otra nota al pie."
+
+msgid "Official extensions"
+msgstr "Extensiones oficiales"
