@@ -1,0 +1,26 @@
+site_name: mkdocs-mdpo-plugin translation PO files outside docs folder example
+site_url: https://mkdocs-mdpo.ga
+docs_dir: docs/src
+
+theme:
+  name: material
+  language: en
+
+nav:
+  - Home: index.md
+
+plugins:
+  - search
+  - mdpo:
+      locale_dir: ../locale
+
+extra:
+  alternate:
+    - name: English
+      lang: en
+    - name: Español
+      link: es
+      lang: es
+    - name: Français
+      link: fr
+      lang: fr

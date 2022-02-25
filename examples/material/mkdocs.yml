@@ -1,0 +1,25 @@
+site_name: mkdocs-mdpo-plugin Material example
+site_url: https://mkdocs-mdpo.ga
+
+theme:
+  name: material
+  language: en
+
+nav:
+  - Home: index.md
+  - Foo: foo.md
+
+plugins:
+  - search
+  - mdpo
+
+extra:
+  alternate:
+    - name: English
+      lang: en
+    - name: Español
+      link: es
+      lang: es
+    - name: Français
+      link: fr
+      lang: fr

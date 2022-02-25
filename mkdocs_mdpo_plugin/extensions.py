@@ -1,40 +1,40 @@
 import polib
 from markdown.extensions import Extension
 from markdown.treeprocessors import Treeprocessor
+from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 
-from mkdocs_mdpo_plugin.plugin import MkdocsBuild
+from mkdocs_mdpo_plugin.mkdocs_utils import MkdocsBuild
 
 
 class MkdocsMdpoTreeProcessor(Treeprocessor):
     def run(self, root):
         mdpo_plugin = MkdocsBuild().mdpo_plugin
-
-        current_page = mdpo_plugin.current_page
-        if not hasattr(current_page, '_language'):
+        tr = mdpo_plugin.translations.current
+        if tr is None:
             return
 
         def process_translation(node, msgid):
-            if msgid not in current_page._translated_entries_msgstrs:
-                if msgid in current_page._po_msgids:
-                    for entry in current_page._po:
+            if msgid not in tr.translated_msgstrs:
+                if msgid in tr.po_msgids:
+                    for entry in tr.po:
                         if entry.msgid == msgid:
                             if entry.msgstr:
                                 node.text = entry.msgstr
                                 (
-                                    current_page._translated_entries_msgstrs
+                                    tr.translated_msgstrs
                                 ).append(
                                     entry.msgstr,
                                 )
                             entry.obsolete = False
-                            current_page._translated_entries_msgids.append(
+                            tr.translated_msgids.append(
                                 entry.msgid,
                             )
-                elif msgid not in current_page._disabled_msgids:
-                    current_page._po_msgids.append(msgid)
+                elif msgid not in tr.disabled_msgids:
+                    tr.po_msgids.append(msgid)
                     entry = polib.POEntry(msgid=msgid, msgstr='')
-                    current_page._po.append(entry)
+                    tr.po.append(entry)
 
-        if 'pymdownx.tasklist' in mdpo_plugin._markdown_extensions:
+        if 'pymdownx.tasklist' in mdpo_plugin.extensions.markdown:
             node_should_be_processed = lambda node: False if (
                 node.tag == 'li' and node.text[:3] in ['[ ]', '[x]', '[X]']
             ) else True
@@ -71,54 +71,53 @@ class MkdocsMdpoTreeProcessor(Treeprocessor):
                     iterate_childs(child)
 
         iterate_childs(root)
-        current_page._po.save(current_page._po_filepath)
 
 
 class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
     def run(self, root):
         mdpo_plugin = MkdocsBuild().mdpo_plugin
 
-        current_page = mdpo_plugin.current_page
-        if not hasattr(current_page, '_language'):
+        tr = mdpo_plugin.translations.current
+        if tr is None:
             return
 
         def process_translation(node, msgid):
-            if msgid not in current_page._translated_entries_msgstrs:
-                if msgid in current_page._po_msgids:
-                    for entry in current_page._po:
+            if msgid not in tr.translated_msgstrs:
+                if msgid in tr.po_msgids:
+                    for entry in tr.po:
                         if entry.msgid == msgid:
                             if entry.msgstr:
                                 node.attrib['title'] = entry.msgstr
                                 (
-                                    current_page._translated_entries_msgstrs
+                                    tr.translated_msgstrs
                                 ).append(
                                     entry.msgstr,
                                 )
                             entry.obsolete = False
-                            current_page._translated_entries_msgids.append(
+                            tr.translated_msgids.append(
                                 entry.msgid,
                             )
-                elif msgid not in current_page._disabled_msgids:
-                    current_page._po_msgids.append(msgid)
+                elif msgid not in tr.disabled_msgids:
+                    tr.po_msgids.append(msgid)
                     entry = polib.POEntry(msgid=msgid, msgstr='')
-                    current_page._po.append(entry)
+                    tr.po.append(entry)
 
-        if 'abbr' in mdpo_plugin._markdown_extensions:
-            if 'pymdownx.emoji' in mdpo_plugin._markdown_extensions:
+        if 'abbr' in mdpo_plugin.extensions.markdown:
+            if 'pymdownx.emoji' in mdpo_plugin.extensions.markdown:
                 node_should_be_processed = lambda node: (
                     node.tag != 'abbr' and
                     node.get('class') not in ['emojione', 'twemoji', 'gemoji']
                 )
             else:
                 node_should_be_processed = lambda node: node.tag != 'abbr'
-        elif 'pymdownx.emoji' in mdpo_plugin._markdown_extensions:
+        elif 'pymdownx.emoji' in mdpo_plugin.extensions.markdown:
             node_should_be_processed = lambda node: (
                 node.get('class') not in ['emojione', 'twemoji', 'gemoji']
             )
 
         if (
-            'abbr' in mdpo_plugin._markdown_extensions
-            or 'pymdownx.emoji' in mdpo_plugin._markdown_extensions
+            'abbr' in mdpo_plugin.extensions.markdown
+            or 'pymdownx.emoji' in mdpo_plugin.extensions.markdown
         ):
             def iterate_childs(_root):
                 for child in _root:
@@ -145,8 +144,6 @@ class MkdocsMdpoTitlesTreeProcessor(Treeprocessor):
 
         iterate_childs(root)
 
-        current_page._po.save(current_page._po_filepath)
-
 
 class MkdocsMdpoExtension(Extension):
     def extendMarkdown(self, md):
@@ -163,3 +160,18 @@ class MkdocsMdpoExtension(Extension):
             'mkdocs-mdpo-tree-titles',
             -88888,
         )
+
+
+class Extensions:
+    __slots__ = {
+        'markdown',
+        'md4c',
+    }
+
+    def __init__(self):
+        # markdown extensions used by the build (loaded on config event)
+        self.markdown = None
+
+        # md4c extensions used in mdpo translation (depend on Python-Markdown
+        # configured extensions in `mkdocs.yml`)
+        self.md4c = DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS

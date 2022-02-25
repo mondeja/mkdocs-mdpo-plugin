@@ -2,8 +2,6 @@
 
 from mkdocs import __version__ as __mkdocs_version__
 
-from mkdocs_mdpo_plugin.io import remove_file_and_parent_dir_if_empty
-
 
 MKDOCS_MINOR_VERSION_INFO = tuple(
     int(n) for n in __mkdocs_version__.split('.')[:2]
@@ -26,13 +24,8 @@ class MkdocsBuild:
         return cls._instance
 
 
-def __on_build_error(_self):
-    for filepath in _self._temp_pages_to_remove:
-        try:
-            remove_file_and_parent_dir_if_empty(filepath)
-        except FileNotFoundError:
-            pass
-
+def __on_build_error(self):
+    self.translations.tempdir.cleanup()
     MkdocsBuild._instance = None
 
 

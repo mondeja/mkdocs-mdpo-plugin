@@ -2,9 +2,6 @@
 msgid ""
 msgstr ""
 
-msgid "API documentation building"
-msgstr "Construcción de documentación de API"
-
 msgid "[API documentation building][api-documentation-building]"
 msgstr "[Construcción de documentación de API][api-documentation-building]"
 
@@ -15,23 +12,23 @@ msgstr ""
 "[api-documentation-building]: https://github.com/mkdocs/mkdocs/wiki/MkDocs-"
 "Plugins#api-documentation-building"
 
-msgid "Remove empty directories walking through all nested subdirectories."
-msgstr ""
-"Elimina los directorios vacíos iterando por todos los subdirectorios "
-"anidados."
-
 msgid ""
 "You can translate your docstrings using this plugin with mkdocs-mdpo-plugin."
 msgstr ""
 "Puedes traducir tus cadenas de documentación usando este plugin con mkdocs-"
 "mdpo-plugin."
 
-msgid "**`mkdocs_mdpo_plugin.io.remove_empty_directories_from_dirtree`**"
-msgstr "**`mkdocs_mdpo_plugin.io.remove_empty_directories_from_dirtree`**"
-
-msgid "Top directory tree path."
-msgstr "Ruta al directorio padre de todos."
-
-#, fuzzy
 msgid "[mkdocstrings-github-link]: https://github.com/pawamoy/mkdocstrings"
 msgstr "[mkdocstrings-github-link]: https://github.com/pawamoy/mkdocstrings"
+
+msgid "Value to check."
+msgstr "Valor a comprobar."
+
+msgid "Function documentation."
+msgstr "Documentación de función."
+
+msgid "**`mkdocs_mdpo_plugin.docs_helper.function`**"
+msgstr "**`mkdocs_mdpo_plugin.docs_helper.function`**"
+
+msgid "API documentation building"
+msgstr "Construcción de documentación de API"

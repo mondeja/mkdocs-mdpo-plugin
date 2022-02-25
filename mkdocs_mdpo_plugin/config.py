@@ -11,7 +11,7 @@ CONFIG_SCHEME = (
     ('lc_messages', Type((str, bool), default='')),
     (
         'dest_filename_template',
-        Type(str, default='{{language}}/{{page.file.dest_path}}'),
+        Type(str, default='{{language}}/{{file.dest_path}}'),
     ),
     ('ignore_extensions', Type(list, default=['.po', '.pot', '.mo'])),
     ('ignore_msgids', Type(list, default=[])),
@@ -26,7 +26,7 @@ def on_config_event(plugin, config, **kwargs):
     * Loads `mkdocs.mdpo` extension.
     * Configures md4c extensions accordingly to Python-Markdown extensions.
     * Stores the Markdown extensions used in the build in the
-      ``_markdown_extensions`` property of the plugin instance.
+      ``extensions.markdown`` property of the plugin instance.
     * Creates the persistent files cache for the project.
     """
     if plugin.config['lc_messages'] is True:
@@ -93,40 +93,40 @@ def on_config_event(plugin, config, **kwargs):
     # configure MD4C extensions
     if markdown_extensions:
         if 'tables' not in markdown_extensions:
-            if 'tables' in plugin._md4c_extensions:
-                plugin._md4c_extensions.remove('tables')
+            if 'tables' in plugin.extensions.md4c:
+                plugin.extensions.md4c.remove('tables')
         else:
-            if 'tables' not in plugin._md4c_extensions:
-                plugin._md4c_extensions.append('tables')
+            if 'tables' not in plugin.extensions.md4c:
+                plugin.extensions.md4c.append('tables')
         if 'wikilinks' not in markdown_extensions:
-            if 'wikilinks' in plugin._md4c_extensions:
-                plugin._md4c_extensions.remove('wikilinks')
+            if 'wikilinks' in plugin.extensions.md4c:
+                plugin.extensions.md4c.remove('wikilinks')
         else:
-            if 'wikilinks' not in plugin._md4c_extensions:
-                plugin._md4c_extensions.append('wikilinks')
+            if 'wikilinks' not in plugin.extensions.md4c:
+                plugin.extensions.md4c.append('wikilinks')
 
         # spaces after '#' are optional in Python-Markdown for headers,
         # but the extension 'pymdownx.saneheaders' makes them mandatory
         if 'pymdownx.saneheaders' in markdown_extensions:
-            if 'permissive_atx_headers' in plugin._md4c_extensions:
-                plugin._md4c_extensions.remove('permissive_atx_headers')
+            if 'permissive_atx_headers' in plugin.extensions.md4c:
+                plugin.extensions.md4c.remove('permissive_atx_headers')
         else:
-            if 'permissive_atx_headers' not in plugin._md4c_extensions:
-                plugin._md4c_extensions.append('permissive_atx_headers')
+            if 'permissive_atx_headers' not in plugin.extensions.md4c:
+                plugin.extensions.md4c.append('permissive_atx_headers')
 
         # 'pymdownx.tasklist' enables 'tasklists' MD4C extentsion
         if 'pymdownx.tasklist' in markdown_extensions:
-            if 'tasklists' not in plugin._md4c_extensions:
-                plugin._md4c_extensions.append('tasklists')
+            if 'tasklists' not in plugin.extensions.md4c:
+                plugin.extensions.md4c.append('tasklists')
         else:
-            if 'tasklists' in plugin._md4c_extensions:
-                plugin._md4c_extensions.remove('tasklists')
+            if 'tasklists' in plugin.extensions.md4c:
+                plugin.extensions.md4c.remove('tasklists')
 
         # 'pymdownx.tilde' enables strikethrough syntax, but only works
         # if the MD4C extension is disabled
         if 'pymdownx.tilde' in markdown_extensions:
-            if 'strikethrough' in plugin._md4c_extensions:
-                plugin._md4c_extensions.remove('strikethrough')
+            if 'strikethrough' in plugin.extensions.md4c:
+                plugin.extensions.md4c.remove('strikethrough')
 
         # configure internal 'mkdocs.mdpo' extension
         if 'mkdocs.mdpo' in markdown_extensions:  # pragma: no cover
@@ -134,6 +134,6 @@ def on_config_event(plugin, config, **kwargs):
         config['markdown_extensions'].append('mkdocs.mdpo')
 
     # store reference in plugin to markdown_extensions for later usage
-    plugin._markdown_extensions = markdown_extensions
+    plugin.extensions.markdown = markdown_extensions
 
     # ----------------------------------------------------------

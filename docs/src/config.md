@@ -41,9 +41,10 @@ Original language of your files. If not defined, the first language found in
 <!-- mdpo-disable-next-line -->
 ### **`locale_dir`** (*str*)
 
-Directory inside your documentation where the PO translation files will be
-placed. If not defined, the root of `docs` (`docs_dir` setting) will be used,
-so the default layout would be something like:
+Directory where the PO translation files will be placed. If not defined,
+the root of your documentation (`docs_dir` setting) will be used,
+which will not allow you to use the command `mkdocs serve`. The default
+layout would be something like:
 
 === "Configuration"
 
@@ -67,20 +68,25 @@ so the default layout would be something like:
     └── index.md
     ```
 
-Defining it to `locale`, the layout will change a bit, but this doesn't mean
-that this new `locale/` folder will be included in the `site/` directory
-(see [`dest_filename_template`](#dest_filename_template-str)).
+The problem with this layout is that doesn't allow you to use the
+command `mkdocs serve`.
+
+The recommended practice is to organize your tipical `docs/` directory
+with multiple subdirectories, one for documentation files, other for
+translation files, other for theme overrides...
 
 === "Configuration"
 
     ```yaml
+    docs_dir: docs/src
+
     plugins:
       - mdpo:
           languages:
             - en
             - es
             - fr
-          locale_dir: locale
+          locale_dir: ../locale
     ```
 
 === "Documentation directories tree"
@@ -89,12 +95,12 @@ that this new `locale/` folder will be included in the `site/` directory
     docs
     ├── locale
     │   ├── es
-    │   │   └── index.md.po
-    |   └── fr
-    |       └── index.md.po
-    └── index.md
+    │   │   └── index.md.po
+    │   └── fr
+    │       └── index.md.po
+    └── src
+        └── index.md
     ```
-
 
 <!-- mdpo-disable-next-line -->
 ### **`lc_messages`** (*bool* or *str*)
@@ -172,15 +178,13 @@ Template for destination file name inside `site/` directory. This is a valid
 [Jinja2 template][jinja2-template] string that will be used to define where
 should be placed the generated translated file inside the `site/` directory.
 
-The default value is `{{language}}/{{page.file.dest_path}}`, being `page` the
-original documentation page and `language` the language of the translation.
+The default value is `{{language}}/{{file.dest_path}}`, being `file` the
+original documentation file and `language` the language of the translation.
 
 The context for the template includes:
 
-- `language`: Translation language for the page.
-- `page`: The original Markdown page object inside your documentation directory.
-- `po_filepath`: The path of the PO file wich contains the translations.
-- `po`: A [`polib.POFile`][polib.POFile] object with the translations loaded.
+- `language`: Translation language for the file.
+- `file`: The original Markdown file object inside your documentation directory.
 - All the configuration settings of the plugin such as `languages`,
   `default_language`, `lc_messages`, `locale_dir`, `dest_filename_template`
   itself...
