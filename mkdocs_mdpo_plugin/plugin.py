@@ -210,6 +210,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
         po2md_events = build_po2md_events(self.extensions.markdown)
 
+        _mdpo_languages = {}  # {lang: file}
+
         for language in self._non_default_languages():
             lang_docs_dir = self._language_dir(config['docs_dir'], language)
 
@@ -316,6 +318,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 config,
             )
             files.append(new_file)
+            _mdpo_languages[language] = new_file
 
             _disabled_msgids = [
                 entry.msgid for entry in po2md.disabled_entries
@@ -361,6 +364,22 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             self.translations.all[language].append(translation)
 
         self.translations.current = None
+
+        for lang, file in _mdpo_languages.items():
+            if file.page.canonical_url.endswith('.md'):
+                if config['use_directory_urls']:
+                    file.page.canonical_url = (
+                        page.canonical_url
+                            .rstrip('.md')
+                            .rstrip('index')
+                            .rstrip('/') + '/'
+                    )
+                else:
+                    file.page.canonical_url = (
+                        page.canonical_url.rstrip('.md') + '.html'
+                    )
+
+        page.file._mdpo_languages = _mdpo_languages
 
         return remove_mdpo_commands_preserving_escaped(markdown)
 
