@@ -1,4 +1,4 @@
-def function(value):
+def function(value):  # pragma: no cover
     """Function documentation.
 
     Args:

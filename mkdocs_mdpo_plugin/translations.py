@@ -2,6 +2,16 @@ import tempfile
 
 
 class Translation:
+    __slots__ = {
+        'language',
+        'po',
+        'po_filepath',
+        'po_msgids',
+        'translated_msgstrs',
+        'translated_msgids',
+        'disabled_msgids',
+    }
+
     def __init__(
             self,
             language,
@@ -35,6 +45,17 @@ class Translation:
 
 
 class Translations:
+    __slots__ = {
+        'files',
+        'tempdir',
+        'nav',
+        'compendium_files',
+        'compendium_msgids',
+        'compendium_msgstrs_tr',
+        'current',
+        'all',
+    }
+
     def __init__(self):
         # temporal translated files created by the plugin at runtime
         # used as `self.files[file.src_path][language]``

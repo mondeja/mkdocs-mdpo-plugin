@@ -42,7 +42,7 @@ adjusted somewhat to be supported correctly (see
 - Currently, edited messages are not marked as fuzzy like
  [xgtettext][xgettext-docs] does.
 
-## Immprove the mkdocs-material's language selector
+## Improve the mkdocs-material's language selector
 
 If you are using the [mkdocs-material theme][mkdocs-material], you can install
 the [`mkdocs-material-relative-language-selector` plugin][mmrls] to make
