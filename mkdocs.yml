@@ -76,8 +76,8 @@ plugins:
           rendering:
             show_source: false
             show_root_toc_entry: false
-  # - material-relative-language-selector:
-  #     root_domain: true
+  - material-relative-language-selector:
+      root_domain: true
   - mdpo:
       locale_dir: ../locale
   - minify:
