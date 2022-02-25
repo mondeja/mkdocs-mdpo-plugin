@@ -1,7 +1,7 @@
 import tempfile
 
 
-class Translation:  # pragma: no cover
+class Translation:
     __slots__ = {
         'language',
         'po',
@@ -30,7 +30,7 @@ class Translation:  # pragma: no cover
         self.translated_msgids = translated_msgids
         self.disabled_msgids = disabled_msgids
 
-    def __str__(self):
+    def __str__(self):  # pragma: no cover
         return (
             f'Translation(language="{self.language}",'
             f' po=polib.POFile(...{str(len(self.po)) + " entries"}...)'
@@ -44,7 +44,7 @@ class Translation:  # pragma: no cover
         )
 
 
-class Translations:  # pragma: no cover
+class Translations:
     __slots__ = {
         'files',
         'tempdir',
@@ -84,7 +84,7 @@ class Translations:  # pragma: no cover
         # {lang: [Translation(...), Translation(...), ...]}
         self.all = {}
 
-    def __str__(self):
+    def __str__(self):  # pragma: no cover
         current = 'None' if self.current is None else 'Translation(...)'
         return (
             f'Translations(tempdir="{self.tempdir}",'

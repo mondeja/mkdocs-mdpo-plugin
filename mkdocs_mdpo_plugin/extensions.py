@@ -162,7 +162,7 @@ class MkdocsMdpoExtension(Extension):
         )
 
 
-class Extensions:  # pragma: no cover
+class Extensions:
     __slots__ = {
         'markdown',
         'md4c',
