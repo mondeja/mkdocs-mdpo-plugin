@@ -333,7 +333,7 @@ TESTS = (
     ),
     pytest.param(  # pymdownx.snippets
         {
-            'index.md': '--8<-- "docs/file-to-be-inserted.txt"\n',
+            'index.md': '--8<-- "docs/src/file-to-be-inserted.txt"\n',
         },
         {
             'es/index.md.po': {
