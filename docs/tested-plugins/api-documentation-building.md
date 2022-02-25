@@ -9,42 +9,29 @@ You can translate your docstrings using this plugin with mkdocs-mdpo-plugin.
 
 === "Output"
 
-    ### **`mkdocs_mdpo_plugin.io.remove_empty_directories_from_dirtree`**
+    ### **`mkdocs_mdpo_plugin.docs_helper.function`**
 
-    ::: mkdocs_mdpo_plugin.io.remove_empty_directories_from_dirtree
+    ::: mkdocs_mdpo_plugin.docs_helper.function
 
 === "Markdown"
 
     ```markdown
-    ### **`mkdocs_mdpo_plugin.io.remove_empty_directories_from_dirtree`**
+    ### **`mkdocs_mdpo_plugin.docs_helper.function`**
 
-    ::: mkdocs_mdpo_plugin.io.remove_empty_directories_from_dirtree
+    ::: mkdocs_mdpo_plugin.docs_helper.function
     ```
 
 === "PO file content"
 
     ```po
-    msgid ""
-    "[mkdocs-exclude-github-link]: https://github.com/apenwarr/mkdocs-exclude"
-    msgstr ""
-    "[mkdocs-exclude-github-link]: https://github.com/apenwarr/mkdocs-exclude"
+    msgid "Function documentation."
+    msgstr "Documentación de función."
 
-    msgid "Remove empty directories walking through all nested subdirectories."
-    msgstr ""
-    "Elimina los directorios vacíos iterando por todos los subdirectorios "
-    "anidados."
+    msgid "Value to check."
+    msgstr "Valor a comprobar."
 
-    msgid "Top directory tree path."
-    msgstr "Ruta al directorio padre de todos."
-
-    msgid ""
-    "You can translate your docstrings using this plugin with mkdocs-mdpo-plugin."
-    msgstr ""
-    "Puedes traducir tus cadenas de documentación usando este plugin con mkdocs-"
-    "mdpo-plugin."
-
-    msgid "**`mkdocs_mdpo_plugin.io.remove_empty_directories_from_dirtree`**"
-    msgstr "**`mkdocs_mdpo_plugin.io.remove_empty_directories_from_dirtree`**"
+    msgid "**`mkdocs_mdpo_plugin.docs_helper.function`**"
+    msgstr "**`mkdocs_mdpo_plugin.docs_helper.function`**"
     ```
 
 <!-- mdpo-enable -->

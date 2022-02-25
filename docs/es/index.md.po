@@ -170,9 +170,6 @@ msgstr ""
 "soportadas correctamente (ver [Soporte de extensiones][extensions-support-"
 "official])."
 
-msgid "Immprove the mkdocs-material's language selector"
-msgstr "Mejora el selector de idioma de mkdocs-material"
-
 msgid "[mkdocs-material]: https://squidfunk.github.io/mkdocs-material/"
 msgstr "[mkdocs-material]: https://squidfunk.github.io/mkdocs-material/"
 
@@ -212,3 +209,6 @@ msgstr "Proyectos usando mkdocs-mdpo-plugin"
 
 msgid "[hrcgen-docs]: https://hrcgen.ml"
 msgstr "[hrcgen-docs]: https://hrcgen.ml/es/"
+
+msgid "Improve the mkdocs-material's language selector"
+msgstr "Mejora el selector de idioma de mkdocs-material"

@@ -13,10 +13,6 @@ from mdpo.md4c import DEFAULT_MD4C_GENERIC_PARSER_EXTENSIONS
 from mdpo.po2md import Po2Md
 
 from mkdocs_mdpo_plugin.config import CONFIG_SCHEME, on_config_event
-from mkdocs_mdpo_plugin.io import (
-    remove_empty_directories_from_dirtree,
-    remove_file_and_parent_dir_if_empty,
-)
 from mkdocs_mdpo_plugin.mdpo_events import (
     build_md2po_events,
     build_po2md_events,

@@ -1,10 +1,6 @@
 """Mkdocs utilities"""
 
-import tempfile
-
 from mkdocs import __version__ as __mkdocs_version__
-
-from mkdocs_mdpo_plugin.io import remove_file_and_parent_dir_if_empty
 
 
 MKDOCS_MINOR_VERSION_INFO = tuple(
