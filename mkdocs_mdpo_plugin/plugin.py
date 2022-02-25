@@ -210,6 +210,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
         po2md_events = build_po2md_events(self.extensions.markdown)
 
+        _mdpo_languages = {}  # {lang: file}
+
         for language in self._non_default_languages():
             lang_docs_dir = self._language_dir(config['docs_dir'], language)
 
@@ -316,6 +318,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 config,
             )
             files.append(new_file)
+            _mdpo_languages[language] = new_file
 
             _disabled_msgids = [
                 entry.msgid for entry in po2md.disabled_entries
@@ -361,6 +364,9 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             self.translations.all[language].append(translation)
 
         self.translations.current = None
+
+        # set languages to render in sitemap.xml
+        page.file._mdpo_languages = _mdpo_languages
 
         return remove_mdpo_commands_preserving_escaped(markdown)
 

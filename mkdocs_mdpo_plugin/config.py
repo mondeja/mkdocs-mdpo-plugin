@@ -1,7 +1,11 @@
 """Configuration event for 'mkdocs-mdpo-plugin'."""
 
+import os
+
 from mkdocs.config.base import ValidationError
 from mkdocs.config.config_options import Type
+
+from mkdocs_mdpo_plugin import __file__ as installation_path
 
 
 CONFIG_SCHEME = (
@@ -132,6 +136,15 @@ def on_config_event(plugin, config, **kwargs):
         if 'mkdocs-mdpo' in markdown_extensions:  # pragma: no cover
             config['markdown_extensions'].remove('mkdocs-mdpo')
         config['markdown_extensions'].append('mkdocs-mdpo')
+
+    # install a i18n aware version of sitemap.xml if not provided by the user
+    theme_custom_dir = config['theme']._vars.get('custom_dir', '.')
+    if not os.path.isfile(os.path.join(theme_custom_dir, 'sitemap.xml')):
+        custom_sitemap_dir = os.path.join(
+            os.path.dirname(installation_path),
+            'custom_mdpo_sitemap',
+        )
+        config['theme'].dirs.insert(0, custom_sitemap_dir)
 
     # store reference in plugin to markdown_extensions for later usage
     plugin.extensions.markdown = markdown_extensions
