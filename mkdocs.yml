@@ -30,6 +30,7 @@ nav:
   - Tested plugins:
       - Navigation and page building: tested-plugins/navigation-and-page-building.md
       - API documentation building: tested-plugins/api-documentation-building.md
+  - Useful recipes: useful-recipes.md
 
 markdown_extensions:
   - toc:

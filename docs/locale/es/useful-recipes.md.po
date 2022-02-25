@@ -1,0 +1,54 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Useful recipes"
+msgstr "Recetas útiles"
+
+msgid "Relative mkdocs-material's language selector"
+msgstr "Selector de idioma de mkdocs-material relativo"
+
+msgid "pre-commit PO hooks"
+msgstr "Hooks PO para pre-commit"
+
+msgid ""
+"You can use [pre-commit-po-hooks] to check for untranslated, obsolete and "
+"fuzzy messages before each commit."
+msgstr ""
+"Puedes usar [pre-commit-po-hooks] para comprobar por mensajes no traducidos,"
+" obsoletos o confusos (marcados como `, fuzzy`) antes de cada commit."
+
+msgid ""
+"[pre-commit-po-hooks]: https://github.com/mondeja/pre-commit-po-hooks#readme"
+msgstr ""
+"[pre-commit-po-hooks]: https://github.com/mondeja/pre-commit-po-hooks#readme"
+
+msgid ".pre-commit-config.yaml"
+msgstr ".pre-commit-config.yaml"
+
+msgid "Example output"
+msgstr "Salida de ejemplo"
+
+msgid ""
+"If you are using the [mkdocs-material theme][mkdocs-material], you can "
+"install the [`mkdocs-material-relative-language-selector` plugin][mmrls] to "
+"make relative links between languages inside the same page and remove the "
+"current displayed language from the language selector:"
+msgstr ""
+"Si estás usando el [tema de mkdocs-material][mkdocs-material], puedes "
+"instalar el [plugin `mkdocs-material-relative-language-selector`][mmrls] "
+"para hacer relativos los links entre idiomas dentro de la misma página y "
+"eliminar el idioma actualmente desplegado del selector de idiomas:"
+
+msgid "Github Pages configuration"
+msgstr "Configuración para Github Pages"
+
+msgid "Custom root domain configuration"
+msgstr "Configuración con dominio raíz personalizado"
+
+msgid ""
+"[mmrls]: https://github.com/mondeja/mkdocs-material-relative-language-"
+"selector"
+msgstr ""
+"[mmrls]: https://github.com/mondeja/mkdocs-material-relative-language-"
+"selector"
