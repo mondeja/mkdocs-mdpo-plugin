@@ -81,6 +81,7 @@ plugins:
       root_domain: true
   - mdpo:
       locale_dir: ../locale
+      cross_language_search: false
   - minify:
       minify_html: true
 

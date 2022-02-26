@@ -54,6 +54,7 @@ class Translations:
         'compendium_msgstrs_tr',
         'current',
         'all',
+        'locations',
     }
 
     def __init__(self):
@@ -84,6 +85,11 @@ class Translations:
         # {lang: [Translation(...), Translation(...), ...]}
         self.all = {}
 
+        # possible URL locations of records with its correspondient
+        # language, needed to discriminate records on search indexes
+        # {location: language}
+        self.locations = {}
+
     def __str__(self):  # pragma: no cover
         current = 'None' if self.current is None else 'Translation(...)'
         return (
@@ -93,6 +99,7 @@ class Translations:
             f' compendium_msgids={str(self.compendium_msgids)},'
             ' compendium_msgstrs_tr='
             f'{str(self.compendium_msgstrs_tr)},'
-            f' current={current}'
+            f' current={current},'
+            f' locations={str(self.locations)}'
             ')'
         )

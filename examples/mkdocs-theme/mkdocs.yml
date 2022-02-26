@@ -1,0 +1,16 @@
+site_name: mkdocs-mdpo-plugin Mkdocs theme example
+site_url: https://mkdocs-mdpo.ga
+docs_dir: docs/src
+
+nav:
+  - Home: index.md
+
+plugins:
+  - search
+  - mdpo:
+      languages:
+        - en
+        - es
+        - fr
+      cross_language_search: false
+      locale_dir: ../locale

@@ -11,7 +11,8 @@ nav:
 
 plugins:
   - search
-  - mdpo
+  - mdpo:
+      cross_language_search: false
 
 extra:
   alternate:

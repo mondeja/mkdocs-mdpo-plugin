@@ -420,6 +420,18 @@ def test_plugin_config(
             ),
             id='languages=undefined-theme=material',
         ),
+        pytest.param(
+            {
+                'cross_language_search': False,
+            },
+            {},
+            mkdocs.config.base.ValidationError,
+            (
+                '"cross_language_search" setting is disabled but'
+                ' no "search" plugin has been added to "plugins"'
+            ),
+            id='cross_language_search=False-plugins={}',
+        ),
     ),
 )
 def test_plugin_config_errors(
