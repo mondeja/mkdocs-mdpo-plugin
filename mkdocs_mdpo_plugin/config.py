@@ -147,6 +147,14 @@ def on_config_event(plugin, config, **kwargs):
         )
         config['theme'].dirs.insert(0, custom_sitemap_dir)
 
+    # check that cross language search configuration is valid
+    if plugin.config.get('cross_language_search') is False:
+        if 'search' not in config['plugins']:
+            raise ValidationError(
+                '"cross_language_search" setting is disabled but'
+                ' no "search" plugin has been added to "plugins"',
+            )
+
     # store reference in plugin to markdown_extensions for later usage
     plugin.extensions.markdown = markdown_extensions
 

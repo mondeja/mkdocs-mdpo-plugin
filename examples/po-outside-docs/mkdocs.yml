@@ -13,6 +13,7 @@ plugins:
   - search
   - mdpo:
       locale_dir: ../locale
+      cross_language_search: false
 
 extra:
   alternate:

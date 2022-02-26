@@ -24,11 +24,8 @@ from mkdocs_mdpo_plugin.mkdocs_utils import (
     MkdocsBuild,
     set_on_build_error_event,
 )
-from mkdocs_mdpo_plugin.translations import (
-    Translation,
-    Translations,
-    TranslationSearchIndexes,
-)
+from mkdocs_mdpo_plugin.search_indexes import TranslationsSearchPatcher
+from mkdocs_mdpo_plugin.translations import Translation, Translations
 
 
 class MdpoPlugin(mkdocs.plugins.BasePlugin):
@@ -397,6 +394,13 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 elif not render_path.endswith('.html'):
                     render_path += '.html'
 
+            # save locations of records with languages for search indexes usage
+            location = os.path.relpath(
+                render_path.rstrip('index.html'),
+                config['site_dir'],
+            ) + '/'
+            self.translations.locations[location] = page.file._mdpo_language
+
             with open(render_path, 'w') as f:
                 f.write(output)
         return output
@@ -404,18 +408,24 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
     def on_post_build(self, config):
         self.translations.tempdir.cleanup()
 
-        if (
-            not self.config['cross_language_search'] and
-            'search' in config['plugins']
-        ):
+        if not self.config['cross_language_search']:
             # cross language search is disabled, so build indexes
             # for each language and patch the 'site_dir' directory
-            search_indexes = TranslationSearchIndexes(
+            search_patcher = TranslationsSearchPatcher(
                 config['site_dir'],
                 self.config['languages'],
                 self.config['default_language'],
+                # use mkdocs 'search' plugin if the theme
+                # has not its own implementation
+                (
+                    config['theme'].name
+                    if config['theme'].name
+                    in TranslationsSearchPatcher.supported_themes
+                    else 'mkdocs'
+                ),
+                self.translations.locations,
             )
-            search_indexes.patch_site_dir()
+            search_patcher.patch_site_dir()
 
         # save PO files
         for translations in self.translations.all.values():
@@ -488,14 +498,14 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         # reset mkdocs build instance
         MkdocsBuild._instance = None
 
-    def on_serve(self, server, builder, **kwargs):
+    def on_serve(self, *args, **kwargs):
         """When serving with livereload server, prevent a infinite loop
         if the user edits a PO file if is placed inside documentation
         directory.
         """
         if '..' not in self.config['locale_dir']:
             sys.stderr.write(
-                'ERROR    -  '
+                'ERROR [mdpo] -  '
                 "You need to set 'locale_dir' configuration setting"
                 ' pointing to a directory placed outside'
                 " the documentation directory ('docs_dir') in order to"
