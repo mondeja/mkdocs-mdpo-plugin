@@ -20,7 +20,7 @@ import os
 
 
 def _language_extension_path(path, extension, language, separator='_'):
-    return f'{path.rstrip(extension)}{separator}{language}{extension}'
+    return f'{path[:-len(extension)]}{separator}{language}{extension}'
 
 ##
 # Get worker Javascript files.
@@ -60,6 +60,7 @@ def _mkdocs_get_worker_js_files(site_dir):
 THEME_WORKER_FILES_FUNCS = {
     'material': _material_get_worker_js_files,
     'mkdocs': _mkdocs_get_worker_js_files,
+    'readthedocs': _mkdocs_get_worker_js_files,
 }
 
 ##
@@ -110,6 +111,7 @@ def _mkdocs_patch_worker_js_files(files, language):
 THEME_WORKER_PATCHS_FUNCS = {
     'material': _material_patch_worker_js_files,
     'mkdocs': _mkdocs_patch_worker_js_files,
+    'readthedocs': _mkdocs_patch_worker_js_files,
 }
 
 ##
@@ -151,9 +153,73 @@ def _mkdocs_patch_html_file(fpath, language, *args):
 THEME_HTML_PATCHS_FUNCS = {
     'material': _material_patch_html_file,
     'mkdocs': _mkdocs_patch_html_file,
+    'readthedocs': _mkdocs_patch_html_file,
 }
 
+##
+# Get search files
+##
+
+
+def _readthedocs_get_search_files(site_dir):
+    search_file_path = os.path.join(site_dir, 'search.html')
+    with open(search_file_path) as f:
+        search_file_content = f.read()
+    return [{'path': search_file_path, 'content': search_file_content}]
+
+
+THEME_GET_SEARCH_FILES_FUNCS = {
+    'readthedocs': _readthedocs_get_search_files,
+}
+
+##
+# Patch search files
+##
+
+
+def _reathedocs_patch_search_files(
+        fpath,
+        language,
+        default_language,
+        search_files,
+):
+    search_file = search_files[0]
+
+    # create search file for the language if not exists
+    lang_search_path = _language_extension_path(
+        search_file['path'],
+        '.html',
+        language,
+    )
+    lang_search_path_content = search_file['content'].replace(
+        'search.html',
+        f'search_{language}.html',
+    ).replace(
+        f'search/main_{default_language}.js',
+        f'search/main_{language}.js',
+    )
+    with open(lang_search_path, 'w') as f:
+        f.write(lang_search_path_content)
+
+    # patch search file URL in language file
+    with open(fpath) as f:
+        content = f.read()
+    new_content = content.replace(
+        'search.html',
+        f'search_{language}.html',
+    )
+    with open(fpath, 'w') as f:
+        f.write(new_content)
+
+
+THEME_PATCH_SEARCH_FILES_FUNCS = {
+    'readthedocs': _reathedocs_patch_search_files,
+}
+
+##
 # Update 'search_index.json#config.lang' only for some themes:
+##
+
 THEME_ALTER_SEARCH_INDEX_LANG_CONFIG = [
     'material',
 ]
@@ -222,6 +288,7 @@ class TranslationsSearchPatcher:
                 language = self.locations[record['location']]
                 self.lang_search_indexes[language].append(record)
 
+        # get site directory HTML files ordered by language
         html_files_by_language = self._get_html_files_by_language()
 
         for language in self.languages:
@@ -248,6 +315,20 @@ class TranslationsSearchPatcher:
                     language,
                     self.worker_js_files,
                 )
+
+        # if the theme needs to patch search files, patch them
+        if self.theme_name in THEME_GET_SEARCH_FILES_FUNCS:
+            search_files = THEME_GET_SEARCH_FILES_FUNCS[self.theme_name](
+                self.site_dir,
+            )
+            for language in self.languages:
+                for fpath in html_files_by_language[language]:
+                    THEME_PATCH_SEARCH_FILES_FUNCS[self.theme_name](
+                        fpath,
+                        language,
+                        self.default_language,
+                        search_files,
+                    )
 
     def _create_lang_search_index_json(self, language, records):
         search_index = copy.copy(self.search_index_json)
