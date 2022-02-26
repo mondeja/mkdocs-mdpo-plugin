@@ -206,8 +206,12 @@ this list.
 <!-- mdpo-disable-next-line -->
 ### **`cross_language_search`** (*bool*)
 
-By default is enabled. You can disable it to restrict the search to the active
-language.
+It configures if the search plugin of the theme will search through all
+languages. By default is enabled. You can disable it to restrict the search to the active language.
+
+The support for this feature currently includes the [mkdocs-material] theme,
+the Mkdocs theme, the Readthedocs theme and all themes which use the builtin
+Mkdocs search plugin.
 
 [iso-369]: https://en.wikipedia.org/wiki/ISO_639
 [mkdocs-material]: https://squidfunk.github.io/mkdocs-material
