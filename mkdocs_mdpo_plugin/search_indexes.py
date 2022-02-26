@@ -12,6 +12,7 @@ The patch implies several steps, which depend on the active theme:
    one for each language. This depends completely on the active theme.
 4. Patch HTML files to load these language versions of JS files instead
    of the original ones.
+5. Additionally, for themes like readthedocs, patchs HTML search files.
 """
 
 import copy
@@ -103,8 +104,8 @@ def _mkdocs_patch_worker_js_files(files, language):
         language,
     )
     new_main_js_content = main_js['content'].replace(
-        'search/worker.js',
-        f'search/worker_{language}.js',
+        'worker.js',
+        f'worker_{language}.js',
     )
     with open(new_main_js_path, 'w') as f:
         f.write(new_main_js_content)
