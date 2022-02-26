@@ -18,6 +18,8 @@ import copy
 import json
 import os
 
+from mkdocs_mdpo_plugin.compat import removesuffix
+
 
 def _language_extension_path(path, extension, language, separator='_'):
     return f'{path[:-len(extension)]}{separator}{language}{extension}'
@@ -355,7 +357,7 @@ class TranslationsSearchPatcher:
             for fname in [f for f in files if f.endswith('.html')]:
                 fpath = os.path.join(root, fname)
                 relpath = os.path.relpath(fpath, self.site_dir)
-                location = relpath.rstrip('index.html')
+                location = removesuffix(relpath, 'index.html')
                 if location in self.locations:
                     language = self.locations[location]
                     language_files[language].append(fpath)

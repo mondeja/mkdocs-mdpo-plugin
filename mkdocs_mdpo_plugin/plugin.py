@@ -11,6 +11,7 @@ from jinja2 import Template
 from mdpo.md2po import Md2Po
 from mdpo.po2md import Po2Md
 
+from mkdocs_mdpo_plugin.compat import removesuffix
 from mkdocs_mdpo_plugin.config import CONFIG_SCHEME, on_config_event
 from mkdocs_mdpo_plugin.extensions import Extensions
 from mkdocs_mdpo_plugin.mdpo_events import (
@@ -98,7 +99,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                     dest_path = Template(
                         self.config['dest_filename_template'],
                     ).render(**context)
-                    src_path = f"{dest_path.rstrip('.html')}.md"
+                    src_path = f"{removesuffix(dest_path, '.html')}.md"
 
                     self.translations.files[file.src_path][language] = (
                         os.path.join(
@@ -343,9 +344,9 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             self.translations.current = translation
 
             # change file url
-            url = new_page.file.url.rstrip('.md') + '.html'
+            url = removesuffix(new_page.file.url, '.md') + '.html'
             if config['use_directory_urls']:
-                url = url.rstrip('index.html')
+                url = removesuffix(url, 'index.html')
             new_page.file.url = url
 
             self.translations.nav[page.title][language] = [
@@ -396,7 +397,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
             # save locations of records with languages for search indexes usage
             location = os.path.relpath(
-                render_path.rstrip('index.html'),
+                removesuffix(render_path, 'index.html'),
                 config['site_dir'],
             ) + '/'
             self.translations.locations[location] = page.file._mdpo_language
