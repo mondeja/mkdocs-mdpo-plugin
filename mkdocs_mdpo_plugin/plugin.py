@@ -499,7 +499,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         # reset mkdocs build instance
         MkdocsBuild._instance = None
 
-    def on_serve(self, *args, **kwargs):
+    def on_serve(self, *args, **kwargs):  # pragma: no cover
         """When serving with livereload server, prevent a infinite loop
         if the user edits a PO file if is placed inside documentation
         directory.
