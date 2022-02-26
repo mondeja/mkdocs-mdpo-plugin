@@ -22,7 +22,8 @@ def test_examples(example_dirname):
     proc = subprocess.run(
         [sys.executable, '-m', 'mkdocs', 'build'],
         cwd=example_dirpath,
-        capture_output=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
     )
 
     norm_stderr = proc.stderr.decode('utf-8').lower()
