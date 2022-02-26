@@ -203,6 +203,14 @@ File extensions that are ignored from being added to site directory, defaults to
 You can ignore certain messages from being dumped into PO files adding them to
 this list.
 
+<!-- mdpo-disable-next-line -->
+### **`cross_language_search`** (*bool*)
+
+By default is enabled. You can disable it to restrict the search to the active
+language.
+
+Currently is only compatible with the [mkdocs-material] theme.
+
 [iso-369]: https://en.wikipedia.org/wiki/ISO_639
 [mkdocs-material]: https://squidfunk.github.io/mkdocs-material
 [mkdocs-material-site-language]: https://squidfunk.github.io/mkdocs-material/setup/changing-the-language/#site-language

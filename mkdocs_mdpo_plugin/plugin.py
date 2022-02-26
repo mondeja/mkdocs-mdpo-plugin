@@ -24,7 +24,11 @@ from mkdocs_mdpo_plugin.mkdocs_utils import (
     MkdocsBuild,
     set_on_build_error_event,
 )
-from mkdocs_mdpo_plugin.translations import Translation, Translations
+from mkdocs_mdpo_plugin.translations import (
+    Translation,
+    Translations,
+    TranslationSearchIndexes,
+)
 
 
 class MdpoPlugin(mkdocs.plugins.BasePlugin):
@@ -329,6 +333,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 _translated_entries_msgstrs.append(entry.msgstr)
                 _translated_entries_msgids.append(entry.msgid)
 
+            # create translation object
             translation = Translation(
                 language,
                 po,
@@ -349,6 +354,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             self.translations.nav[page.title][language] = [
                 translated_page_title, new_page.file.url,
             ]
+
             mkdocs.commands.build._populate_page(
                 new_page,
                 config,
@@ -398,6 +404,20 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
     def on_post_build(self, config):
         self.translations.tempdir.cleanup()
 
+        if (
+            not self.config['cross_language_search'] and
+            'search' in config['plugins']
+        ):
+            # cross language search is disabled, so build indexes
+            # for each language and patch the 'site_dir' directory
+            search_indexes = TranslationSearchIndexes(
+                config['site_dir'],
+                self.config['languages'],
+                self.config['default_language'],
+            )
+            search_indexes.patch_site_dir()
+
+        # save PO files
         for translations in self.translations.all.values():
             for translation in translations:
                 translation.po.save(translation.po_filepath)

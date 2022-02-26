@@ -19,6 +19,7 @@ CONFIG_SCHEME = (
     ),
     ('ignore_extensions', Type(list, default=['.po', '.pot', '.mo'])),
     ('ignore_msgids', Type(list, default=[])),
+    ('cross_language_search', Type(bool, default=True)),
 )
 
 

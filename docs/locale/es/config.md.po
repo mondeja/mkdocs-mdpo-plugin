@@ -188,3 +188,13 @@ msgstr ""
 
 msgid "Content"
 msgstr "Contenido"
+
+msgid ""
+"By default is enabled. You can disable it to restrict the search to the "
+"active language."
+msgstr ""
+"Por defecto está habilitado. Puedes deshabilitarlo para restringir la "
+"búsqueda al idioma activo."
+
+msgid "Currently is only compatible with the [mkdocs-material] theme."
+msgstr "Actualmente sólo es compatible con el tema [mkdocs-material]."
