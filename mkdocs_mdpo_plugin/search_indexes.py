@@ -10,8 +10,8 @@ The patch implies several steps, which depend on the active theme:
    The files are named 'search_index_es.json', 'search_index_fr.json'...
 3. Patch the JS files which loads the 'search_index.json' file creating
    one for each language. This depends completely on the active theme.
-4. Patch HTML files to load these language versions of JS files instead
-   of the original ones.
+4. Patch HTML page files to load these language versions of JS files
+   instead of the original ones.
 5. Additionally, for themes like readthedocs, patchs HTML search files.
 """
 
@@ -19,7 +19,7 @@ import copy
 import json
 import os
 
-from mkdocs_mdpo_plugin.compat import removesuffix
+from mkdocs_mdpo_plugin.utils import removesuffix
 
 
 def _language_extension_path(path, extension, language, separator='_'):

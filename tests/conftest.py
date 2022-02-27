@@ -59,13 +59,15 @@ def _mkdocs_build(
         }
         if additional_config:
             mkdocs_config.update(additional_config)
-        if insert_plugin_config_at_position == -1:
-            mkdocs_config['plugins'].append({'mdpo': mdpo_config})
-        else:
-            mkdocs_config['plugins'].insert(
-                insert_plugin_config_at_position,
-                {'mdpo': mdpo_config},
-            )
+        mkdocs_config['plugins'].insert(
+            (
+                insert_plugin_config_at_position
+                if insert_plugin_config_at_position > -1
+                else len(mkdocs_config['plugins'])
+                + insert_plugin_config_at_position + 1
+            ),
+            {'mdpo': mdpo_config},
+        )
 
         config_filename = os.path.join(config_dir, 'mkdocs.yml')
         with open(config_filename, 'w') as f:
@@ -141,16 +143,20 @@ def _mkdocs_build(
         for filename, expected_lines in expected_output_files.items():
             if not expected_lines:
                 raise ValueError(
-                    'Expected file defined without output lines',
+                    f'Expected file "{filename}" defined without output'
+                    ' lines',
                 )
 
-            filename = os.path.join(site_dir, os.path.normpath(filename))
+            filepath = os.path.join(site_dir, os.path.normpath(filename))
 
-            with open(filename) as f:
+            with open(filepath) as f:
                 content = f.read()
 
             for expected_line in expected_lines:
-                assert expected_line in content
+                assert expected_line in content, (
+                    f'Expected line "{expected_line}" not found in file'
+                    f' "{filename}"'
+                )
 
         os.remove(config_filename)
 

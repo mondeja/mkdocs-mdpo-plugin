@@ -20,6 +20,7 @@ CONFIG_SCHEME = (
     ('ignore_extensions', Type(list, default=['.po', '.pot', '.mo'])),
     ('ignore_msgids', Type(list, default=[])),
     ('cross_language_search', Type(bool, default=True)),
+    ('min_translated_messages', Type((str, int), default=None)),
 )
 
 
@@ -71,6 +72,17 @@ def on_config_event(plugin, config, **kwargs):
             plugin.config['languages'] = [alt['lang'] for alt in alternate]
         else:
             raise _languages_required()
+    else:
+        if not isinstance(languages, list):
+            raise ValidationError(
+                'Expected "languages" config setting to be a list',
+            )
+        for i, language in enumerate(languages):
+            if not isinstance(language, str):
+                raise ValidationError(
+                    f'Expected "languages[{i}]" config setting to'
+                    f' be a string but is {language}',
+                )
 
     default_language = plugin.config.get('default_language')
     if not default_language:
@@ -149,11 +161,35 @@ def on_config_event(plugin, config, **kwargs):
 
     # check that cross language search configuration is valid
     if plugin.config.get('cross_language_search') is False:
+        plugin_names = [p for p in config['plugins']]
         if 'search' not in config['plugins']:
             raise ValidationError(
                 '"cross_language_search" setting is disabled but'
                 ' no "search" plugin has been added to "plugins"',
             )
+        elif plugin_names.index('search') > plugin_names.index('mdpo'):
+            raise ValidationError(
+                'The "search" plugin must be placed before the "mdpo"'
+                ' plugin if you want to disable "cross_language_search".',
+            )
+
+    # check that minimum translated messages required for each language
+    # is a valid value
+    min_translated = plugin.config.get('min_translated_messages')
+    if min_translated is not None:
+        try:
+            if '%' in str(min_translated):
+                min_translated = -float(min_translated.strip('%'))
+            else:
+                min_translated = int(min_translated)
+        except Exception:
+            raise ValidationError(
+                f"The value '{min_translated}' for"
+                " 'min_translated_messages' config setting"
+                '  is not a valid percentage or number.',
+            )
+        else:
+            plugin.config['min_translated_messages'] = min_translated
 
     # store reference in plugin to markdown_extensions for later usage
     plugin.extensions.markdown = markdown_extensions

@@ -1,0 +1,12 @@
+#
+msgid ""
+msgstr ""
+
+msgid "File excluded from translations"
+msgstr ""
+
+msgid "Excluded header"
+msgstr ""
+
+msgid "Excluded content"
+msgstr ""

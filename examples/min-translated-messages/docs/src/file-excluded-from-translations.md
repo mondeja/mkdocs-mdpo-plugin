@@ -1,0 +1,3 @@
+# Excluded header
+
+Excluded content
