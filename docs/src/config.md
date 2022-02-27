@@ -209,7 +209,7 @@ Minimum number or percentage of messages in all files to include the
 translated pages for a language. An information message will be displayed
 if a language does not reach the minimum translation requirements.
 
-Specify as a string ending with `%` like `"55%"` for percentages of
+Specify as a string ending with `%` like `55%` for percentages of
 total messages or as an integer like `76` to determine the minimum
 number of translated messages required to include a language.
 
