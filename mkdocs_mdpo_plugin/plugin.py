@@ -1,6 +1,7 @@
 """mkdocs-mdpo-plugin module"""
 
 import functools
+import logging
 import math
 import os
 import sys
@@ -11,7 +12,6 @@ from jinja2 import Template
 from mdpo.md2po import Md2Po
 from mdpo.po2md import Po2Md
 
-from mkdocs_mdpo_plugin.compat import removesuffix
 from mkdocs_mdpo_plugin.config import CONFIG_SCHEME, on_config_event
 from mkdocs_mdpo_plugin.extensions import Extensions
 from mkdocs_mdpo_plugin.mdpo_events import (
@@ -27,6 +27,15 @@ from mkdocs_mdpo_plugin.mkdocs_utils import (
 )
 from mkdocs_mdpo_plugin.search_indexes import TranslationsSearchPatcher
 from mkdocs_mdpo_plugin.translations import Translation, Translations
+from mkdocs_mdpo_plugin.utils import (
+    po_messages_stats,
+    readable_float,
+    removesuffix,
+)
+
+
+# use Mkdocs build logger
+logger = logging.getLogger('mkdocs.commands.build')
 
 
 class MdpoPlugin(mkdocs.plugins.BasePlugin):
@@ -162,7 +171,12 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                     if item.children:
                         _translate_nav_section(item.children)
 
-                if item.title not in self.translations.nav:
+                if (
+                    item.title not in self.translations.nav or
+                    language not in self.translations.nav[item.title]
+                ):
+                    # language not added because page has been excluded
+                    # from translations
                     continue
 
                 tr_title, tr_url = self.translations.nav[
@@ -282,8 +296,25 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             for entry in compendium_pofile:
                 if entry not in po and entry.msgstr:
                     po.append(entry)
-
             po.save(po_filepath)
+
+            # if a minimum number of translations are required to include
+            # the file, compute number of untranslated messages
+            min_translated = self.config['min_translated_messages']
+            if min_translated:
+                n_translated, n_total = po_messages_stats(str(po))
+                if language not in self.translations.stats:
+                    self.translations.stats[language] = {
+                        'total': n_total,
+                        'translated': n_translated,
+                    }
+                else:
+                    self.translations.stats[language][
+                        'total'
+                    ] += n_total
+                    self.translations.stats[language][
+                        'translated'
+                    ] += n_translated
 
             # translate part of the markdown producing a translated file
             # content (the rest of the translations are handled by extensions,
@@ -376,6 +407,47 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
     def on_post_page(self, output, page, config):
         if hasattr(page.file, '_mdpo_language'):
+            # if the language should be included from the build, ignore it
+            min_translated = self.config['min_translated_messages']
+            if min_translated:
+                language = page.file._mdpo_language
+                stats = self.translations.stats[language]
+                if abs(min_translated) != min_translated:
+                    min_translated = abs(min_translated)
+                    if 'percent_translated' in stats:
+                        percent_translated = stats['percent_translated']
+                    else:
+                        percent_translated = (
+                            stats['translated'] / stats['total'] * 100
+                        )
+                        stats['percent_translated'] = percent_translated
+                    if percent_translated < min_translated:
+                        if language in self.config['languages']:
+                            logger.info(
+                                '[mdpo] '
+                                f'Excluding language "{language}". Translated'
+                                f' {readable_float(percent_translated)}%'
+                                f' ({stats["translated"]} of'
+                                f' {stats["total"]} messages) but'
+                                f' required {readable_float(min_translated)}%'
+                                ' at least.\n',
+                            )
+                            self.config['languages'].remove(language)
+                        return
+                else:
+                    if stats['translated'] < min_translated:
+                        if language in self.config['languages']:
+                            logger.info(
+                                '[mdpo] '
+                                f'Excluding language "{language}".'
+                                f' Translated {stats["translated"]} messages'
+                                f' of {stats["total"]} but required'
+                                f' {min_translated} translated'
+                                ' messages at least.\n',
+                            )
+                            self.config['languages'].remove(language)
+                        return
+
             # write translated HTML file to 'site' directory
             os.makedirs(
                 os.path.join(
@@ -505,8 +577,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         directory.
         """
         if '..' not in self.config['locale_dir']:
-            sys.stderr.write(
-                'ERROR [mdpo] -  '
+            logger.error(
+                '[mdpo] -  '
                 "You need to set 'locale_dir' configuration setting"
                 ' pointing to a directory placed outside'
                 " the documentation directory ('docs_dir') in order to"

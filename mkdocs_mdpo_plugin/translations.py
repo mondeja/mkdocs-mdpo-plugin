@@ -55,6 +55,7 @@ class Translations:
         'current',
         'all',
         'locations',
+        'stats',
     }
 
     def __init__(self):
@@ -89,6 +90,10 @@ class Translations:
         # language, needed to discriminate records on search indexes
         # {location: language}
         self.locations = {}
+
+        # translations statistics for each language
+        # {lang: {total: int, translated: int}}
+        self.stats = {}
 
     def __str__(self):  # pragma: no cover
         current = 'None' if self.current is None else 'Translation(...)'

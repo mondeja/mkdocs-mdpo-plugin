@@ -1,6 +1,7 @@
 """Mkdocs builds tests for mkdocs-mdpo-plugin configuration."""
 
 import os
+from collections import OrderedDict
 from tempfile import TemporaryDirectory
 
 import mkdocs
@@ -8,6 +9,13 @@ import pytest
 import yaml
 
 from mkdocs_mdpo_plugin.plugin import MdpoPlugin
+
+
+class FakeMkdocsTheme:
+    def __init__(self):
+        self.name = 'mkdocs'
+        self._vars = {}
+        self.dirs = []
 
 
 tests = (
@@ -315,9 +323,7 @@ def test_plugin_config(
             None,
             mkdocs.config.base.ValidationError,
             (
-                'You must define the languages you will translate the content'
-                " into using the 'plugins.mdpo.languages' configuration"
-                ' setting.'
+                'Expected "languages" config setting to be a list'
             ),
             id='languages=<int>',
         ),
@@ -379,29 +385,7 @@ def test_plugin_config(
                 " into using either 'plugins.mdpo.languages' or"
                 " 'extra.alternate' configuration settings."
             ),
-            id='languages=undefined-theme=material-extra.alternate=undefined',
-        ),
-        pytest.param(
-            {
-                'default_language': 'es',
-            },
-            {
-                'theme': type(
-                    'Theme', (), {
-                        'name': 'material',
-                    },
-                ),
-                'extra': {
-                    'alternate': [],
-                },
-            },
-            mkdocs.config.base.ValidationError,
-            (
-                'You must define the languages you will translate the content'
-                " into using either 'plugins.mdpo.languages' or"
-                " 'extra.alternate' configuration settings."
-            ),
-            id='languages=undefined-theme=material-extra.alternate=undefined',
+            id='languages=undefined-theme=material-extra.alternate=[]',
         ),
         pytest.param(
             {},
@@ -423,6 +407,7 @@ def test_plugin_config(
         pytest.param(
             {
                 'cross_language_search': False,
+                'languages': ['en', 'es'],
             },
             {},
             mkdocs.config.base.ValidationError,
@@ -430,7 +415,72 @@ def test_plugin_config(
                 '"cross_language_search" setting is disabled but'
                 ' no "search" plugin has been added to "plugins"'
             ),
-            id='cross_language_search=False-plugins={}',
+            id='cross_language_search=False-plugins=[]',
+        ),
+        pytest.param(
+            {},
+            {
+                'plugins': {
+                    'mdpo': {
+                        'cross_language_search': False,
+                        'languages': [
+                            'en',
+                            'es',
+                        ],
+                    },
+                    'search': {},
+                },
+            },
+            mkdocs.config.base.ValidationError,
+            (
+                '"search" plugin must be placed before'
+                ' "mdpo" plugin if you want to disable'
+                ' "cross_language_search".'
+            ),
+            id='cross_language_search=False-plugins=[mdpo,search]',
+        ),
+        pytest.param(
+            {
+                'min_translated_messages': 'foo',
+                'languages': [
+                    'en',
+                    'es',
+                ],
+            },
+            {},
+            mkdocs.config.base.ValidationError,
+            (
+                "The value 'foo' for 'min_translated_messages'"
+                ' config setting  is not a valid percentage or'
+                ' number.'
+            ),
+            id='min_translated_messages=foo',
+        ),
+        pytest.param(
+            {
+                'min_translated_messages': '50%',
+                'languages': [
+                    'en',
+                    'es',
+                ],
+            },
+            {},
+            None,
+            None,
+            id='min_translated_messages=50%',
+        ),
+        pytest.param(
+            {
+                'min_translated_messages': 45,
+                'languages': [
+                    'en',
+                    'es',
+                ],
+            },
+            {},
+            None,
+            None,
+            id='min_translated_messages=45',
         ),
     ),
 )
@@ -439,7 +489,6 @@ def test_plugin_config_errors(
     additional_config,
     expected_error_type,
     expected_error_message,
-    caplog,
 ):
 
     with TemporaryDirectory() as site_dir, TemporaryDirectory() as docs_dir, \
@@ -448,42 +497,44 @@ def test_plugin_config_errors(
         mdpo_config = {
             'lc_messages': '',
             'locale_dir': '',
-            'dest_filename_template': '{{language}}/{{page.file.dest_path}}',
+            'dest_filename_template': '{{language}}/{{file.dest_path}}',
         }
         mdpo_config.update(plugin_config)
-
-        plugin.config = mdpo_config
 
         mkdocs_config = {
             'site_name': 'My site',
             'site_url': 'https://foo.bar',
             'docs_dir': docs_dir,
             'site_dir': site_dir,
-            'plugins': [
-                {'mdpo': mdpo_config},
-            ],
+            'plugins': OrderedDict(),
+            'theme': FakeMkdocsTheme(),
         }
         if additional_config:
+            if 'plugins' in additional_config:
+                additional_config['plugins'] = OrderedDict(
+                    additional_config['plugins'],
+                )
             mkdocs_config.update(additional_config)
+
+        _mdpo_plugin_found = False
+        for plugin_name in mkdocs_config['plugins']:
+            if plugin_name == 'mdpo':
+                mkdocs_config['plugins'][plugin_name].update(mdpo_config)
+                plugin.config = mkdocs_config['plugins'][plugin_name]
+                _mdpo_plugin_found = True
+                break
+        if not _mdpo_plugin_found:
+            mkdocs_config['plugins']['mdpo'] = mdpo_config
+            plugin.config = mkdocs_config['plugins']['mdpo']
 
         config_filename = os.path.join(config_dir, 'mkdocs.yml')
         with open(config_filename, 'w') as f:
             yaml.dump(mkdocs_config, f)
 
-        if expected_error_type is mkdocs.exceptions.ConfigurationError:
-            with pytest.raises(expected_error_type) as exc:
-                mkdocs.config.load_config(config_filename)
-            assert 'Aborted with 1 Configuration Errors!' in str(exc)
-
-            assert len(caplog.records) == 1
-            error_log = caplog.records[0]
-            assert error_log.args[0] == 'plugins'
-
-            error = error_log.args[1]
-            assert isinstance(error, mkdocs.config.base.ValidationError)
-
-            error_message = error.args[0]
-            assert error_message == expected_error_message
-        else:
+        if expected_error_type:
             with pytest.raises(expected_error_type) as exc:
                 plugin.on_config(mkdocs_config)
+            assert expected_error_message in str(exc.value)
+        else:
+            # load configuration without errors
+            plugin.on_config(mkdocs_config)

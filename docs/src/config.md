@@ -192,6 +192,28 @@ The context for the template includes:
 ## Content
 
 <!-- mdpo-disable-next-line -->
+### **`cross_language_search`** (*bool*)
+
+It configures if the search plugin of the theme will search through all
+languages. By default is enabled. You can disable it to restrict the search
+to the active language.
+
+The support for this feature currently includes the [mkdocs-material] theme,
+the Mkdocs theme, the Readthedocs theme and all themes which use the builtin
+Mkdocs search plugin.
+
+<!-- mdpo-disable-next-line -->
+### **`min_translated_messages`** (*str* or *int*)
+
+Minimum number or percentage of messages in all files to include the
+translated pages for a language. An information message will be displayed
+if a language does not reach the minimum translation requirements.
+
+Specify as a string ending with `%` like `55%` for percentages of
+total messages or as an integer like `76` to determine the minimum
+number of translated messages required to include a language.
+
+<!-- mdpo-disable-next-line -->
 ### **`ignore_extensions`** (*list*)
 
 File extensions that are ignored from being added to site directory, defaults to
@@ -202,16 +224,6 @@ File extensions that are ignored from being added to site directory, defaults to
 
 You can ignore certain messages from being dumped into PO files adding them to
 this list.
-
-<!-- mdpo-disable-next-line -->
-### **`cross_language_search`** (*bool*)
-
-It configures if the search plugin of the theme will search through all
-languages. By default is enabled. You can disable it to restrict the search to the active language.
-
-The support for this feature currently includes the [mkdocs-material] theme,
-the Mkdocs theme, the Readthedocs theme and all themes which use the builtin
-Mkdocs search plugin.
 
 [iso-369]: https://en.wikipedia.org/wiki/ISO_639
 [mkdocs-material]: https://squidfunk.github.io/mkdocs-material
