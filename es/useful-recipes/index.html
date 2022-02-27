@@ -404,15 +404,35 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#selector-de-idioma-de-mkdocs-material-relativo" class="md-nav__link">
-    Selector de idioma de mkdocs-material relativo
+  <a href="#hooks-po-para-pre-commit" class="md-nav__link">
+    Hooks PO para pre-commit
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#hooks-po-para-pre-commit" class="md-nav__link">
-    Hooks PO para pre-commit
+  <a href="#mdpo" class="md-nav__link">
+    mdpo
+  </a>
+  
+    <nav class="md-nav" aria-label="mdpo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#traduccion-simple-de-archivo-readme-con-pre-commit" class="md-nav__link">
+    Traducción simple de archivo README con pre-commit
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#selector-de-idioma-de-mkdocs-material-relativo" class="md-nav__link">
+    Selector de idioma de mkdocs-material relativo
   </a>
   
 </li>
@@ -429,46 +449,24 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mondeja/mkdocs-mdpo-plugin/tree/master/docs/src/tmp/mkdocs_mdpo_bmaavclh/es/useful-recipes/index.md" title="Editar esta página" class="md-content__button md-icon">
+                  <a href="https://github.com/mondeja/mkdocs-mdpo-plugin/tree/master/docs/src/tmp/mkdocs_mdpo_82ffotln/es/useful-recipes/index.md" title="Editar esta página" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
                 <h1 id="recetas-utiles">Recetas útiles<a class="headerlink" href="#recetas-utiles" title="Link permanente">&para;</a></h1>
-<h2 id="selector-de-idioma-de-mkdocs-material-relativo">Selector de idioma de mkdocs-material relativo<a class="headerlink" href="#selector-de-idioma-de-mkdocs-material-relativo" title="Link permanente">&para;</a></h2>
-<p>Si estás usando el <a href="https://squidfunk.github.io/mkdocs-material/">tema de mkdocs-material</a>, puedes instalar el <a href="https://github.com/mondeja/mkdocs-material-relative-language-selector">plugin <code>mkdocs-material-relative-language-selector</code></a> para hacer relativos los links entre idiomas dentro de la misma página y eliminar el idioma actualmente desplegado del selector de idiomas:</p>
-<div class="tabbed-set" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Instalar</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>pip install mkdocs-material-relative-language-selector
-</code></pre></div>
-</div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Configuración para Github Pages</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">search</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">material-relative-language-selector</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mdpo</span><span class="w"></span>
-</code></pre></div>
-</div>
-<input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">Configuración con dominio raíz personalizado</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">search</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">material-relative-language-selector</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">root_domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mdpo</span><span class="w"></span>
-</code></pre></div>
-</div>
-</div>
 <h2 id="hooks-po-para-pre-commit">Hooks PO para pre-commit<a class="headerlink" href="#hooks-po-para-pre-commit" title="Link permanente">&para;</a></h2>
 <p>Puedes usar <a href="https://github.com/mondeja/pre-commit-po-hooks#readme">pre-commit-po-hooks</a> para comprobar por mensajes no traducidos, obsoletos o confusos (marcados como <code>, fuzzy</code>) antes de cada commit.</p>
-<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">.pre-commit-config.yaml</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">.pre-commit-config.yaml</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/mondeja/pre-commit-po-hooks</span><span class="w"></span>
-<span class="w">  </span><span class="nt">rev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.7.0</span><span class="w"></span>
+<span class="w">  </span><span class="nt">rev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.7.3</span><span class="w"></span>
 <span class="w">  </span><span class="nt">hooks</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">obsolete-messages</span><span class="w"></span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">untranslated-messages</span><span class="w"></span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fuzzy-messages</span><span class="w"></span>
 </code></pre></div>
 </div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Salida de ejemplo</label><div class="tabbed-content">
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Salida de ejemplo</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>untranslated-messages....................................................Failed
 - hook id: untranslated-messages
 - exit code: 1
@@ -481,6 +479,56 @@ fuzzy-messages...........................................................Failed
 - exit code: 1
 
 Found fuzzy message at docs/locale/es/index.md.po:48
+</code></pre></div>
+</div>
+</div>
+<h2 id="mdpo">mdpo<a class="headerlink" href="#mdpo" title="Link permanente">&para;</a></h2>
+<p><a href="https://mdpo.readthedocs.io/en/master/index.html">mdpo</a> es el núcleo de <strong>mkdocs-mdpo-plugin</strong>. El paquete contiene un conjunto de programas para traducir archivos Markdown usando <a href="https://www.gnu.org/software/gettext/manual/gettext.html#PO-Files">archivos PO</a>, así que puedes usarlos directamente como una <a href="https://mdpo.readthedocs.io/en/master/cli.html">interfaz de línea de comandos</a> o mediante sus <a href="https://mdpo.readthedocs.io/en/master/pre-commit-hooks.html">hooks pre-commit</a>.</p>
+<h3 id="traduccion-simple-de-archivo-readme-con-pre-commit">Traducción simple de archivo README con pre-commit<a class="headerlink" href="#traduccion-simple-de-archivo-readme-con-pre-commit" title="Link permanente">&para;</a></h3>
+<div class="tabbed-set" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Interfaz de línea de comandos <code>md2po2md</code></label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>md2po2md README.md -l es -l fr -o locale/<span class="o">{</span>lang<span class="o">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Configuración de hook pre-commit</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/mondeja/mdpo</span><span class="w"></span>
+<span class="w">  </span><span class="nt">rev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v0.3.84</span><span class="w"></span>
+<span class="w">  </span><span class="nt">hooks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">md2po2md</span><span class="w"></span>
+<span class="w">      </span><span class="nt">files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^README\.md</span><span class="w"></span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;-l&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;es&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;-l&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;fr&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;-o&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;locale/{lang}&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
+</code></pre></div>
+</div>
+<input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">Árbol de directorios</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>locale
+├── es
+│   ├── README.md
+│   └── README.md.po
+└── fr
+    ├── README.md
+    └── README.md.po
+README.md             &lt;-- only existing file before execute it
+</code></pre></div>
+</div>
+</div>
+<h2 id="selector-de-idioma-de-mkdocs-material-relativo">Selector de idioma de mkdocs-material relativo<a class="headerlink" href="#selector-de-idioma-de-mkdocs-material-relativo" title="Link permanente">&para;</a></h2>
+<p>Si estás usando el <a href="https://squidfunk.github.io/mkdocs-material/">tema de mkdocs-material</a>, puedes instalar el <a href="https://github.com/mondeja/mkdocs-material-relative-language-selector">plugin <code>mkdocs-material-relative-language-selector</code></a> para hacer relativos los links entre idiomas dentro de la misma página y eliminar el idioma actualmente desplegado del selector de idiomas:</p>
+<div class="tabbed-set" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Instalar</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>pip install mkdocs-material-relative-language-selector
+</code></pre></div>
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Configuración para Github Pages</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">search</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">material-relative-language-selector</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mdpo</span><span class="w"></span>
+</code></pre></div>
+</div>
+<input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><label for="__tabbed_3_3">Configuración con dominio raíz personalizado</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">search</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">material-relative-language-selector</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">root_domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mdpo</span><span class="w"></span>
 </code></pre></div>
 </div>
 </div>
