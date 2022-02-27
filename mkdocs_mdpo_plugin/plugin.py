@@ -18,7 +18,6 @@ from mkdocs_mdpo_plugin.mdpo_events import (
     build_po2md_events,
 )
 from mkdocs_mdpo_plugin.mdpo_utils import (
-    po_messages_stats,
     remove_mdpo_commands_preserving_escaped,
 )
 from mkdocs_mdpo_plugin.mkdocs_utils import (
@@ -27,7 +26,11 @@ from mkdocs_mdpo_plugin.mkdocs_utils import (
 )
 from mkdocs_mdpo_plugin.search_indexes import TranslationsSearchPatcher
 from mkdocs_mdpo_plugin.translations import Translation, Translations
-from mkdocs_mdpo_plugin.utils import readable_float, removesuffix
+from mkdocs_mdpo_plugin.utils import (
+    po_messages_stats,
+    readable_float,
+    removesuffix,
+)
 
 
 class MdpoPlugin(mkdocs.plugins.BasePlugin):
