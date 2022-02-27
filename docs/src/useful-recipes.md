@@ -61,7 +61,7 @@ use them directly [as a command line interface][mdpo-cli] or through is
           files: ^README\.md
           args: ['-l', 'es', '-l', 'fr', '-o', 'locale/{lang}']
     ```
-
+<!-- mdpo-include-codeblocks -->
 === "Directories tree"
 
     ```
@@ -72,8 +72,10 @@ use them directly [as a command line interface][mdpo-cli] or through is
     └── fr
         ├── README.md
         └── README.md.po
-    README.md             <-- only existing file before execute it
+    README.md             <-- only existing file before execution
     ```
+
+<!-- mdpo-disable-codeblocks -->
 
 ## Relative mkdocs-material's language selector
 
