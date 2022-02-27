@@ -47,3 +47,26 @@ msgstr "Instalar"
 
 msgid "[mkdocs-material]: https://squidfunk.github.io/mkdocs-material/"
 msgstr "[mkdocs-material]: https://squidfunk.github.io/mkdocs-material/"
+
+msgid "Tip"
+msgstr "Consejo"
+
+msgid "See [Code blocks extraction][mdpo-codeblocks-extraction]."
+msgstr ""
+"Ver [Extracción de bloques de código (inglés)][mdpo-codeblocks-extraction]."
+
+msgid ""
+"Code blocks are not translated by default, but you can include a [`<!-- "
+"mdpo-include-codeblock -->`][mdpo-codeblocks-extraction] HTML comment before"
+" each code block that you want translate."
+msgstr ""
+"Los bloques de código no son traducidos por defecto, pero puedes incluir un "
+"comentario HTML [`<!-- mdpo-include-codeblock -->`][mdpo-codeblocks-"
+"extraction] antes de cada bloque de código que quieres traducir."
+
+msgid ""
+"[mdpo-codeblocks-extraction]: "
+"https://mdpo.readthedocs.io/en/master/commands.html#code-blocks-extraction"
+msgstr ""
+"[mdpo-codeblocks-extraction]: "
+"https://mdpo.readthedocs.io/en/master/commands.html#code-blocks-extraction"

@@ -88,6 +88,10 @@ Code blocks are not translated by default, but you can include a
 [`<!-- mdpo-include-codeblock -->`](https://mdpo.readthedocs.io/en/master/commands.html#code-blocks-extraction)
 HTML comment before each code block that you want translate.
 
+!!! tip
+
+    See [Code blocks extraction][mdpo-codeblocks-extraction].
+
 === "Output"
 
     ```python
@@ -411,3 +415,4 @@ You must let one blank line between each progress bar.
     ```
 
 [pymdown-extensions]: https://facelessuser.github.io/pymdown-extensions/extensions
+[mdpo-codeblocks-extraction]: https://mdpo.readthedocs.io/en/master/commands.html#code-blocks-extraction

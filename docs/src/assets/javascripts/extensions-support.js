@@ -10,7 +10,7 @@ var removePyMdownxSnippetsMarkdownDemoEscapeChar = function() {
     var markdownCode = pyMdownSnippetsSection.nextElementSibling.children[5].children[0].children[0];
     for (let i=0; i<markdownCode.children.length; i++) {
       let child = markdownCode.children[i];
-      if (child.tagName === 'CODE') {
+      if (child.tagName === 'CODE' && child.innerText.includes('--8<--')) {
         child.innerHTML = child.innerHTML.replace('\\', '');
         break;
       }
