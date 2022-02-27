@@ -169,7 +169,7 @@ def on_config_event(plugin, config, **kwargs):
             )
         elif plugin_names.index('search') > plugin_names.index('mdpo'):
             raise ValidationError(
-                'The "search" plugin must be placed before the "mdpo"'
+                '"search" plugin must be placed before "mdpo"'
                 ' plugin if you want to disable "cross_language_search".',
             )
 

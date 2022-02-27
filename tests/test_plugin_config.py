@@ -420,22 +420,20 @@ def test_plugin_config(
         pytest.param(
             {},
             {
-                'plugins': OrderedDict(
-                    {
-                        'mdpo': {
-                            'cross_language_search': False,
-                            'languages': [
-                                'en',
-                                'es',
-                            ],
-                        },
-                        'search': {},
+                'plugins': {
+                    'mdpo': {
+                        'cross_language_search': False,
+                        'languages': [
+                            'en',
+                            'es',
+                        ],
                     },
-                ),
+                    'search': {},
+                },
             },
             mkdocs.config.base.ValidationError,
             (
-                'The "search" plugin must be placed before the'
+                '"search" plugin must be placed before'
                 ' "mdpo" plugin if you want to disable'
                 ' "cross_language_search".'
             ),
@@ -512,6 +510,10 @@ def test_plugin_config_errors(
             'theme': FakeMkdocsTheme(),
         }
         if additional_config:
+            if 'plugins' in additional_config:
+                additional_config['plugins'] = OrderedDict(
+                    additional_config['plugins'],
+                )
             mkdocs_config.update(additional_config)
 
         _mdpo_plugin_found = False
