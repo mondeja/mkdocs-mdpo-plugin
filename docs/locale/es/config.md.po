@@ -200,7 +200,7 @@ msgstr ""
 
 msgid ""
 "The support for this feature currently includes the [mkdocs-material] theme,"
-" the Mkdocs theme, the Readthedocs theme and all themes which use the "
+" the Mkdocs theme, the Readthedocs theme and all themes which are using the "
 "builtin Mkdocs search plugin."
 msgstr ""
 "El soporte de esta característica actualmente incluye el tema [mkdocs-"

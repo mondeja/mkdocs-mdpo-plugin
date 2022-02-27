@@ -8,6 +8,7 @@ edit the content of your files:
   - search
   - include-markdown
   - mdpo
+  - minify
 ```
 
 ## Languages
@@ -199,7 +200,7 @@ languages. By default is enabled. You can disable it to restrict the search
 to the active language.
 
 The support for this feature currently includes the [mkdocs-material] theme,
-the Mkdocs theme, the Readthedocs theme and all themes which use the builtin
+the Mkdocs theme, the Readthedocs theme and all themes which are using the builtin
 Mkdocs search plugin.
 
 <!-- mdpo-disable-next-line -->

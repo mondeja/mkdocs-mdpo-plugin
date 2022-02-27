@@ -5,9 +5,6 @@ msgstr ""
 msgid "Useful recipes"
 msgstr "Recetas útiles"
 
-msgid "Relative mkdocs-material's language selector"
-msgstr "Selector de idioma de mkdocs-material relativo"
-
 msgid "pre-commit PO hooks"
 msgstr "Hooks PO para pre-commit"
 
@@ -30,6 +27,47 @@ msgid "Example output"
 msgstr "Salida de ejemplo"
 
 msgid ""
+"[mmrls]: https://github.com/mondeja/mkdocs-material-relative-language-"
+"selector"
+msgstr ""
+"[mmrls]: https://github.com/mondeja/mkdocs-material-relative-language-"
+"selector"
+
+msgid "Simple README file translation with pre-commit"
+msgstr "Traducción simple de archivo README con pre-commit"
+
+msgid "[mdpo]: https://mdpo.readthedocs.io/en/master/index.html"
+msgstr "[mdpo]: https://mdpo.readthedocs.io/en/master/index.html"
+
+msgid "[mdpo-cli]: https://mdpo.readthedocs.io/en/master/cli.html"
+msgstr "[mdpo-cli]: https://mdpo.readthedocs.io/en/master/cli.html"
+
+msgid ""
+"[mdpo-pre-commit]: https://mdpo.readthedocs.io/en/master/pre-commit-"
+"hooks.html"
+msgstr ""
+"[mdpo-pre-commit]: https://mdpo.readthedocs.io/en/master/pre-commit-"
+"hooks.html"
+
+msgid "`md2po2md` command line interface"
+msgstr "Interfaz de línea de comandos `md2po2md`"
+
+msgid "pre-commit hook configuration"
+msgstr "Configuración de hook pre-commit"
+
+msgid "Directories tree"
+msgstr "Árbol de directorios"
+
+msgid "Github Pages configuration"
+msgstr "Configuración para Github Pages"
+
+msgid "Custom root domain configuration"
+msgstr "Configuración con dominio raíz personalizado"
+
+msgid "Relative mkdocs-material's language selector"
+msgstr "Selector de idioma de mkdocs-material relativo"
+
+msgid ""
 "If you are using the [mkdocs-material theme][mkdocs-material], you can "
 "install the [`mkdocs-material-relative-language-selector` plugin][mmrls] to "
 "make relative links between languages inside the same page and remove the "
@@ -40,15 +78,20 @@ msgstr ""
 "para hacer relativos los links entre idiomas dentro de la misma página y "
 "eliminar el idioma actualmente desplegado del selector de idiomas:"
 
-msgid "Github Pages configuration"
-msgstr "Configuración para Github Pages"
-
-msgid "Custom root domain configuration"
-msgstr "Configuración con dominio raíz personalizado"
+msgid ""
+"[mdpo] is the core of **mkdocs-mdpo-plugin**. The package contains a set of "
+"programs to translate Markdown files using [PO files][po-files], so you can "
+"use them directly [as a command line interface][mdpo-cli] or through is "
+"[pre-commit hooks][mdpo-pre-commit]."
+msgstr ""
+"[mdpo] es el núcleo de **mkdocs-mdpo-plugin**. El paquete contiene un conjunto"
+" de programas para traducir archivos Markdown usando [archivos PO][po-files],"
+" así que puedes usarlos directamente como una [interfaz de línea de comandos][mdpo-cli]"
+" o mediante sus [hooks pre-commit][mdpo-pre-commit]."
 
 msgid ""
-"[mmrls]: https://github.com/mondeja/mkdocs-material-relative-language-"
-"selector"
+"[po-files]: https://www.gnu.org/software/gettext/manual/gettext.html#PO-"
+"Files"
 msgstr ""
-"[mmrls]: https://github.com/mondeja/mkdocs-material-relative-language-"
-"selector"
+"[po-files]: https://www.gnu.org/software/gettext/manual/gettext.html#PO-"
+"Files"

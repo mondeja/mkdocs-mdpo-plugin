@@ -2,7 +2,6 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/mkdocs-mdpo-plugin?label=version)](https://pypi.org/project/mkdocs-mdpo-plugin)
 [![Downloads](https://img.shields.io/pypi/dm/mkdocs-mdpo-plugin)](https://pypistats.org/packages/mkdocs-mdpo-plugin)
-
 [![Test](https://img.shields.io/github/workflow/status/mondeja/mkdocs-mdpo-plugin/CI?label=tests&logo=github)](https://github.com/mondeja/mkdocs-mdpo-plugin/actions?query=workflow%3ACI)
 [![Documentation](https://img.shields.io/github/workflow/status/mondeja/mkdocs-mdpo-plugin/Github%20Pages?label=docs&logo=github)](https://mkdocs-mdpo.ga)
 [![Cloudflare DNS](https://img.shields.io/github/workflow/status/mondeja/mkdocs-mdpo-plugin/website-check?label=dns&logo=cloudflare&logoColor=white)](https://github.com/mondeja/mkdocs-mdpo-plugin/actions/workflows/website-check.yml)
