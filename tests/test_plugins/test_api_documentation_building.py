@@ -17,7 +17,7 @@ TESTS = (
         {
             'es/index.md.po': {
                 'Hello': 'Hola',
-                'Bye': 'Adios',
+                'Bye': 'Adiós',
                 'Function documentation.': 'Documentación de función.',
                 'Value to check.':  'Valor a comprobar.',
             },

@@ -1,6 +1,7 @@
 """mkdocs-mdpo-plugin module"""
 
 import functools
+import logging
 import math
 import os
 import sys
@@ -31,6 +32,10 @@ from mkdocs_mdpo_plugin.utils import (
     readable_float,
     removesuffix,
 )
+
+
+# use Mkdocs build logger
+logger = logging.getLogger('mkdocs.commands.build')
 
 
 class MdpoPlugin(mkdocs.plugins.BasePlugin):
@@ -418,8 +423,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                         stats['percent_translated'] = percent_translated
                     if percent_translated < min_translated:
                         if language in self.config['languages']:
-                            sys.stdout.write(
-                                'INFO     -  [mdpo] '
+                            logger.info(
+                                '[mdpo] '
                                 f'Excluding language "{language}". Translated'
                                 f' {readable_float(percent_translated)}%'
                                 f' ({stats["translated"]} of'
@@ -432,13 +437,13 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 else:
                     if stats['translated'] < min_translated:
                         if language in self.config['languages']:
-                            sys.stdout.write(
-                                'INFO     -  [mdpo] '
+                            logger.info(
+                                '[mdpo] '
                                 f'Excluding language "{language}".'
                                 f' Translated {stats["translated"]} messages'
                                 f' of {stats["total"]} but required'
                                 f' {min_translated} translated'
-                                'messages at least.\n',
+                                ' messages at least.\n',
                             )
                             self.config['languages'].remove(language)
                         return
@@ -572,8 +577,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         directory.
         """
         if '..' not in self.config['locale_dir']:
-            sys.stderr.write(
-                'ERROR [mdpo] -  '
+            logger.error(
+                '[mdpo] -  '
                 "You need to set 'locale_dir' configuration setting"
                 ' pointing to a directory placed outside'
                 " the documentation directory ('docs_dir') in order to"

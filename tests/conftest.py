@@ -1,8 +1,9 @@
 """Configuration for mkdocs_mdpo_plugin tests."""
 
+import logging
 import os
 import sys
-from tempfile import TemporaryDirectory
+from tempfile import NamedTemporaryFile, TemporaryDirectory
 
 import polib
 import pytest
@@ -28,9 +29,21 @@ def _mkdocs_build(
     callback_after_first_build=None,
     insert_plugin_config_at_position=-1,
     interrupt_after_first_build=False,
+    allow_missing_translations=False,
 ):
     with TemporaryDirectory() as site_dir, TemporaryDirectory() as docs_dir, \
-            TemporaryDirectory() as config_dir:
+            TemporaryDirectory() as config_dir, \
+            NamedTemporaryFile('w+', suffix='.log') as mkdocs_logger_f, \
+            NamedTemporaryFile('w+', suffix='.log') as plugin_logger_f:
+
+        # configure mkdocs logger to capture messages
+        mkdocs_logger = logging.getLogger('mkdocs')
+        mkdocs_logger.setLevel(logging.DEBUG)
+        mkdocs_logger.addHandler(logging.FileHandler(mkdocs_logger_f.name))
+
+        plugin_logger = logging.getLogger('mkdocs.commands.build')
+        plugin_logger.setLevel(logging.DEBUG)
+        plugin_logger.addHandler(logging.FileHandler(plugin_logger_f.name))
 
         # build input files
         for input_file_name, content in input_files_contents.items():
@@ -85,80 +98,92 @@ def _mkdocs_build(
 
         if interrupt_after_first_build:
             os.remove(config_filename)
-            return
+        else:
 
-        # translate PO files
-        for po_filename, translation_messages in translations.items():
-            po_filename = os.path.join(docs_dir, os.path.normpath(po_filename))
-            assert os.path.isfile(po_filename)
-            po = polib.pofile(po_filename)
-
-            for msgid_or_msgctxt, msgstr in translation_messages.items():
-                if isinstance(msgstr, dict):
-                    # case when msgctxt is passed as key
-                    # and msgid-msgstr as value in a dict
-                    msgid = list(msgstr.keys())[0]
-                    msgstr = msgstr[msgid]
-                    msgctxt = msgid_or_msgctxt
-                else:
-                    msgid = msgid_or_msgctxt
-                    msgctxt = None
-
-                _msgid_in_pofile = False
-                for entry in po:
-                    if entry.msgid == msgid:
-                        _msgid_in_pofile = True
-                        break
-
-                assert _msgid_in_pofile, (
-                    f"'{msgid}' not found in pofile '{po_filename}'"
+            # translate PO files
+            for po_filename, translation_messages in translations.items():
+                po_filename = os.path.join(
+                    docs_dir,
+                    os.path.normpath(po_filename),
                 )
+                assert os.path.isfile(po_filename)
+                po = polib.pofile(po_filename)
+
+                for msgid_or_msgctxt, msgstr in translation_messages.items():
+                    if isinstance(msgstr, dict):
+                        # case when msgctxt is passed as key
+                        # and msgid-msgstr as value in a dict
+                        msgid = list(msgstr.keys())[0]
+                        msgstr = msgstr[msgid]
+                        msgctxt = msgid_or_msgctxt
+                    else:
+                        msgid = msgid_or_msgctxt
+                        msgctxt = None
+
+                    _msgid_in_pofile = False
+                    for entry in po:
+                        if entry.msgid == msgid:
+                            _msgid_in_pofile = True
+                            break
+
+                    assert _msgid_in_pofile, (
+                        f"'{msgid}' not found in pofile '{po_filename}'"
+                    )
+
+                    for entry in po:
+                        if entry.msgid == msgid:
+                            entry.msgstr = msgstr
+                            if msgctxt:
+                                entry.msgctxt = msgctxt
+                            break
 
                 for entry in po:
-                    if entry.msgid == msgid:
-                        entry.msgstr = msgstr
-                        if msgctxt:
-                            entry.msgctxt = msgctxt
-                        break
+                    # 'Home' is the title given to the page by the default
+                    # Mkdocs theme
+                    if entry.msgid == 'Home':
+                        continue
+                    if not allow_missing_translations:
+                        assert entry.msgstr, (
+                            f"Found '{entry.msgid}' not translated in pofile"
+                        )
 
-            for entry in po:
-                # 'Home' is the title given to the page by the default
-                # Mkdocs theme
-                if entry.msgid == 'Home':
-                    continue
-                assert entry.msgstr, (
-                    f"Found '{entry.msgid}' not translated in pofile"
-                )
+                po.save(po_filename)
 
-            po.save(po_filename)
+            # second build, dump translations in content (PO files -> Markdown)
+            try:
+                build(config.load_config(config_filename))
+            except Exception:
+                os.remove(config_filename)
+                raise
 
-        # second build, dump translations in content (PO files -> Markdown)
-        try:
-            build(config.load_config(config_filename))
-        except Exception:
+            # assert that files have been translated
+            for filename, expected_lines in expected_output_files.items():
+                if not expected_lines:
+                    raise ValueError(
+                        f'Expected file "{filename}" defined without output'
+                        ' lines',
+                    )
+
+                filepath = os.path.join(site_dir, os.path.normpath(filename))
+
+                with open(filepath) as f:
+                    content = f.read()
+
+                for expected_line in expected_lines:
+                    assert expected_line in content, (
+                        f'Expected line "{expected_line}" not found in file'
+                        f' "{filename}"'
+                    )
+
             os.remove(config_filename)
-            raise
 
-        # assert that files have been translated
-        for filename, expected_lines in expected_output_files.items():
-            if not expected_lines:
-                raise ValueError(
-                    f'Expected file "{filename}" defined without output'
-                    ' lines',
-                )
+        # read builds logs
+        with open(mkdocs_logger_f.name) as f:
+            mkdocs_log = f.read()
+        with open(plugin_logger_f.name) as f:
+            plugin_log = f.read()
 
-            filepath = os.path.join(site_dir, os.path.normpath(filename))
-
-            with open(filepath) as f:
-                content = f.read()
-
-            for expected_line in expected_lines:
-                assert expected_line in content, (
-                    f'Expected line "{expected_line}" not found in file'
-                    f' "{filename}"'
-                )
-
-        os.remove(config_filename)
+    return (mkdocs_log, plugin_log)
 
 
 @pytest.fixture
