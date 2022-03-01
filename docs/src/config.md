@@ -61,12 +61,12 @@ layout would be something like:
 === "Documentation directories tree"
 
     ```
-    docs
-    ├── es
-    │   └── index.md.po
-    ├── fr
-    │   └── index.md.po
-    └── index.md
+    📁 docs
+    ├── 📁 es
+    │   └── 📄 index.md.po
+    ├── 📁 fr
+    │   └── 📄 index.md.po
+    └── 📄 index.md
     ```
 
 The problem with this layout is that doesn't allow you to use the
@@ -93,14 +93,14 @@ translation files, other for theme overrides...
 === "Documentation directories tree"
 
     ```
-    docs
-    ├── locale
-    │   ├── es
-    │   │   └── index.md.po
-    │   └── fr
-    │       └── index.md.po
-    └── src
-        └── index.md
+    📁 docs
+    ├── 📁 locale
+    │   ├── 📁 es
+    │   │   └── 📄 index.md.po
+    │   └── 📁 fr
+    │       └── 📄 index.md.po
+    └── 📁 src
+        └── 📄 index.md
     ```
 
 <!-- mdpo-disable-next-line -->
@@ -130,15 +130,15 @@ and their content:
     === "Documentation directories tree"
 
         ```
-        docs
-        ├── locale
-        │   ├── es
-        │   │   └── LC_MESSAGES
-        |   │       └── index.md.po
-        |   └── fr
-        |       └── LC_MESSAGES
-        │           └── index.md.po
-        └── index.md
+        📁 docs
+        ├── 📁 locale
+        │   ├── 📁 es
+        │   │   └── 📁 LC_MESSAGES
+        |   │       └── 📄 index.md.po
+        |   └── 📁 fr
+        |       └── 📁 LC_MESSAGES
+        │           └── 📄 index.md.po
+        └── 📄 index.md
         ```
 
 === "Custom value"
@@ -159,17 +159,17 @@ and their content:
     === "Documentation directories tree"
 
         ```
-        docs
-        ├── locales
-        │   ├── es
-        │   │   └── my-own
-        |   │       └── subdir
-        |   |           └── index.md.po
-        |   └── fr
-        |       └── my-own
-        │           └── subdir
-        |               └── index.md.po
-        └── index.md
+        📁 docs
+        ├── 📁 locales
+        │   ├── 📁 es
+        │   │   └── 📁 my-own
+        |   │       └── 📁 subdir
+        |   |           └── 📄 index.md.po
+        |   └── 📁 fr
+        |       └── 📁 my-own
+        │           └── 📁 subdir
+        |               └── 📄 index.md.po
+        └── 📄 index.md
         ```
 
 <!-- mdpo-disable-next-line -->

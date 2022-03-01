@@ -69,34 +69,34 @@ Both previous configurations will create the same layout of files building the
 documentation. Given the next layout in a `docs/` directory:
 
 ```
-docs
-└── index.md
+📁 docs
+└── 📄 index.md
 ```
 
 After the build, you will get:
 
 ```
-docs
-├── es
-│   └── index.md.po
-└── index.md
+📁 docs
+├── 📁 es
+│   └── 📄 index.md.po
+└── 📄 index.md
 ```
 
 Just translate the strings in `docs/es/index.md.po` into Spanish, build again
 with `mkdocs build` and the `site/` directory will look like:
 
 ```
-site
-├── 404.html
+📁 site
+├── 📄 404.html
 ├── assets
-│   ├── images
-│   ├── javascripts
-│   └── stylesheets
-├── es
+│   ├── 📁 images
+│   ├── 📁 javascripts
+│   └── 📁 stylesheets
+├── 📁 es
 │   └── index.html
-├── index.html
-├── sitemap.xml
-└── sitemap.xml.gz
+├── 📄 index.html
+├── 📄 sitemap.xml
+└── 📄 sitemap.xml.gz
 ```
 
 <!--intro-end-->

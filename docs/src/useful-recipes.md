@@ -65,14 +65,14 @@ use them directly [as a command line interface][mdpo-cli] or through is
 === "Directories tree"
 
     ```
-    locale
-    ├── es
-    │   ├── README.md
-    │   └── README.md.po
-    └── fr
-        ├── README.md
-        └── README.md.po
-    README.md             <-- only existing file before execution
+    📁 locale
+    ├── 📁 es
+    │   ├── 📄 README.md
+    │   └── 📄 README.md.po
+    └── 📁 fr
+        ├── 📄 README.md
+        └── 📄 README.md.po
+    📄 README.md             <-- only existing file before execution
     ```
 
 <!-- mdpo-disable-codeblocks -->
