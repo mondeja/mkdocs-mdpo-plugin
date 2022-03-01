@@ -380,8 +380,10 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 self.translations.tempdir.name,
             )
             new_file._mdpo_language = language
+
+            new_page_title = translated_page_title or page.title
             new_page = mkdocs.structure.pages.Page(
-                translated_page_title or page.title,
+                new_page_title,
                 new_file,
                 config,
             )
@@ -410,7 +412,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             # if the file is being excluded from translations using the
             # 'exclude' plugin's config setting
             self.translations.nav[page.title][language] = [
-                translated_page_title or page.title, new_page.file.url,
+                new_page_title, new_page.file.url,
             ]
 
             mkdocs.commands.build._populate_page(
