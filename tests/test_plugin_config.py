@@ -482,6 +482,41 @@ def test_plugin_config(
             None,
             id='min_translated_messages=45',
         ),
+        pytest.param(
+            {
+                'exclude': 45,
+                'languages': [
+                    'en',
+                    'es',
+                ],
+            },
+            {},
+            mkdocs.config.base.ValidationError,
+            (
+                'Expected mdpo\'s "exclude" setting to be a list,'
+                ' but found the value 45 of type int'
+            ),
+            id='exclude=<int>',
+        ),
+        pytest.param(
+            {
+                'exclude': [
+                    'string',
+                    45,
+                ],
+                'languages': [
+                    'en',
+                    'es',
+                ],
+            },
+            {},
+            mkdocs.config.base.ValidationError,
+            (
+                'Expected mdpo\'s setting "exclude[1]" value to be'
+                ' a string, but found the value 45 of type int'
+            ),
+            id='exclude=[<str>,<int>]',
+        ),
     ),
 )
 def test_plugin_config_errors(

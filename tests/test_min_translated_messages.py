@@ -87,7 +87,7 @@ TESTS = (
     ),
     TESTS,
 )
-def test_navigation_and_page_building_plugins(
+def test_min_translated_messages(
     input_files_contents,
     translations,
     plugin_config,
