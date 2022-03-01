@@ -180,9 +180,9 @@ def on_config_event(plugin, config, **kwargs):
     if min_translated is not None:
         try:
             if '%' in str(min_translated):
-                min_translated = -float(min_translated.strip('%'))
+                min_translated = max(-100, -float(min_translated.strip('%')))
             else:
-                min_translated = int(min_translated)
+                min_translated = max(int(min_translated), 0)
         except Exception:
             raise ValidationError(
                 f"The value '{min_translated}' for"

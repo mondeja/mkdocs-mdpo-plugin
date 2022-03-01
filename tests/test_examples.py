@@ -28,7 +28,6 @@ def test_examples(example_dirname):
 
     norm_stderr = proc.stderr.decode('utf-8').lower()
     assert proc.returncode == 0
-    assert 'warning' not in norm_stderr
     assert 'error' not in norm_stderr
 
     assert os.path.isdir(site_dir)

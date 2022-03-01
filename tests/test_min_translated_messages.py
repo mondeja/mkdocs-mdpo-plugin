@@ -4,6 +4,8 @@ import os
 
 import pytest
 
+from mkdocs_mdpo_plugin.plugin import logger
+
 
 TESTS = (
     pytest.param(
@@ -72,6 +74,47 @@ TESTS = (
         ),
         id='min_translated_messages=2',
     ),
+    pytest.param(
+        {
+            'index.md': (
+                'Hello\n\nBye'
+            ),
+            'changelog.md': (
+                'Some changes\n\nIn the changelog'
+            ),
+        },
+        {
+            'es/index.md.po': {
+                'Hello': 'Hola',
+                'Bye': '',
+            },
+        },
+        {
+            'languages': ['en', 'es'],
+            'min_translated_messages': 2,
+            'exclude': ['changelog.md'],
+        },
+        {},
+        {
+            'index.html': [
+                '<p>Hello</p>',
+                '<p>Bye</p>',
+            ],
+            'changelog/index.html': [
+                '<p>Some changes</p>',
+                '<p>In the changelog</p>',
+            ],
+        },
+        (
+            'Excluding language "es". Translated 0 messages of'
+            ' 3 but required 2 translated messages at least.'
+        ),
+        (
+            'Excluding language "es". Translated 1 messages of'
+            ' 3 but required 2 translated messages at least.'
+        ),
+        id='min_translated_messages=2-exclude=[changelog.md]',
+    ),
 )
 
 
@@ -97,19 +140,26 @@ def test_min_translated_messages(
     expected_second_build_log,
     mkdocs_build,
 ):
-    def check_translation_files_not_exists(context):
+    # show duplicated messages in logger
+    #
+    # see Mkdocs build duplicate filter:
+    # https://github.com/mkdocs/mkdocs/blob/
+    # 1da44cea96b850c527d7bdceac920498e4a488ae/mkdocs/commands/build.py#L16
+    logger.filters[0].msgs = set()
+
+    def check_translated_files_not_exists(context):
         es_path = os.path.join(context['site_dir'], 'es')
         es_index_path = os.path.join(es_path, 'index.html')
         assert not os.path.exists(es_path)
         assert not os.path.exists(es_index_path)
 
-    mkdocs_log, plugin_log = mkdocs_build(
+    _, plugin_log = mkdocs_build(
         input_files_contents,
         translations,
         plugin_config,
         additional_config,
         expected_output_files,
-        callback_after_first_build=check_translation_files_not_exists,
+        callback_after_first_build=check_translated_files_not_exists,
         allow_missing_translations=True,
     )
 

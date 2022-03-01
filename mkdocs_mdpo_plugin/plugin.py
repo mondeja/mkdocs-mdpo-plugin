@@ -443,7 +443,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             if min_translated:
                 language = page.file._mdpo_language
                 stats = self.translations.stats[language]
-                if abs(min_translated) != min_translated:
+                if abs(min_translated) != min_translated:  # percent
                     min_translated = abs(min_translated)
                     if 'percent_translated' in stats:
                         percent_translated = stats['percent_translated']
@@ -467,6 +467,16 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                         return
                 else:
                     if stats['translated'] < min_translated:
+                        if min_translated > stats['total']:
+                            logger.warning(
+                                '[mdpo] Found more required translated'
+                                f' messages ({min_translated}) than total of'
+                                f' them ({stats["total"]}). Using'
+                                f' {stats["total"]} for'
+                                ' "min_translated_messages" value.',
+                            )
+                            min_translated = stats['total']
+
                         if language in self.config['languages']:
                             logger.info(
                                 '[mdpo] '
