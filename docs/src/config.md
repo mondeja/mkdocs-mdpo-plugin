@@ -215,13 +215,23 @@ total messages or as an integer like `76` to determine the minimum
 number of translated messages required to include a language.
 
 <!-- mdpo-disable-next-line -->
-### **`ignore_extensions`** (*list*)
+### **`exclude`** (*list[str]*)
+
+Exclude certain files from being translated, still creating copies of
+original ones in target languages. Accepts relative paths to files from
+`docs_dir` (documentation directory).
+
+This setting is useful if you want, for example, to exclude a changelog
+file from being translated.
+
+<!-- mdpo-disable-next-line -->
+### **`ignore_extensions`** (*list[str]*)
 
 File extensions that are ignored from being added to site directory, defaults to
 `['.po', '.pot', '.mo']`.
 
 <!-- mdpo-disable-next-line -->
-### **`ignore_msgids`** (*list*)
+### **`ignore_msgids`** (*list[str]*)
 
 You can ignore certain messages from being dumped into PO files adding them to
 this list.

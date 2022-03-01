@@ -1,0 +1,6 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Not translated"
+msgstr "Non traduit"

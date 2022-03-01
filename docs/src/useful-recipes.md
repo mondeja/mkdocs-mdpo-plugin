@@ -55,11 +55,11 @@ use them directly [as a command line interface][mdpo-cli] or through is
 
     ```yaml
     - repo: https://github.com/mondeja/mdpo
-      rev: v0.3.84
+      rev: v0.3.85
       hooks:
         - id: md2po2md
           files: ^README\.md
-          args: ['-l', 'es', '-l', 'fr', '-o', 'locale/{lang}']
+          args: ['-l', 'es', 'fr', '-o', 'locale/{lang}']
     ```
 <!-- mdpo-include-codeblocks -->
 === "Directories tree"

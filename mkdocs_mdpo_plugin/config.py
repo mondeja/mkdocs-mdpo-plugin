@@ -21,6 +21,7 @@ CONFIG_SCHEME = (
     ('ignore_msgids', Type(list, default=[])),
     ('cross_language_search', Type(bool, default=True)),
     ('min_translated_messages', Type((str, int), default=None)),
+    ('exclude', Type(list, default=[])),
 )
 
 
@@ -179,9 +180,9 @@ def on_config_event(plugin, config, **kwargs):
     if min_translated is not None:
         try:
             if '%' in str(min_translated):
-                min_translated = -float(min_translated.strip('%'))
+                min_translated = max(-100, -float(min_translated.strip('%')))
             else:
-                min_translated = int(min_translated)
+                min_translated = max(int(min_translated), 0)
         except Exception:
             raise ValidationError(
                 f"The value '{min_translated}' for"
@@ -190,6 +191,23 @@ def on_config_event(plugin, config, **kwargs):
             )
         else:
             plugin.config['min_translated_messages'] = min_translated
+
+    # check that 'exclude' contains a valid list
+    exclude = plugin.config.get('exclude') or []
+    if not isinstance(exclude, list):
+        raise ValidationError(
+            'Expected mdpo\'s "exclude" setting to be a list, but found'
+            f' the value {str(exclude)} of type {type(exclude).__name__}',
+        )
+    else:
+        for i, path in enumerate(exclude):
+            if not isinstance(path, str):
+                raise ValidationError(
+                    f'Expected mdpo\'s setting "exclude[{i}]" value to'
+                    f' be a string, but found the value {str(path)} of'
+                    f' type {type(path).__name__}',
+                )
+    plugin.config['exclude'] = exclude
 
     # store reference in plugin to markdown_extensions for later usage
     plugin.extensions.markdown = markdown_extensions
