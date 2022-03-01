@@ -487,15 +487,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ignore_extensions-list" class="md-nav__link">
-    ignore_extensions (list)
+  <a href="#exclude-liststr" class="md-nav__link">
+    exclude (list[str])
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#ignore_msgids-list" class="md-nav__link">
-    ignore_msgids (list)
+  <a href="#ignore_extensions-liststr" class="md-nav__link">
+    ignore_extensions (list[str])
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ignore_msgids-liststr" class="md-nav__link">
+    ignore_msgids (list[str])
   </a>
   
 </li>
@@ -517,7 +524,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mondeja/mkdocs-mdpo-plugin/tree/master/docs/src/tmp/mkdocs_mdpo_xeiyexf7/es/config/index.md" title="Editar esta página" class="md-content__button md-icon">
+                  <a href="https://github.com/mondeja/mkdocs-mdpo-plugin/tree/master/docs/src/tmp/mkdocs_mdpo_bl1htd57/es/config/index.md" title="Editar esta página" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
@@ -664,9 +671,12 @@
 <h3 id="min_translated_messages-str-or-int"><strong><code>min_translated_messages</code></strong> (<em>str</em> or <em>int</em>)<a class="headerlink" href="#min_translated_messages-str-or-int" title="Link permanente">&para;</a></h3>
 <p>Número o porcentaje de mensajes mínimo en todos los archivos para incluir las páginas traducidas para un idioma. Un mensaje de información será mostrado si un idioma no alcanza los requisitos de traducción mínimos.</p>
 <p>Especifica como cadena terminada con <code>%</code> como <code>55%</code> para porcentaje de mensajes totales o como entero como <code>76</code> para determinar el número mínimo de mensajes traducidos requeridos para incluir un idioma.</p>
-<h3 id="ignore_extensions-list"><strong><code>ignore_extensions</code></strong> (<em>list</em>)<a class="headerlink" href="#ignore_extensions-list" title="Link permanente">&para;</a></h3>
+<h3 id="exclude-liststr"><strong><code>exclude</code></strong> (<em>list[str]</em>)<a class="headerlink" href="#exclude-liststr" title="Link permanente">&para;</a></h3>
+<p>Excluye ciertos archivos de ser traducidos, aún creando copias de los archivos originales en los idiomas objetivo. Acepta rutas relativas a los archivos desde el directorio <code>docs_dir</code> (directorio de documentación).</p>
+<p>Esta configuración es útil si quieres, por ejemplo, excluir un archivo de historial de cambios o changelog de ser traducido.</p>
+<h3 id="ignore_extensions-liststr"><strong><code>ignore_extensions</code></strong> (<em>list[str]</em>)<a class="headerlink" href="#ignore_extensions-liststr" title="Link permanente">&para;</a></h3>
 <p>Extensiones de archivos que son ignorados de ser añadidos al directorio del sitio, por defecto <code>['.po', '.pot', '.mo']</code>.</p>
-<h3 id="ignore_msgids-list"><strong><code>ignore_msgids</code></strong> (<em>list</em>)<a class="headerlink" href="#ignore_msgids-list" title="Link permanente">&para;</a></h3>
+<h3 id="ignore_msgids-liststr"><strong><code>ignore_msgids</code></strong> (<em>list[str]</em>)<a class="headerlink" href="#ignore_msgids-liststr" title="Link permanente">&para;</a></h3>
 <p>Puedes ignorar ciertos mensajes de ser volcados a los archivos PO añadiéndolos a esta lista.</p>
                 
               
