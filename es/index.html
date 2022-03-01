@@ -483,7 +483,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mondeja/mkdocs-mdpo-plugin/tree/master/docs/src/tmp/mkdocs_mdpo_ljpm7l2a/es/index.md" title="Editar esta página" class="md-content__button md-icon">
+                  <a href="https://github.com/mondeja/mkdocs-mdpo-plugin/tree/master/docs/src/tmp/mkdocs_mdpo_ftcy_bpa/es/index.md" title="Editar esta página" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
@@ -523,27 +523,27 @@
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">es</span><span class="w"></span>
 </code></pre></div>
 <p>Ambas configuraciones previas crearán la misma estructura de archivos construyendo la documentación. Dada la siguiente estructura en un directorio <code>docs/</code>:</p>
-<div class="highlight"><pre><span></span><code>docs
-└── index.md
+<div class="highlight"><pre><span></span><code>📁 docs
+└── 📄 index.md
 </code></pre></div>
 <p>Después de la construcción, obtendrás:</p>
-<div class="highlight"><pre><span></span><code>docs
-├── es
-│   └── index.md.po
-└── index.md
+<div class="highlight"><pre><span></span><code>📁 docs
+├── 📁 es
+│   └── 📄 index.md.po
+└── 📄 index.md
 </code></pre></div>
 <p>Simplemente traduce las cadenas en <code>docs/es/index.md.po</code> al español, construye de nuevo con <code>mkdocs build</code> y el directorio <code>site/</code> se verá tal que:</p>
-<div class="highlight"><pre><span></span><code>site
-├── 404.html
+<div class="highlight"><pre><span></span><code>📁 site
+├── 📄 404.html
 ├── assets
-│   ├── images
-│   ├── javascripts
-│   └── stylesheets
-├── es
+│   ├── 📁 images
+│   ├── 📁 javascripts
+│   └── 📁 stylesheets
+├── 📁 es
 │   └── index.html
-├── index.html
-├── sitemap.xml
-└── sitemap.xml.gz
+├── 📄 index.html
+├── 📄 sitemap.xml
+└── 📄 sitemap.xml.gz
 </code></pre></div>
 <h2 id="como-funciona">Cómo funciona<a class="headerlink" href="#como-funciona" title="Link permanente">&para;</a></h2>
 <p><strong>mkdocs-mdpo-plugin</strong> está basado en <a href="https://mdpo.readthedocs.io">mdpo</a> el cual es un programa para traducir contenido Markdown complaciente con <a href="https://spec.commonmark.org/0.29/">CommonMark</a> usando archivos PO.</p>
