@@ -1,0 +1,9 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Bar"
+msgstr "Bar es"
+
+msgid "Baz"
+msgstr "Baz es"

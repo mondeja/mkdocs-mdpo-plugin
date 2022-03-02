@@ -82,6 +82,7 @@ plugins:
   - mdpo:
       locale_dir: ../locale
       cross_language_search: false
+      min_translated_messages: 95%
   - minify:
       minify_html: true
 

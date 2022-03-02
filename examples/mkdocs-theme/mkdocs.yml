@@ -4,6 +4,7 @@ docs_dir: docs/src
 
 nav:
   - Home: index.md
+  - foo.md
 
 plugins:
   - search

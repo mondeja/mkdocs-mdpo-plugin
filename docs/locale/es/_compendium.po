@@ -70,3 +70,6 @@ msgid ""
 msgstr ""
 "[mdpo-codeblocks-extraction]: "
 "https://mdpo.readthedocs.io/en/master/commands.html#code-blocks-extraction"
+
+msgid "Directories tree"
+msgstr "Árbol de directorios"

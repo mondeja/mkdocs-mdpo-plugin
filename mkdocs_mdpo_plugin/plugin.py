@@ -5,6 +5,7 @@ import logging
 import math
 import os
 import sys
+from urllib.parse import urljoin
 
 import mkdocs
 import polib
@@ -387,6 +388,20 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 new_file,
                 config,
             )
+
+            # overwrite the edit uri for the translated page targetting
+            # the PO file located in the repository
+            if config.get('repo_url') and config.get('edit_uri'):
+                new_page.edit_url = urljoin(
+                    config['repo_url'],
+                    os.path.normpath(
+                        os.path.join(
+                            config['edit_uri'],
+                            os.path.relpath(po_filepath, config['docs_dir']),
+                        ),
+                    ),
+                )
+
             files.append(new_file)
             _mdpo_languages[language] = new_file
 
@@ -610,9 +625,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
         # remove empty compendium files
         for compendium_filepath in self.translations.compendium_files.values():
-            with open(compendium_filepath) as f:
-                content = f.read()
-            if content == '#\nmsgid ""\nmsgstr ""\n':
+            if not len(polib.pofile(compendium_filepath)):
                 os.remove(compendium_filepath)
 
         # reset mkdocs build instance
@@ -625,7 +638,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         """
         if '..' not in self.config['locale_dir']:
             logger.error(
-                '[mdpo] -  '
+                '[mdpo] '
                 "You need to set 'locale_dir' configuration setting"
                 ' pointing to a directory placed outside'
                 " the documentation directory ('docs_dir') in order to"
