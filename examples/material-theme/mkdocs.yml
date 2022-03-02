@@ -1,5 +1,8 @@
 site_name: mkdocs-mdpo-plugin Material example
 site_url: https://mkdocs-mdpo.ga
+docs_dir: docs/src
+edit_uri: tree/master/docs/src
+repo_url: https://github.com/mondeja/mkdocs-mdpo-plugin
 
 theme:
   name: material
@@ -13,6 +16,7 @@ plugins:
   - search
   - mdpo:
       cross_language_search: false
+      locale_dir: ../locale
 
 extra:
   alternate:

@@ -22,8 +22,7 @@ def po_messages_stats(pofile_content):
 
         if line.startswith('msgid "'):
             total_messages += 1
-
-        if line.startswith('msgstr ""') and (
+        elif line.startswith('msgstr ""') and (
             next_i == len(content_lines) or (not content_lines[next_i].strip())
         ):
             untranslated_messages += 1

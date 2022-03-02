@@ -72,8 +72,8 @@ layout would be something like:
 The problem with this layout is that doesn't allow you to use the
 command `mkdocs serve`.
 
-The recommended practice is to organize your tipical `docs/` directory
-with multiple subdirectories, one for documentation files, other for
+The recommended practice is to organize your `docs/` directory in
+multiple subdirectories, one for documentation files, other for
 translation files, other for theme overrides...
 
 === "Configuration"
@@ -214,6 +214,28 @@ Specify as a string ending with `%` like `55%` for percentages of
 total messages or as an integer like `76` to determine the minimum
 number of translated messages required to include a language.
 
+=== "Filter by percentage"
+
+    ```yaml
+    plugins:
+      - mdpo:
+          languages:
+            - en
+            - es
+          min_translated_messages: 95%
+    ```
+
+=== "Filter by number of messages"
+
+    ```yaml
+    plugins:
+      - mdpo:
+          languages:
+            - en
+            - es
+          min_translated_messages: 50
+    ```
+
 <!-- mdpo-disable-next-line -->
 ### **`exclude`** (*list[str]*)
 
@@ -222,7 +244,34 @@ original ones in target languages. Accepts relative paths to files from
 `docs_dir` (documentation directory).
 
 This setting is useful if you want, for example, to exclude a changelog
-file from being translated.
+file from being translated:
+
+=== "Configuration"
+
+    ```yaml
+    plugins:
+      - mdpo:
+          languages:
+            - en
+            - es
+            - fr
+          locale_dir: locale
+          exclude:
+            - changelog.md
+    ```
+
+=== "Directories tree"
+
+    ```
+    📁 docs
+    ├── 📁 locale
+    │   ├── 📁 es
+    │   │   └── 📄 index.md.po
+    |   └── 📁 fr
+    |       └── 📄 index.md.po
+    ├── 📄 changelog.md
+    └── 📄 index.md
+    ```
 
 <!-- mdpo-disable-next-line -->
 ### **`ignore_extensions`** (*list[str]*)

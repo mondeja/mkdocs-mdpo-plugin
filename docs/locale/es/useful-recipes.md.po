@@ -55,9 +55,6 @@ msgstr "Interfaz de línea de comandos `md2po2md`"
 msgid "pre-commit hook configuration"
 msgstr "Configuración de hook pre-commit"
 
-msgid "Directories tree"
-msgstr "Árbol de directorios"
-
 msgid "Github Pages configuration"
 msgstr "Configuración para Github Pages"
 
