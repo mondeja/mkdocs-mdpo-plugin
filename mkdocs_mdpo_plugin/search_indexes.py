@@ -38,7 +38,7 @@ def _material_get_worker_js_files(site_dir):
             fpath = os.path.join(javascripts_dir, fname)
             with open(fpath) as f:
                 content = f.read()
-            if '/search/search_index.json' in content:
+            if 'search_index.json' in content:
                 worker_js_filepath = fpath
                 worker_js_content = content
                 continue
@@ -134,8 +134,8 @@ def _material_patch_html_file(fpath, language, worker_files):
     )
 
     new_content = content.replace(
-        f'assets/javascripts/{worker_js_fname}"',
-        f'assets/javascripts/{worker_js_fname_lang}"',
+        f'{worker_js_fname}',
+        f'{worker_js_fname_lang}',
     )
     with open(fpath, 'w') as f:
         f.write(new_content)
@@ -218,14 +218,6 @@ def _reathedocs_patch_search_files(
 THEME_PATCH_SEARCH_FILES_FUNCS = {
     'readthedocs': _reathedocs_patch_search_files,
 }
-
-##
-# Update 'search_index.json#config.lang' only for some themes:
-##
-
-THEME_ALTER_SEARCH_INDEX_LANG_CONFIG = [
-    'material',
-]
 
 
 class TranslationsSearchPatcher:
@@ -336,12 +328,6 @@ class TranslationsSearchPatcher:
     def _create_lang_search_index_json(self, language, records):
         search_index = copy.copy(self.search_index_json)
         search_index['docs'] = records
-        if (
-                self.theme_name in THEME_ALTER_SEARCH_INDEX_LANG_CONFIG
-                and 'config' in search_index
-                and 'lang' in search_index['config']
-        ):
-            search_index['config']['lang'] = [language]
 
         new_path = _language_extension_path(
             self.search_index_json_path,
