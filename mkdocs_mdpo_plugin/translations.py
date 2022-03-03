@@ -56,6 +56,7 @@ class Translations:
         'all',
         'locations',
         'stats',
+        'config_settings',
     }
 
     def __init__(self):
@@ -95,6 +96,10 @@ class Translations:
         # {lang: {total: int, translated: int}}
         self.stats = {}
 
+        # config settings translations (site_name, site_description)
+        # {lang: {site_name: str, site_description: str}}
+        self.config_settings = {}
+
     def __str__(self):  # pragma: no cover
         current = 'None' if self.current is None else 'Translation(...)'
         return (
@@ -105,6 +110,7 @@ class Translations:
             ' compendium_msgstrs_tr='
             f'{str(self.compendium_msgstrs_tr)},'
             f' current={current},'
-            f' locations={str(self.locations)}'
+            f' locations={str(self.locations)},'
+            f' config_settings={str(self.config_settings)}'
             ')'
         )

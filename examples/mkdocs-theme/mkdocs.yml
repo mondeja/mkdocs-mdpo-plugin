@@ -1,4 +1,5 @@
 site_name: mkdocs-mdpo-plugin Mkdocs theme example
+site_description: Example using builtin Mkdocs theme with mkdocs-mdpo-plugin
 site_url: https://mkdocs-mdpo.ga
 docs_dir: docs/src
 
@@ -15,3 +16,6 @@ plugins:
         - fr
       cross_language_search: false
       locale_dir: ../locale
+      translate:
+        - site_name
+        - site_description

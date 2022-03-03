@@ -83,6 +83,8 @@ plugins:
       locale_dir: ../locale
       cross_language_search: false
       min_translated_messages: 95%
+      translate:
+        - site_description
   - minify:
       minify_html: true
 

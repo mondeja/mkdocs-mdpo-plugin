@@ -10,6 +10,12 @@ def readable_float(number):
     return round_number
 
 
+def removepreffix(s, pref):
+    if pref and s.startswith(pref):
+        return s[len(pref):]
+    return s
+
+
 def removesuffix(s, suf):
     if suf and s.endswith(suf):
         return s[:-len(suf)]

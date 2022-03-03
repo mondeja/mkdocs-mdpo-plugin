@@ -2,6 +2,9 @@
 msgid ""
 msgstr ""
 
+msgid "Mkdocs plugin for translations using PO files"
+msgstr "Plugin de Mkdocs para traducciones usando archivos PO"
+
 msgid "Permanent link"
 msgstr "Link permanente"
 
