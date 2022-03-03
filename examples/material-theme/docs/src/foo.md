@@ -1,3 +1,7 @@
+---
+description: Some description
+---
+
 # Bar
 
 Baz
