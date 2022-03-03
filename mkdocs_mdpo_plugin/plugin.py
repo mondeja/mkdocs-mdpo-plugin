@@ -33,6 +33,7 @@ from mkdocs_mdpo_plugin.translations import Translation, Translations
 from mkdocs_mdpo_plugin.utils import (
     po_messages_stats,
     readable_float,
+    removepreffix,
     removesuffix,
 )
 
@@ -594,16 +595,35 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             # translate title and description replacing directly in HTML
             if language in self.translations.config_settings:
                 tr_settings = self.translations.config_settings[language]
+
                 if tr_settings.get('site_name'):
                     output = output.replace(
                         f'{config["site_name"]}</title>',
                         f'{tr_settings["site_name"]}</title>',
                     )
                 if tr_settings.get('site_description'):
-                    output = output.replace(
-                        f'content="{config["site_description"]}"',
-                        f'content="{tr_settings["site_description"]}"',
-                    )
+                    # insert site_description into description meta tag
+                    # if the file is a translated index, only for
+                    # readthedocs and mkdocs themes
+                    if (
+                        config['theme'].name in {'mkdocs', 'readthedocs'} and
+                        removepreffix(page.file.url, language).count('/') == 1
+                    ):
+                        output = output.replace(
+                            '/title>',
+                            (
+                                '/title><meta name="description"'
+                                f' content="{tr_settings["site_description"]}"'
+                                ' />'
+                            ),
+                        )
+                    else:
+                        # mkdocs-material theme includes the description
+                        # in all pages
+                        output = output.replace(
+                            f'content="{config["site_description"]}"',
+                            f'content="{tr_settings["site_description"]}"',
+                        )
 
             # write translated HTML file to 'site' directory
             os.makedirs(

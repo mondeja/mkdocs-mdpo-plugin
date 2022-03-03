@@ -221,10 +221,41 @@ def test_translate_dumped_to_compendium(
             {
                 'site_name': 'The name of the site',
                 'site_description': 'The description of the site',
+            },
+            {
+                'es/index.html': [
+                    '<p>Hola</p>',
+                    '<p>Adiós</p>',
+                    'The name of the site',
+                    'La descripción del sitio',
+                ],
+            },
+            id='translate=[site_description]-theme=mkdocs',
+        ),
+        pytest.param(
+            {
+                'index.md': (
+                    'Hello\n\nBye'
+                ),
+            },
+            {
+                'es/index.md.po': {
+                    'Hello': 'Hola',
+                    'Bye': 'Adiós',
+                },
+                'es/_compendium.po': {
+                    'The description of the site': 'La descripción del sitio',
+                },
+            },
+            {
+                'languages': ['en', 'es'],
+                'translate': ['site_description'],
+            },
+            {
+                'site_name': 'The name of the site',
+                'site_description': 'The description of the site',
                 'theme': {
                     'name': 'material',
-                    # TODO: mkdocs theme does not recognize 'es/index.html'
-                    #       as homepage with `.is_homepage`?
                 },
             },
             {
@@ -235,7 +266,7 @@ def test_translate_dumped_to_compendium(
                     'La descripción del sitio',
                 ],
             },
-            id='translate=[site_description]',
+            id='translate=[site_description]-theme=material',
         ),
         pytest.param(
             {
