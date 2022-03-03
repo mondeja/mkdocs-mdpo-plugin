@@ -4,6 +4,7 @@ import functools
 import logging
 import math
 import os
+import re
 import sys
 from urllib.parse import urljoin
 
@@ -296,10 +297,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 # translate title
                 translated_page_title, _title_in_pofile = (None, False)
                 # translated custom description
-                page_meta_description = (
-                    page.meta.get('description')
-                    if config['theme'].name == 'material' else None
-                )
+                page_meta_description = page.meta.get('description')
                 translated_page_desc, _desc_in_pofile = (None, False)
 
                 # translate site_name and site_description
@@ -673,37 +671,40 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 meta_description = self.translations.page_metas[
                     language
                 ][page.file.src_path].get('description')
-                if tr_settings.get('site_description'):
-                    # insert site_description into description meta tag
-                    # if the file is a translated index, only for
-                    # readthedocs and mkdocs themes
-                    if (
-                        config['theme'].name in {'mkdocs', 'readthedocs'} and
-                        removepreffix(page.file.url, language).count('/') == 1
-                    ):
+
+                if (
+                    meta_description or
+                    tr_settings.get('site_description') or
+                    config.get('site_description')
+                ):
+                    if meta_description:
+                        tr_description = meta_description
+                    elif tr_settings.get('site_description'):
+                        tr_description = tr_settings['site_description']
+                    elif config.get('site_description'):
+                        tr_description = config['site_description']
+
+                    if '<meta name="description"' not in output:
                         output = output.replace(
                             '/title>',
                             (
                                 '/title><meta name="description"'
-                                f' content="{tr_settings["site_description"]}"'
-                                ' />'
+                                ' content="">'
                             ),
                         )
-                    elif not meta_description:
-                        # mkdocs-material theme includes the description
-                        # in all pages
-                        #
-                        # is defined using a 'description' metadata with
-                        # 'site_description' config setting as fallback
-                        output = output.replace(
-                            f'content="{config["site_description"]}"',
-                            f'content="{tr_settings["site_description"]}"',
+
+                    if not (
+                        config['theme'].name in {'mkdocs', 'readthedocs'} and
+                        removepreffix(page.file.url, language).count('/') > 1
+                    ):
+                        output = re.sub(
+                            r'<meta name="description" content="[^"]*"',
+                            (
+                                '<meta name="description"'
+                                f' content="{tr_description}"'
+                            ),
+                            output,
                         )
-                if meta_description:
-                    output = output.replace(
-                        f'content="{config["site_description"]}"',
-                        f'content="{meta_description}"',
-                    )
 
             # write translated HTML file to 'site' directory
             os.makedirs(
