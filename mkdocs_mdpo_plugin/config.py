@@ -237,9 +237,10 @@ def on_config_event(plugin, config, **kwargs):
                 )
     plugin.config['exclude'] = exclude
 
-    # translation of configuration options
+    # translation of configuration settings
     valid_translate_settings = ['site_name', 'site_description']
-    for setting in plugin.config.get('translate', []):
+    translate = plugin.config.get('translate', [])
+    for setting in translate:
         if setting not in valid_translate_settings:
             valid_translate_settings_readable = ' and '.join([
                 f"'{opt}'" for opt in valid_translate_settings
@@ -249,6 +250,15 @@ def on_config_event(plugin, config, **kwargs):
                 " 'plugins.mdpo.translate' config setting. Valid settings"
                 f' are {valid_translate_settings_readable}',
             )
+        elif (
+            setting == 'site_description'
+            and not config.get('site_description')
+        ):
+            logger.warn(
+                '[mdpo] "site_description" is configured to be translated'
+                ' but was not defined in mkdocs.yml',
+            )
+            translate.remove('site_description')
 
     # store reference in plugin to markdown_extensions for later usage
     plugin.extensions.markdown = markdown_extensions

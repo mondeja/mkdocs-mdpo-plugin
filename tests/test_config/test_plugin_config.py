@@ -517,6 +517,24 @@ def test_plugin_config(
             ),
             id='exclude=[<str>,<int>]',
         ),
+        pytest.param(  # translate invalid config setting name
+            {
+                'languages': [
+                    'en',
+                    'es',
+                ],
+                'translate': [
+                    'invalid',
+                ],
+            },
+            {},
+            mkdocs.config.base.ValidationError,
+            (
+                "The setting 'invalid' is not supported for"
+                " 'plugins.mdpo.translate' config setting."
+            ),
+            id='translate=[invalid]',
+        ),
     ),
 )
 def test_plugin_config_errors(
