@@ -560,7 +560,7 @@
 <h2 id="estructura">Estructura<a class="headerlink" href="#estructura" title="Link permanente">&para;</a></h2>
 <h3 id="locale_dir-str"><strong><code>locale_dir</code></strong> (<em>str</em>)<a class="headerlink" href="#locale_dir-str" title="Link permanente">&para;</a></h3>
 <p>Directorio donde los archivos de traducción PO serán ubicados. Si no se define, se usará la raíz de tu documentación (configuración <code>docs_dir</code>), lo cual no te permitirá usar el comando <code>mkdocs serve</code>. La estructura por defecto sería algo como:</p>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Configuration</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Configuración</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mdpo</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">languages</span><span class="p">:</span><span class="w"></span>
@@ -581,7 +581,7 @@
 </div>
 <p>El problema con esta estructura es que no te permite usar el comando <code>mkdocs serve</code>.</p>
 <p>La práctica recomendada es organizar tu directorio <code>docs/</code> con múltiples subdirectorios, uno para archivos de documentación, otro para archivos de traducción, otro para sobreescritura de temas...</p>
-<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Configuration</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Configuración</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nt">docs_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docs/src</span><span class="w"></span>
 
 <span class="nt">plugins</span><span class="p">:</span><span class="w"></span>
@@ -608,7 +608,7 @@
 <h3 id="lc_messages-bool-or-str"><strong><code>lc_messages</code></strong> (<em>bool</em> or <em>str</em>)<a class="headerlink" href="#lc_messages-bool-or-str" title="Link permanente">&para;</a></h3>
 <p>En el mundo de la traducción de programas es común la creación de una carpeta <code>LC_MESSAGES</code> dentro del directorio de idioma. Si la necesitas, puedes definir este ajuste como <code>true</code>, pero si quieres otro nombre de carpeta, puedes pasar una cadena, o incluso una ruta relativa para crear más de una carpeta entre el directorio de idioma y su contenido:</p>
 <div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">true</label><div class="tabbed-content">
-<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Configuration</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Configuración</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mdpo</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">languages</span><span class="p">:</span><span class="w"></span>
@@ -634,7 +634,7 @@
 </div>
 </div>
 <input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Valor personalizado</label><div class="tabbed-content">
-<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Configuration</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Configuración</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mdpo</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">languages</span><span class="p">:</span><span class="w"></span>
@@ -706,7 +706,7 @@
 <h3 id="exclude-liststr"><strong><code>exclude</code></strong> (<em>list[str]</em>)<a class="headerlink" href="#exclude-liststr" title="Link permanente">&para;</a></h3>
 <p>Excluye ciertos archivos de ser traducidos, aunque sigue creando copias de los archivos originales en los idiomas objetivo. Acepta rutas relativas a los archivos desde el directorio <code>docs_dir</code> (directorio de documentación).</p>
 <p>Esta configuración es útil si quieres, por ejemplo, excluir un archivo de historial de cambios (changelog) de ser traducido:</p>
-<div class="tabbed-set" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Configuration</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Configuración</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mdpo</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">languages</span><span class="p">:</span><span class="w"></span>
