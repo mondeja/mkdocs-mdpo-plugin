@@ -4,6 +4,7 @@ import functools
 import logging
 import math
 import os
+import re
 import sys
 from urllib.parse import urljoin
 
@@ -295,6 +296,9 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 #
                 # translate title
                 translated_page_title, _title_in_pofile = (None, False)
+                # translated custom description
+                page_meta_description = page.meta.get('description')
+                translated_page_desc, _desc_in_pofile = (None, False)
 
                 # translate site_name and site_description
                 translated_config_settings = {
@@ -304,15 +308,52 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                     key: False for key in self.config['translate']
                 }
 
-                for entry in po:
-                    if entry.msgid == page.title:
-                        # matching title found
-                        entry.obsolete = False
-                        translated_page_title = entry.msgstr
-                        _title_in_pofile = True
-                        _translated_entries_msgids.append(page.title)
-                        if entry.msgstr:
-                            _translated_entries_msgstrs.append(page.title)
+                if page_meta_description:
+                    for entry in po:
+                        if entry.msgid == page.title:
+                            # matching title found
+                            entry.obsolete = False
+                            translated_page_title = entry.msgstr
+                            _title_in_pofile = True
+                            if entry.msgstr:
+                                _translated_entries_msgstrs.append(
+                                    entry.msgstr,
+                                )
+
+                        if entry.msgid == page_meta_description:
+                            # matching description found
+                            entry.obsolete = False
+                            translated_page_desc = entry.msgstr
+                            _desc_in_pofile = True
+                            if entry.msgstr:
+                                _translated_entries_msgstrs.append(
+                                    page_meta_description,
+                                )
+
+                    # add description to PO file if not added
+                    if not _desc_in_pofile:
+                        po.insert(
+                            0,
+                            polib.POEntry(
+                                msgid=page_meta_description,
+                                msgstr='',
+                            ),
+                        )
+
+                        _translated_entries_msgids.append(
+                            page_meta_description,
+                        )
+                else:
+                    for entry in po:
+                        if entry.msgid == page.title:
+                            # matching title found
+                            entry.obsolete = False
+                            translated_page_title = entry.msgstr
+                            _title_in_pofile = True
+                            if entry.msgstr:
+                                _translated_entries_msgstrs.append(
+                                    entry.msgstr,
+                                )
 
                 for entry in compendium_pofile:
                     for setting in translated_config_settings:
@@ -381,6 +422,19 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                     events=po2md_events,
                     wrapwidth=math.inf,  # ignore line wrapping
                 )
+                if page_meta_description:
+                    po2md.translated_entries.append(
+                        polib.POEntry(
+                            msgid=page_meta_description,
+                            msgstr='',
+                        ),
+                    )
+                po2md.translated_entries.append(
+                    polib.POEntry(
+                        msgid=page.title,
+                        msgstr='',
+                    ),
+                )
                 content = po2md.translate(markdown)
 
                 _disabled_msgids = [
@@ -395,6 +449,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 # mock variables if the file is excluded from being translated
                 content = markdown
                 translated_page_title = None
+                translated_page_desc = None
                 _disabled_msgids = []
                 _translated_entries_msgstrs = []
                 _translated_entries_msgids = []
@@ -427,6 +482,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 new_file,
                 config,
             )
+            if translated_page_desc:
+                new_page.meta['description'] = translated_page_desc
 
             # overwrite the edit uri for the translated page targetting
             # the PO file located in the repository
@@ -459,6 +516,15 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 self.translations.config_settings[language] = (
                     translated_config_settings
                 )
+            if language not in self.translations.page_metas:
+                self.translations.page_metas[language] = {}
+            if (
+                new_file.src_path
+                not in self.translations.page_metas[language]
+            ):
+                self.translations.page_metas[
+                    language
+                ][new_file.src_path] = new_page.meta
 
             # change file url
             url = removesuffix(new_page.file.url, '.md') + '.html'
@@ -601,28 +667,43 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                         f'{config["site_name"]}</title>',
                         f'{tr_settings["site_name"]}</title>',
                     )
-                if tr_settings.get('site_description'):
-                    # insert site_description into description meta tag
-                    # if the file is a translated index, only for
-                    # readthedocs and mkdocs themes
-                    if (
-                        config['theme'].name in {'mkdocs', 'readthedocs'} and
-                        removepreffix(page.file.url, language).count('/') == 1
-                    ):
+
+                meta_description = self.translations.page_metas[
+                    language
+                ][page.file.src_path].get('description')
+
+                if (
+                    meta_description or
+                    tr_settings.get('site_description') or
+                    config.get('site_description')
+                ):
+                    if meta_description:
+                        tr_description = meta_description
+                    elif tr_settings.get('site_description'):
+                        tr_description = tr_settings['site_description']
+                    elif config.get('site_description'):
+                        tr_description = config['site_description']
+
+                    if '<meta name="description"' not in output:
                         output = output.replace(
                             '/title>',
                             (
                                 '/title><meta name="description"'
-                                f' content="{tr_settings["site_description"]}"'
-                                ' />'
+                                ' content="">'
                             ),
                         )
-                    else:
-                        # mkdocs-material theme includes the description
-                        # in all pages
-                        output = output.replace(
-                            f'content="{config["site_description"]}"',
-                            f'content="{tr_settings["site_description"]}"',
+
+                    if not (
+                        config['theme'].name in {'mkdocs', 'readthedocs'} and
+                        removepreffix(page.file.url, language).count('/') > 1
+                    ):
+                        output = re.sub(
+                            r'<meta name="description" content="[^"]*"',
+                            (
+                                '<meta name="description"'
+                                f' content="{tr_description}"'
+                            ),
+                            output,
                         )
 
             # write translated HTML file to 'site' directory
@@ -709,9 +790,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
                 _msgids_appended_to_compendium = []
                 for translation in translations:
-                    po = polib.pofile(translation.po_filepath)
                     _entry_found = None
-                    for entry in po:
+                    for entry in translation.po:
                         if entry.msgid == repeated_msgid:
                             if (
                                 repeated_msgid not in
@@ -725,8 +805,8 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                             _entry_found = entry
                             break
                     if _entry_found:
-                        po.remove(_entry_found)
-                        po.save(translation.po_filepath)
+                        translation.po.remove(_entry_found)
+                        translation.po.save(translation.po_filepath)
 
             for entry in compendium_pofile:
                 if entry.msgid not in repeated_msgids:
@@ -752,11 +832,10 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 # po_filepath is None if the file has been excluded from
                 # translations using 'exclude' config setting
                 if translation.po_filepath is not None:
-                    po = polib.pofile(translation.po_filepath)
-                    for entry in po:
+                    for entry in translation.po:
                         if entry.msgid not in translation.translated_msgids:
                             entry.obsolete = True
-                    po.save(translation.po_filepath)
+                    translation.po.save(translation.po_filepath)
 
         # reset mkdocs build instance
         MkdocsBuild._instance = None

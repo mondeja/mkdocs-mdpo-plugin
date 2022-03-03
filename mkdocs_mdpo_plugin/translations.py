@@ -57,6 +57,7 @@ class Translations:
         'locations',
         'stats',
         'config_settings',
+        'page_metas',
     }
 
     def __init__(self):
@@ -100,6 +101,10 @@ class Translations:
         # {lang: {site_name: str, site_description: str}}
         self.config_settings = {}
 
+        # translated page metadatas by language
+        # {lang: {page.file.src_path: {...meta...}}}
+        self.page_metas = {}
+
     def __str__(self):  # pragma: no cover
         current = 'None' if self.current is None else 'Translation(...)'
         return (
@@ -111,6 +116,7 @@ class Translations:
             f'{str(self.compendium_msgstrs_tr)},'
             f' current={current},'
             f' locations={str(self.locations)},'
-            f' config_settings={str(self.config_settings)}'
+            f' config_settings={str(self.config_settings)},'
+            f' page_metas={str(self.page_metas)}'
             ')'
         )

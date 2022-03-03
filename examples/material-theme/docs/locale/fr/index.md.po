@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 
-msgid "Home"
-msgstr "Accueil"
-
 msgid "Welcome to MkDocs"
 msgstr "Bienvenue sur mkdocs"
+
+msgid "Home"
+msgstr "Accueil"

@@ -48,7 +48,7 @@ use them directly [as a command line interface][mdpo-cli] or through is
 === "`md2po2md` command line interface"
 
     ```bash
-    md2po2md README.md -l es -l fr -o locale/{lang}
+    md2po2md README.md -l es fr -o locale/{lang}
     ```
 
 === "pre-commit hook configuration"

@@ -2,11 +2,14 @@
 msgid ""
 msgstr ""
 
-msgid "Foo"
-msgstr "Foo es"
+msgid "Some description"
+msgstr "Algo de descripción"
 
 msgid "Bar"
 msgstr "Bar es"
 
 msgid "Baz"
 msgstr "Baz es"
+
+msgid "Foo"
+msgstr "Foo es"
