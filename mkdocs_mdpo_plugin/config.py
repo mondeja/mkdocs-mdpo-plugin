@@ -167,36 +167,39 @@ def on_config_event(plugin, config, **kwargs):
 
     # check that cross language search configuration is valid
     if plugin.config.get('cross_language_search') is False:
-        plugin_names = [p for p in config['plugins']]
         if 'search' not in config['plugins']:
             raise ValidationError(
                 '"cross_language_search" setting is disabled but'
                 ' no "search" plugin has been added to "plugins"',
             )
-        elif plugin_names.index('search') > plugin_names.index('mdpo'):
-            raise ValidationError(
-                '"search" plugin must be placed before "mdpo"'
-                ' plugin if you want to disable "cross_language_search".',
-            )
         else:
-            lunr_languages = get_lunr_languages()
-            search_langs = config['plugins']['search'].config['lang'] or []
-            for language in plugin.config['languages']:
-                if language in lunr_languages:
-                    if language not in search_langs:
-                        config['plugins']['search'].config['lang'].append(
-                            language,
-                        )
-                        logger.debug(
-                            f"[mdpo] Adding '{language}' to"
-                            " 'plugins.search.lang' option",
-                        )
-                elif language != 'en':
-                    logger.info(
-                        f"[mdpo] Language '{language}' is not supported by"
-                        " lunr.js, not adding it to 'plugins.search.lang'"
-                        ' option',
+            plugin_names = [p for p in config['plugins']]
+            if plugin_names.index('search') > plugin_names.index('mdpo'):
+                raise ValidationError(
+                    '"search" plugin must be placed before "mdpo"'
+                    ' plugin if you want to disable "cross_language_search".',
+                )
+    elif not _using_material_theme and 'search' in config['plugins']:
+        # if cross_language_search is active, add all languages to 'search'
+        # plugin configuration
+        lunr_languages = get_lunr_languages()
+        search_langs = config['plugins']['search'].config['lang'] or []
+        for language in plugin.config['languages']:
+            if language in lunr_languages:
+                if language not in search_langs:
+                    config['plugins']['search'].config['lang'].append(
+                        language,
                     )
+                    logger.debug(
+                        f"[mdpo] Adding '{language}' to"
+                        " 'plugins.search.lang' option",
+                    )
+            elif language != 'en':  # English does not need steemer
+                logger.info(
+                    f"[mdpo] Language '{language}' is not supported by"
+                    " lunr.js, not adding it to 'plugins.search.lang'"
+                    ' option',
+                )
 
     # check that minimum translated messages required for each language
     # is a valid value

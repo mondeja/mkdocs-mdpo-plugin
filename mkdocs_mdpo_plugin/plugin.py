@@ -24,6 +24,7 @@ from mkdocs_mdpo_plugin.mdpo_utils import (
 )
 from mkdocs_mdpo_plugin.mkdocs_utils import (
     MkdocsBuild,
+    get_lunr_languages,
     get_material_languages,
     set_on_build_error_event,
 )
@@ -429,20 +430,47 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 new_page_title, new_page.file.url,
             ]
 
-            if config['theme'].name == 'material':
-                material_languages = get_material_languages()
-                if language in material_languages:
-                    config['theme'].language = language
-                else:
-                    material_version = get_package_version('material')
-                    material_version_eq = (
-                        f'=={material_version}' if material_version else ''
+            # set languages for search when 'cross_language_search'
+            # is disabled
+            #
+            # if it is enabled, this configuration is handled in the
+            # `on_config` event
+            if self.config['cross_language_search'] is False:
+                if config['theme'].name == 'material':
+                    material_languages = get_material_languages()
+                    if language in material_languages:
+                        config['theme'].language = language
+                    else:
+                        material_version = get_package_version('material')
+                        material_version_eq = (
+                            f'=={material_version}' if material_version else ''
+                        )
+                        logger.info(
+                            f'[mdpo] Language {language} is not supported by'
+                            f' mkdocs-material{material_version_eq}, not'
+                            " setting the 'theme.language' option",
+                        )
+                elif 'search' in config['plugins']:  # Mkdocs theme languages
+                    lunr_languages = get_lunr_languages()
+                    search_langs = (
+                        config['plugins']['search'].config['lang'] or []
                     )
-                    logger.info(
-                        f'[mdpo] Language {language} is not supported by'
-                        f' mkdocs-material{material_version_eq}, not setting'
-                        " the 'theme.language' option",
-                    )
+                    if language in lunr_languages:
+                        if language not in search_langs:
+                            # set only the language to search
+                            config['plugins']['search'].config['lang'] = (
+                                [language]
+                            )
+                            logger.debug(
+                                f"[mdpo] Setting ['{language}'] for"
+                                " 'plugins.search.lang' option",
+                            )
+                    elif language != 'en':
+                        logger.info(
+                            f"[mdpo] Language '{language}' is not supported by"
+                            ' lunr.js, not setting it for'
+                            " 'plugins.search.lang' option",
+                        )
 
             mkdocs.commands.build._populate_page(
                 new_page,
@@ -459,6 +487,18 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             self.translations.all[language].append(translation)
 
         self.translations.current = None
+
+        # reconfigure default language for plugins and themes after
+        # translated pages are built
+        if config['theme'].name == 'material':
+            config['theme'].language = self.config['default_language']
+        elif (
+            'search' in config['plugins'] and
+            'lang' in config['plugins']['search']
+        ):
+            config['plugins']['search'].config['lang'] = [
+                self.config['default_language'],
+            ]
 
         # set languages to render in sitemap.xml
         page.file._mdpo_languages = _mdpo_languages

@@ -219,14 +219,6 @@ THEME_PATCH_SEARCH_FILES_FUNCS = {
     'readthedocs': _reathedocs_patch_search_files,
 }
 
-##
-# Update 'search_index.json#config.lang' only for some themes:
-##
-
-THEME_ALTER_SEARCH_INDEX_LANG_CONFIG = [
-    'material',
-]
-
 
 class TranslationsSearchPatcher:
     supported_themes = THEME_WORKER_FILES_FUNCS.keys()
@@ -336,12 +328,6 @@ class TranslationsSearchPatcher:
     def _create_lang_search_index_json(self, language, records):
         search_index = copy.copy(self.search_index_json)
         search_index['docs'] = records
-        if (
-                self.theme_name in THEME_ALTER_SEARCH_INDEX_LANG_CONFIG
-                and 'config' in search_index
-                and 'lang' in search_index['config']
-        ):
-            search_index['config']['lang'] = [language]
 
         new_path = _language_extension_path(
             self.search_index_json_path,
