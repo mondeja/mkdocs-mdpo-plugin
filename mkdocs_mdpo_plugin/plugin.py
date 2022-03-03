@@ -26,13 +26,11 @@ from mkdocs_mdpo_plugin.mdpo_utils import (
 from mkdocs_mdpo_plugin.mkdocs_utils import (
     MkdocsBuild,
     get_lunr_languages,
-    get_material_languages,
     set_on_build_error_event,
 )
 from mkdocs_mdpo_plugin.search_indexes import TranslationsSearchPatcher
 from mkdocs_mdpo_plugin.translations import Translation, Translations
 from mkdocs_mdpo_plugin.utils import (
-    get_package_version,
     po_messages_stats,
     readable_float,
     removesuffix,
@@ -480,21 +478,11 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             # if it is enabled, this configuration is handled in the
             # `on_config` event
             if self.config['cross_language_search'] is False:
-                if config['theme'].name == 'material':
-                    material_languages = get_material_languages()
-                    if language in material_languages:
-                        config['theme'].language = language
-                    else:
-                        material_version = get_package_version('material')
-                        material_version_eq = (
-                            f'=={material_version}' if material_version else ''
-                        )
-                        logger.info(
-                            f'[mdpo] Language {language} is not supported by'
-                            f' mkdocs-material{material_version_eq}, not'
-                            " setting the 'theme.language' option",
-                        )
-                elif 'search' in config['plugins']:  # Mkdocs theme languages
+                if (
+                    config['theme'].name != 'material' and
+                    'search' in config['plugins']
+                ):
+                    # Mkdocs theme languages
                     lunr_languages = get_lunr_languages()
                     search_langs = (
                         config['plugins']['search'].config['lang'] or []
@@ -534,11 +522,10 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
         # reconfigure default language for plugins and themes after
         # translated pages are built
-        if config['theme'].name == 'material':
-            config['theme'].language = self.config['default_language']
-        elif (
-            'search' in config['plugins'] and
-            hasattr(config['plugins']['search'], 'lang')
+        if (
+            config['theme'].name != 'material'
+            and 'search' in config['plugins']
+            and hasattr(config['plugins']['search'], 'lang')
         ):
             config['plugins']['search'].config['lang'] = [
                 self.config['default_language'],

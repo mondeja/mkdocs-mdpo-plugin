@@ -17,9 +17,14 @@ The patch implies several steps, which depend on the active theme:
 
 import copy
 import json
+import logging
 import os
 
-from mkdocs_mdpo_plugin.utils import removesuffix
+from mkdocs_mdpo_plugin.mkdocs_utils import get_material_languages
+from mkdocs_mdpo_plugin.utils import get_package_version, removesuffix
+
+
+logger = logging.getLogger('mkdocs.plugins.mdpo')
 
 
 def _language_extension_path(path, extension, language, separator='_'):
@@ -219,6 +224,30 @@ THEME_PATCH_SEARCH_FILES_FUNCS = {
     'readthedocs': _reathedocs_patch_search_files,
 }
 
+##
+# Update 'search_index.json#config.lang' only for some themes:
+##
+
+
+def _patch_material_search_index_lang(language, search_index):
+    material_languages = get_material_languages()
+    if language not in material_languages:
+        material_version = get_package_version('material')
+        material_version_eq = (
+            f'=={material_version}' if material_version else ''
+        )
+        logger.info(
+            f'[mdpo] Language {language} is not supported by'
+            f' mkdocs-material{material_version_eq}, not'
+            " setting the 'theme.language' option",
+        )
+    search_index['config']['lang'] = [language]
+
+
+THEME_PATCH_SEARCH_INDEX_LANG = {
+    'material': _patch_material_search_index_lang,
+}
+
 
 class TranslationsSearchPatcher:
     supported_themes = THEME_WORKER_FILES_FUNCS.keys()
@@ -328,6 +357,11 @@ class TranslationsSearchPatcher:
     def _create_lang_search_index_json(self, language, records):
         search_index = copy.copy(self.search_index_json)
         search_index['docs'] = records
+        if self.theme_name in THEME_PATCH_SEARCH_INDEX_LANG:
+            THEME_PATCH_SEARCH_INDEX_LANG[self.theme_name](
+                language,
+                search_index,
+            )
 
         new_path = _language_extension_path(
             self.search_index_json_path,
