@@ -1,10 +1,15 @@
 """Mkdocs utilities"""
 
-from mkdocs import __version__ as __mkdocs_version__
+import os
+
+import mkdocs
 
 
 MKDOCS_MINOR_VERSION_INFO = tuple(
-    int(n) for n in __mkdocs_version__.split('.')[:2]
+    int(n) for n in mkdocs.__version__.split('.')[:2]
+)
+LUNR_LANGUAGES_PATH = os.path.join(
+    mkdocs.__path__[0], 'contrib', 'search', 'lunr-language',
 )
 
 
@@ -52,3 +57,12 @@ def set_on_build_error_event(MdpoPlugin):
 
         atexit.unregister(_on_build_error)
         atexit.register(_on_build_error)
+
+
+def get_lunr_languages():
+    response = []
+    for filename in os.listdir(LUNR_LANGUAGES_PATH):
+        lang = filename.split('.')[1]
+        if len(lang) == 2:
+            response.append(lang)
+    return response

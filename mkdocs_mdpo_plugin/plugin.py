@@ -35,8 +35,7 @@ from mkdocs_mdpo_plugin.utils import (
 )
 
 
-# use Mkdocs build logger
-logger = logging.getLogger('mkdocs.commands.build')
+logger = logging.getLogger('mkdocs.plugins.mdpo')
 
 
 class MdpoPlugin(mkdocs.plugins.BasePlugin):

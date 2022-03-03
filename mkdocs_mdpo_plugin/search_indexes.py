@@ -38,7 +38,7 @@ def _material_get_worker_js_files(site_dir):
             fpath = os.path.join(javascripts_dir, fname)
             with open(fpath) as f:
                 content = f.read()
-            if '/search/search_index.json' in content:
+            if 'search_index.json' in content:
                 worker_js_filepath = fpath
                 worker_js_content = content
                 continue
@@ -134,8 +134,8 @@ def _material_patch_html_file(fpath, language, worker_files):
     )
 
     new_content = content.replace(
-        f'assets/javascripts/{worker_js_fname}"',
-        f'assets/javascripts/{worker_js_fname_lang}"',
+        f'{worker_js_fname}',
+        f'{worker_js_fname_lang}',
     )
     with open(fpath, 'w') as f:
         f.write(new_content)

@@ -1,11 +1,16 @@
 """Configuration event for 'mkdocs-mdpo-plugin'."""
 
+import logging
 import os
 
 from mkdocs.config.base import ValidationError
 from mkdocs.config.config_options import Type
 
 from mkdocs_mdpo_plugin import __file__ as installation_path
+from mkdocs_mdpo_plugin.mkdocs_utils import get_lunr_languages
+
+
+logger = logging.getLogger('mkdocs.plugins.mdpo')
 
 
 CONFIG_SCHEME = (
@@ -173,6 +178,25 @@ def on_config_event(plugin, config, **kwargs):
                 '"search" plugin must be placed before "mdpo"'
                 ' plugin if you want to disable "cross_language_search".',
             )
+        else:
+            lunr_languages = get_lunr_languages()
+            search_langs = config['plugins']['search'].config['lang'] or []
+            for language in plugin.config['languages']:
+                if language in lunr_languages:
+                    if language not in search_langs:
+                        config['plugins']['search'].config['lang'].append(
+                            language,
+                        )
+                        logger.debug(
+                            f"[mdpo] Adding '{language}' to"
+                            " 'plugins.search.lang' option",
+                        )
+                elif language != 'en':
+                    logger.info(
+                        f"[mdpo] Language '{language}' is not supported by"
+                        " lunr.js, not adding it to 'plugins.search.lang'"
+                        ' option',
+                    )
 
     # check that minimum translated messages required for each language
     # is a valid value

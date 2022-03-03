@@ -4,8 +4,6 @@ import os
 
 import pytest
 
-from mkdocs_mdpo_plugin.plugin import logger
-
 
 TESTS = (
     pytest.param(
@@ -140,13 +138,6 @@ def test_min_translated_messages(
     expected_second_build_log,
     mkdocs_build,
 ):
-    # show duplicated messages in logger
-    #
-    # see Mkdocs build duplicate filter:
-    # https://github.com/mkdocs/mkdocs/blob/
-    # 1da44cea96b850c527d7bdceac920498e4a488ae/mkdocs/commands/build.py#L16
-    logger.filters[0].msgs = set()
-
     def check_translated_files_not_exists(context):
         es_path = os.path.join(context['site_dir'], 'es')
         es_index_path = os.path.join(es_path, 'index.html')

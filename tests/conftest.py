@@ -41,7 +41,7 @@ def _mkdocs_build(
         mkdocs_logger.setLevel(logging.DEBUG)
         mkdocs_logger.addHandler(logging.FileHandler(mkdocs_logger_f.name))
 
-        plugin_logger = logging.getLogger('mkdocs.commands.build')
+        plugin_logger = logging.getLogger('mkdocs.plugins.mdpo')
         plugin_logger.setLevel(logging.DEBUG)
         plugin_logger.addHandler(logging.FileHandler(plugin_logger_f.name))
 
