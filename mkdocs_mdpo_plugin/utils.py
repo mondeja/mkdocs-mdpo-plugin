@@ -1,3 +1,6 @@
+import functools
+
+
 def readable_float(number):
     if str(number).endswith('.0'):
         number = int(number)
@@ -31,3 +34,23 @@ def po_messages_stats(pofile_content):
         total_messages - untranslated_messages,
         total_messages,
     )
+
+
+@functools.lru_cache(maxsize=None)
+def get_package_version(pkg):
+    try:
+        from importlib import metadata
+    except ImportError:
+        try:
+            import importlib_metadata as metadata  # python<=3.7
+        except ImportError:
+            try:
+                import pkg_resources
+            except ImportError:
+                return None
+            else:
+                return pkg_resources.get_distribution(pkg).version
+        else:
+            return metadata.version(pkg)
+    else:
+        return metadata.version(pkg)

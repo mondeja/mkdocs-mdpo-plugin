@@ -1,8 +1,11 @@
 """Mkdocs utilities"""
 
+import functools
 import os
 
 import mkdocs
+
+from mkdocs_mdpo_plugin.utils import removesuffix
 
 
 MKDOCS_MINOR_VERSION_INFO = tuple(
@@ -59,10 +62,24 @@ def set_on_build_error_event(MdpoPlugin):
         atexit.register(_on_build_error)
 
 
+@functools.lru_cache(maxsize=None)
 def get_lunr_languages():
-    response = []
+    languages = []
     for filename in os.listdir(LUNR_LANGUAGES_PATH):
         lang = filename.split('.')[1]
         if len(lang) == 2:
-            response.append(lang)
-    return response
+            languages.append(lang)
+    return languages
+
+
+@functools.lru_cache(maxsize=None)
+def get_material_languages():
+    import material
+
+    languages_dirpath = os.path.join(
+        material.__path__[0], 'partials', 'languages',
+    )
+    languages = []
+    for fname in os.listdir(languages_dirpath):
+        languages.append(removesuffix(fname, '.html'))
+    return languages

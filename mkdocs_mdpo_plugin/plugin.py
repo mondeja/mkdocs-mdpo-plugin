@@ -7,9 +7,9 @@ import os
 import sys
 from urllib.parse import urljoin
 
+import jinja2
 import mkdocs
 import polib
-from jinja2 import Template
 from mdpo.md2po import Md2Po
 from mdpo.po2md import Po2Md
 
@@ -24,11 +24,13 @@ from mkdocs_mdpo_plugin.mdpo_utils import (
 )
 from mkdocs_mdpo_plugin.mkdocs_utils import (
     MkdocsBuild,
+    get_material_languages,
     set_on_build_error_event,
 )
 from mkdocs_mdpo_plugin.search_indexes import TranslationsSearchPatcher
 from mkdocs_mdpo_plugin.translations import Translation, Translations
 from mkdocs_mdpo_plugin.utils import (
+    get_package_version,
     po_messages_stats,
     readable_float,
     removesuffix,
@@ -55,7 +57,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
         super().__init__(*args, **kwargs)
 
     @functools.lru_cache(maxsize=None)
-    def _non_default_languages(self):
+    def _translation_languages(self):
         return [
             language for language in self.config['languages']
             if language != self.config['default_language']
@@ -70,13 +72,11 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             self.config['lc_messages'],
         )
 
-    def on_config(self, config, **kwargs):
-        """Configuration for `mkdocs_mdpo_plugin`."""
-        return on_config_event(self, config, **kwargs)
+    on_config = on_config_event
 
     def on_pre_build(self, config):
         """Create locales folders inside documentation directory."""
-        for language in self._non_default_languages():
+        for language in self._translation_languages():
             os.makedirs(
                 os.path.join(
                     self._language_dir(config['docs_dir'], language),
@@ -101,11 +101,11 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             if file.is_documentation_page():
                 self.translations.files[file.src_path] = {}
 
-                for language in self._non_default_languages():
+                for language in self._translation_languages():
                     # render destination path
                     context = {'file': file, 'language': language}
                     context.update(self.config)
-                    dest_path = Template(
+                    dest_path = jinja2.Template(
                         self.config['dest_filename_template'],
                     ).render(**context)
                     src_path = f"{removesuffix(dest_path, '.html')}.md"
@@ -242,7 +242,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
         _mdpo_languages = {}  # {lang: file}
 
-        for language in self._non_default_languages():
+        for language in self._translation_languages():
             if not excluded_page:
                 # if the page has been excluded from being translated
                 lang_docs_dir = self._language_dir(
@@ -428,6 +428,21 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             self.translations.nav[page.title][language] = [
                 new_page_title, new_page.file.url,
             ]
+
+            if config['theme'].name == 'material':
+                material_languages = get_material_languages()
+                if language in material_languages:
+                    config['theme'].language = language
+                else:
+                    material_version = get_package_version('material')
+                    material_version_eq = (
+                        f'=={material_version}' if material_version else ''
+                    )
+                    logger.info(
+                        f'[mdpo] Language {language} is not supported by'
+                        f' mkdocs-material{material_version_eq}, not setting'
+                        " the 'theme.language' option",
+                    )
 
             mkdocs.commands.build._populate_page(
                 new_page,
