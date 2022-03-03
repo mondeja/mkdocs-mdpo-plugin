@@ -494,7 +494,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             config['theme'].language = self.config['default_language']
         elif (
             'search' in config['plugins'] and
-            'lang' in config['plugins']['search']
+            hasattr(config['plugins']['search'], 'lang')
         ):
             config['plugins']['search'].config['lang'] = [
                 self.config['default_language'],
