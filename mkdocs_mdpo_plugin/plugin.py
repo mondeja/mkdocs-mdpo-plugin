@@ -400,7 +400,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 # if a minimum number of translations are required to include
                 # the file, compute number of untranslated messages
                 if min_translated:
-                    n_translated, n_total = po_messages_stats(str(po))
+                    n_translated, n_total = po_messages_stats(po)
                     if language not in self.translations.stats:
                         self.translations.stats[language] = {
                             'total': n_total,

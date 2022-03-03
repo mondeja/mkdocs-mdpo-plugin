@@ -22,20 +22,13 @@ def removesuffix(s, suf):
     return s
 
 
-def po_messages_stats(pofile_content):
-    untranslated_messages, total_messages = -1, -1
-    content_lines = pofile_content.splitlines()
+def po_messages_stats(po):
+    untranslated_messages, total_messages = 0, 0
 
-    for i, line in enumerate(content_lines):
-        next_i = i + 1
-
-        if line.startswith('msgid "'):
-            total_messages += 1
-        elif line.startswith('msgstr ""') and (
-            next_i == len(content_lines) or (not content_lines[next_i].strip())
-        ):
+    for entry in po:
+        total_messages += 1
+        if not entry.msgstr and not entry.obsolete:
             untranslated_messages += 1
-
     return (
         total_messages - untranslated_messages,
         total_messages,
