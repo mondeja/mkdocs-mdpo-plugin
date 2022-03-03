@@ -193,6 +193,17 @@ The context for the template includes:
 ## Content
 
 <!-- mdpo-disable-next-line -->
+### **`translate`** (*list[str]*)
+
+Configuration settings to translate. Currently only the next settings are
+supported:
+
+<!-- mdpo-disable -->
+- [`site_name`][mkdocs-config-site_name]
+- [`site_description`][mkdocs-config-site_description]
+<!-- mdpo-enable -->
+
+<!-- mdpo-disable-next-line -->
 ### **`cross_language_search`** (*bool*)
 
 It configures if the search plugin of the theme will search through all
@@ -291,3 +302,5 @@ this list.
 [mkdocs-material-site-language-selector]: https://squidfunk.github.io/mkdocs-material/setup/changing-the-language/#site-language-selector
 [jinja2-template]: https://jinja2docs.readthedocs.io/en/stable/templates.html
 [polib.POFile]: https://polib.readthedocs.io/en/latest/api.html#polib.POFile
+[mkdocs-config-site_name]: https://www.mkdocs.org/user-guide/configuration/#site_name
+[mkdocs-config-site_description]: https://www.mkdocs.org/user-guide/configuration/#site_description
