@@ -42,7 +42,7 @@ def get_package_version(pkg):
         from importlib import metadata
     except ImportError:
         try:
-            import importlib_metadata as metadata  # python<=3.7
+            import importlib_metadata as metadata  # python < 3.8
         except ImportError:
             try:
                 import pkg_resources
