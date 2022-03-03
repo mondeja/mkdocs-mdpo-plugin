@@ -2,5 +2,11 @@
 msgid ""
 msgstr ""
 
+msgid "Example using mkdocs-material theme with mkdocs-mdpo-plugin"
+msgstr "Exemple utilisant le thème mkdocs-material avec mkdocs-mdpo-plugin"
+
+msgid "mkdocs-mdpo-plugin Material theme example"
+msgstr "mkdocs-mdpo-plugin exemple de Material thème"
+
 msgid "Some content"
 msgstr "Du contenu"

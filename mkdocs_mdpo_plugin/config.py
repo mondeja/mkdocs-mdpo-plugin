@@ -27,6 +27,7 @@ CONFIG_SCHEME = (
     ('cross_language_search', Type(bool, default=True)),
     ('min_translated_messages', Type((str, int), default=None)),
     ('exclude', Type(list, default=[])),
+    ('translate', Type(list, default=[])),
 )
 
 
@@ -183,7 +184,7 @@ def on_config_event(plugin, config, **kwargs):
         # if cross_language_search is active, add all languages to 'search'
         # plugin configuration
         lunr_languages = get_lunr_languages()
-        search_langs = config['plugins']['search'].config['lang'] or []
+        search_langs = config['plugins']['search'].config.get('lang', [])
         for language in plugin.config['languages']:
             if language in lunr_languages:
                 if language not in search_langs:
@@ -220,7 +221,7 @@ def on_config_event(plugin, config, **kwargs):
             plugin.config['min_translated_messages'] = min_translated
 
     # check that 'exclude' contains a valid list
-    exclude = plugin.config.get('exclude') or []
+    exclude = plugin.config.get('exclude', [])
     if not isinstance(exclude, list):
         raise ValidationError(
             'Expected mdpo\'s "exclude" setting to be a list, but found'
@@ -235,6 +236,19 @@ def on_config_event(plugin, config, **kwargs):
                     f' type {type(path).__name__}',
                 )
     plugin.config['exclude'] = exclude
+
+    # translation of configuration options
+    valid_translate_settings = ['site_name', 'site_description']
+    for setting in plugin.config.get('translate', []):
+        if setting not in valid_translate_settings:
+            valid_translate_settings_readable = ' and '.join([
+                f"'{opt}'" for opt in valid_translate_settings
+            ])
+            raise ValidationError(
+                f"The setting '{setting}' is not supported for"
+                " 'plugins.mdpo.translate' config setting. Valid settings"
+                f' are {valid_translate_settings_readable}',
+            )
 
     # store reference in plugin to markdown_extensions for later usage
     plugin.extensions.markdown = markdown_extensions

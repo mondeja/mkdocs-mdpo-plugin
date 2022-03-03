@@ -21,6 +21,7 @@ from mkdocs_mdpo_plugin.mdpo_events import (
 )
 from mkdocs_mdpo_plugin.mdpo_utils import (
     remove_mdpo_commands_preserving_escaped,
+    remove_mdpo_setting_tags_from_po_entry,
 )
 from mkdocs_mdpo_plugin.mkdocs_utils import (
     MkdocsBuild,
@@ -291,8 +292,19 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 _translated_entries_msgids = []
                 _translated_entries_msgstrs = []
 
+                # translate metadata and config settings
+                #
                 # translate title
                 translated_page_title, _title_in_pofile = (None, False)
+
+                # translate site_name and site_description
+                translated_config_settings = {
+                    key: None for key in self.config['translate']
+                }
+                _config_settings_in_pofile = {
+                    key: False for key in self.config['translate']
+                }
+
                 for entry in po:
                     if entry.msgid == page.title:
                         # matching title found
@@ -302,15 +314,42 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                         _translated_entries_msgids.append(page.title)
                         if entry.msgstr:
                             _translated_entries_msgstrs.append(page.title)
+
+                for entry in compendium_pofile:
+                    for setting in translated_config_settings:
+                        if entry.msgid == config[setting]:
+                            # matching translated setting found
+                            entry.obsolete = False
+                            translated_config_settings[setting] = entry.msgstr
+                            _config_settings_in_pofile[setting] = True
+                            _translated_entries_msgids.append(config[setting])
+                            if entry.msgstr:
+                                _translated_entries_msgstrs.append(
+                                    entry.msgstr,
+                                )
+                            if f'mdpo-{setting}' not in entry.flags:
+                                entry.flags.append(f'mdpo-{setting}')
+
+                # add title to PO file if not added
                 if not _title_in_pofile:
                     po.insert(
                         0,
-                        polib.POEntry(
-                            msgid=page.title,
-                            msgstr='',
-                        ),
+                        polib.POEntry(msgid=page.title, msgstr=''),
                     )
                     _translated_entries_msgids.append(page.title)
+
+                # add translatable configuration settings to PO file
+                for setting, _translated in _config_settings_in_pofile.items():
+                    if not _translated:
+                        compendium_pofile.insert(
+                            0,
+                            polib.POEntry(
+                                msgid=config[setting],
+                                msgstr='',
+                                flags=[f'mdpo-{setting}'],
+                            ),
+                        )
+                compendium_pofile.save(compendium_filepath)
 
                 # add temporally compendium entries to language pofiles
                 for entry in compendium_pofile:
@@ -361,6 +400,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 _translated_entries_msgstrs = []
                 _translated_entries_msgids = []
                 po, po_filepath = [], None
+                translated_config_settings = {}
 
             temp_abs_path = self.translations.files[
                 page.file.src_path
@@ -416,6 +456,10 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                 _disabled_msgids,
             )
             self.translations.current = translation
+            if language not in self.translations.config_settings:
+                self.translations.config_settings[language] = (
+                    translated_config_settings
+                )
 
             # change file url
             url = removesuffix(new_page.file.url, '.md') + '.html'
@@ -507,10 +551,12 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
     def on_post_page(self, output, page, config):
         if hasattr(page.file, '_mdpo_language'):
+            language = page.file._mdpo_language
+
             # if the language should be included from the build, ignore it
             min_translated = self.config['min_translated_messages']
             if min_translated:
-                language = page.file._mdpo_language
+
                 stats = self.translations.stats[language]
                 if abs(min_translated) != min_translated:  # percent
                     min_translated = abs(min_translated)
@@ -557,6 +603,20 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                             )
                             self.config['languages'].remove(language)
                         return
+
+            # translate title and description replacing directly in HTML
+            if language in self.translations.config_settings:
+                tr_settings = self.translations.config_settings[language]
+                if tr_settings.get('site_name'):
+                    output = output.replace(
+                        f'{config["site_name"]}</title>',
+                        f'{tr_settings["site_name"]}</title>',
+                    )
+                if tr_settings.get('site_description'):
+                    output = output.replace(
+                        f'content="{config["site_description"]}"',
+                        f'content="{tr_settings["site_description"]}"',
+                    )
 
             # write translated HTML file to 'site' directory
             os.makedirs(
@@ -663,8 +723,22 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
 
             for entry in compendium_pofile:
                 if entry.msgid not in repeated_msgids:
-                    entry.obsolete = True
-            compendium_pofile.save(compendium_filepath)
+                    # translation of site_name and site_description
+                    if (
+                        'mdpo-site_description' in entry.flags or
+                        'mdpo-site_name' in entry.flags
+                    ):
+                        remove_mdpo_setting_tags_from_po_entry(entry)
+                    else:
+                        entry.obsolete = True
+                else:
+                    remove_mdpo_setting_tags_from_po_entry(entry)
+
+            if len(compendium_pofile):
+                compendium_pofile.save(compendium_filepath)
+            else:
+                # remove empty compendium files
+                os.remove(compendium_filepath)
 
             # mark not found msgstrs as obsolete
             for translation in translations:
@@ -676,11 +750,6 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
                         if entry.msgid not in translation.translated_msgids:
                             entry.obsolete = True
                     po.save(translation.po_filepath)
-
-        # remove empty compendium files
-        for compendium_filepath in self.translations.compendium_files.values():
-            if not len(polib.pofile(compendium_filepath)):
-                os.remove(compendium_filepath)
 
         # reset mkdocs build instance
         MkdocsBuild._instance = None

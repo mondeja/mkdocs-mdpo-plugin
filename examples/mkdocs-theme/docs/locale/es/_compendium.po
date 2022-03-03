@@ -1,0 +1,9 @@
+#
+msgid ""
+msgstr ""
+
+msgid "Example using builtin Mkdocs theme with mkdocs-mdpo-plugin"
+msgstr "Ejemplo usando el tema incluido en Mkdocs con mkdocs-mdpo-plugin"
+
+msgid "mkdocs-mdpo-plugin Mkdocs theme example"
+msgstr "Ejemplo con tema Mkdocs para mkdocs-mdpo-plugin"
