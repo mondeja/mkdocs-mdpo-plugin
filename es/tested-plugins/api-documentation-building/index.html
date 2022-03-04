@@ -48,6 +48,8 @@
     
       <link rel="stylesheet" href="../../../assets/stylesheets/pymdownx.progressbar.css">
     
+      <link rel="stylesheet" href="../../../assets/stylesheets/components.css">
+    
     
       
     
@@ -418,6 +420,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#mkdocs_mdpo_plugindocs_helperother_function" class="md-nav__link">
+    mkdocs_mdpo_plugin.docs_helper.other_function
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -441,8 +450,15 @@
                 
                 
                 <h1 id="construccion-de-documentacion-de-api"><a href="https://github.com/mkdocs/mkdocs/wiki/MkDocs-Plugins#api-documentation-building">Construcción de documentación de API</a><a class="headerlink" href="#construccion-de-documentacion-de-api" title="Link permanente">&para;</a></h1>
+<p><span class="versions-support">0.15.0 &lt; 0.16.0</span></p>
 <h2 id="mkdocstrings"><a href="https://github.com/pawamoy/mkdocstrings">mkdocstrings</a><a class="headerlink" href="#mkdocstrings" title="Link permanente">&para;</a></h2>
-<p>Puedes traducir tus cadenas de documentación usando este plugin con mkdocs-mdpo-plugin.</p>
+<p>Puedes traducir tus cadenas de documentación usando mkdocstrings con mdpo.</p>
+<div class="admonition warning">
+<p class="admonition-title">Precaución</p>
+<ul>
+<li>Empezando en v0.16.0 el plugin funciona pero los nombres de parámetros de función y sus tipos son añadidos también al archivo PO como <code>msgid "**value:** `str` – Value to check."</code>.</li>
+</ul>
+</div>
 <div class="tabbed-set" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Salida</label><div class="tabbed-content">
 <h3 id="mkdocs_mdpo_plugindocs_helperfunction"><strong><code>mkdocs_mdpo_plugin.docs_helper.function</code></strong><a class="headerlink" href="#mkdocs_mdpo_plugindocs_helperfunction" title="Link permanente">&para;</a></h3>
 <div class="mkdocstrings">
@@ -478,11 +494,45 @@
   </div>
 
 </div>
+<h3 id="mkdocs_mdpo_plugindocs_helperother_function"><strong><code>mkdocs_mdpo_plugin.docs_helper.other_function</code></strong><a class="headerlink" href="#mkdocs_mdpo_plugindocs_helperother_function" title="Link permanente">&para;</a></h3>
+<div class="mkdocstrings">
+
+  <div class="doc doc-object doc-function">
+
+
+    <div class="doc doc-contents first">
+
+      <p>Documentación de otra función.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>str</code></td>
+      <td><p>Valor de retorno.</p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+</div>
 </div>
 <input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="gu">### **`mkdocs_mdpo_plugin.docs_helper.function`**</span>
 
 ::: mkdocs_mdpo_plugin.docs_helper.function
+
+<span class="gu">### **`mkdocs_mdpo_plugin.docs_helper.other_function`**</span>
+
+::: mkdocs_mdpo_plugin.docs_helper.other_function
 </code></pre></div>
 </div>
 <input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">Contenido de archivo PO</label><div class="tabbed-content">
@@ -494,6 +544,15 @@
 
 <span class="nv">msgid</span> <span class="s">&quot;**`mkdocs_mdpo_plugin.docs_helper.function`**&quot;</span>
 <span class="nv">msgstr</span> <span class="s">&quot;**`mkdocs_mdpo_plugin.docs_helper.function`**&quot;</span>
+
+<span class="nv">msgid</span> <span class="s">&quot;Other function documentation.&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Documentación de otra función.&quot;</span>
+
+<span class="nv">msgid</span> <span class="s">&quot;Return value.&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;Valor de retorno.&quot;</span>
+
+<span class="nv">msgid</span> <span class="s">&quot;**`mkdocs_mdpo_plugin.docs_helper.other_function`**&quot;</span>
+<span class="nv">msgstr</span> <span class="s">&quot;**`mkdocs_mdpo_plugin.docs_helper.other_function`**&quot;</span>
 </code></pre></div>
 </div>
 </div>
