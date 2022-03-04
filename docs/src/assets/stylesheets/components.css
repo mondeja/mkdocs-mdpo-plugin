@@ -1,0 +1,16 @@
+/* Version range support for third party extensions and plugins */
+.versions-support {
+  margin-top: 2px;
+  font-size: 14px;
+  float: right;
+  font-family: var(--md-code-font-family, _), SFMono-Regular, Consolas, Menlo,
+    monospace;
+  padding: 5px 18px 5px 13px;
+}
+
+.versions-support::after {
+  content: "🔓";
+  position: relative;
+  top: -1px;
+  left: 8px;
+}

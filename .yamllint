@@ -48,5 +48,7 @@ rules:
       - \d\d:\d\d
     quote-type: single
     required: only-when-needed
+    ignore: |
+      mkdocs.yml
   trailing-spaces: enable
   truthy: disable
