@@ -13,6 +13,7 @@ extra_javascript:
 extra_css:
   - assets/stylesheets/theme-overrides.css
   - assets/stylesheets/pymdownx.progressbar.css
+  - assets/stylesheets/components.css
 
 theme:
   name: material
@@ -92,6 +93,7 @@ extra:
   alternate:
     - name: English
       lang: en
+      link: ""
     - name: Español
-      link: es
       lang: es
+      link: es

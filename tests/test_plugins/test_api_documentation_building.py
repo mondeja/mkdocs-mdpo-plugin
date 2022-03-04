@@ -44,7 +44,7 @@ TESTS = (
                 '<td><p>Valor a comprobar.</p></td>',
             ],
         },
-        id='mkdocs-exclude (before mdpo)',
+        id='mkdocstrings',
     ),
 )
 

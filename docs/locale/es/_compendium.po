@@ -76,3 +76,6 @@ msgstr ""
 
 msgid "Directories tree"
 msgstr "Árbol de directorios"
+
+msgid "Warning"
+msgstr "Precaución"

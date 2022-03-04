@@ -19,9 +19,6 @@ msgstr ""
 msgid "You must let one blank line between each progress bar."
 msgstr "Debes dejar una línea en blanco entre cada barra de progreso."
 
-msgid "Warning"
-msgstr "Precaución"
-
 msgid ""
 "Some content of certain extensions placed inside tabs will not be "
 "translated."

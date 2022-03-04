@@ -5,3 +5,12 @@ def function(value):  # pragma: no cover
         value (str): Value to check.
     """
     pass
+
+
+def other_function():
+    """Other function documentation.
+
+    Returns:
+        str: Return value.
+    """
+    return ''
