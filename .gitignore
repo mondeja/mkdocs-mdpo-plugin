@@ -11,6 +11,7 @@ prueba.md
 /*.txt
 /src/
 examples/**/**/site/
+/.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

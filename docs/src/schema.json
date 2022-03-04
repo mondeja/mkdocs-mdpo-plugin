@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "title": "Mkdocs translations using PO files.",
+  "oneOf": [
+    {
+      "markdownDescription": "https://mondeja.github.io/mkdocs-mdpo-plugin/",
+      "enum": ["mdpo"]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "mdpo": {
+          "markdownDescription": "https://mondeja.github.io/mkdocs-mdpo-plugin/",
+          "type": "object",
+          "properties": {
+            "languages": {
+              "title": "Languages to translate documentation sources into.",
+              "markdownDescription": "https://mondeja.github.io/mkdocs-mdpo-plugin/config/#languages-list",
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "default_language": {
+              "title": "Original language in which the documentation sources are written.",
+              "markdownDescription": "https://mondeja.github.io/mkdocs-mdpo-plugin/config/#default_language-str",
+              "type": "string",
+              "default": "en"
+            },
+            "locale_dir": {
+              "title": "Directory where the generated PO translation files are placed.",
+              "markdownDescription": "https://mondeja.github.io/mkdocs-mdpo-plugin/config/#locale_dir-str",
+              "type": "string",
+              "default": "../locale",
+              "format": "uri-reference"
+            },
+            "lc_messages": {
+              "title": "LC_MESSAGES subfolder inside generated language directories.",
+              "markdownDescription": "https://mondeja.github.io/mkdocs-mdpo-plugin/config/#lc_messages-bool-or-str",
+              "type": ["boolean", "string"],
+              "default": true
+            },
+            "dest_filename_template": {
+              "title": "Jinja2 template for destination file name inside 'site/' directory.",
+              "markdownDescription": "https://mondeja.github.io/mkdocs-mdpo-plugin/config/#dest_filename_template-str",
+              "type": "string",
+              "default": "\"{{language}}/{{file.dest_path}}\""
+            },
+            "translate": {
+              "title": "Configuration settings to translate.",
+              "markdownDescription": "https://mondeja.github.io/mkdocs-mdpo-plugin/config/#translate-liststr",
+              "type": "array",
+              "default": [],
+              "items": {
+                "type": "string",
+                "enum": ["site_name", "site_description"]
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "cross_language_search": {
+              "title": "Configures if the search plugin of the theme will search through all languages.",
+              "markdownDescription": "https://mondeja.github.io/mkdocs-mdpo-plugin/config/#cross_language_search-bool",
+              "type": "boolean",
+              "default": false
+            },
+            "min_translated_messages": {
+              "title": "Minimum number or percentage of messages in all files to include the translated pages for a language.",
+              "markdownDescription": "https://mondeja.github.io/mkdocs-mdpo-plugin/config/#min_translated_messages-str-or-int",
+              "oneOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[1-9][0-9]?(\\.[0-9]+)?%$|^100(\\.0+)?%$|^0(\\.[0-9]+)?%$"
+                },
+                {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              ],
+              "default": "95%"
+            }
+          },
+          "exclude": {
+            "title": "Files to exclude from being translated, still creating copies of original ones in target languages.",
+            "markdownDescription": "https://mondeja.github.io/mkdocs-mdpo-plugin/config/#exclude-liststr",
+            "type": "array",
+            "default": [],
+            "items": {
+              "type": "string",
+              "format": "uri-reference"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "ignore_extensions": {
+            "title": "File extensions that are ignored from being added to site directory.",
+            "markdownDescription": "https://mondeja.github.io/mkdocs-mdpo-plugin/config/#ignore_extensions-liststr",
+            "type": "array",
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "ignore_msgids": {
+            "title": "Messages that are ignored from being dumped into generated PO files.",
+            "markdownDescription": "https://mondeja.github.io/mkdocs-mdpo-plugin/config/#ignore_msgids-liststr",
+            "type": "array",
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}
