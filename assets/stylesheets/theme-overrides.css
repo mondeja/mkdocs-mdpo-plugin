@@ -3,13 +3,26 @@
   --md-accent-fg-color: #f70019;
 }
 
-article a {
-  color: #bc0013 !important;
+@media (prefers-color-scheme: light) {
+  article a {
+    color: #bc0013 !important;
+  }
+
+  article a.headerlink,
+  article .md-icon:not(.md-clipboard) {
+    color: var(--md-primary-fg-color) !important;
+  }
 }
 
-article a.headerlink,
-article .md-icon:not(.md-clipboard) {
-  color: #f70019 !important;
+@media (prefers-color-scheme: dark) {
+  article a {
+    color: #ff2f44 !important;
+  }
+
+  article a.headerlink,
+  article .md-icon:not(.md-clipboard) {
+    color: #ff2f44 !important;
+  }
 }
 
 .md-source:hover {

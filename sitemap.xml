@@ -2,43 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
          <loc>https://mkdocs-mdpo.ga/</loc>
-         <lastmod>2022-03-04</lastmod>
+         <lastmod>2022-03-06</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="es" href="https://mkdocs-mdpo.ga/es/"/>
     </url>
     <url>
          <loc>https://mkdocs-mdpo.ga/config/</loc>
-         <lastmod>2022-03-04</lastmod>
+         <lastmod>2022-03-06</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="es" href="https://mkdocs-mdpo.ga/es/config/"/>
     </url>
     <url>
          <loc>https://mkdocs-mdpo.ga/useful-recipes/</loc>
-         <lastmod>2022-03-04</lastmod>
+         <lastmod>2022-03-06</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="es" href="https://mkdocs-mdpo.ga/es/useful-recipes/"/>
     </url>
     <url>
          <loc>https://mkdocs-mdpo.ga/extensions-support/official/</loc>
-         <lastmod>2022-03-04</lastmod>
+         <lastmod>2022-03-06</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="es" href="https://mkdocs-mdpo.ga/es/extensions-support/official/"/>
     </url>
     <url>
          <loc>https://mkdocs-mdpo.ga/extensions-support/pymdownx/</loc>
-         <lastmod>2022-03-04</lastmod>
+         <lastmod>2022-03-06</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="es" href="https://mkdocs-mdpo.ga/es/extensions-support/pymdownx/"/>
     </url>
     <url>
          <loc>https://mkdocs-mdpo.ga/tested-plugins/api-documentation-building/</loc>
-         <lastmod>2022-03-04</lastmod>
+         <lastmod>2022-03-06</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="es" href="https://mkdocs-mdpo.ga/es/tested-plugins/api-documentation-building/"/>
     </url>
     <url>
          <loc>https://mkdocs-mdpo.ga/tested-plugins/navigation-and-page-building/</loc>
-         <lastmod>2022-03-04</lastmod>
+         <lastmod>2022-03-06</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="es" href="https://mkdocs-mdpo.ga/es/tested-plugins/navigation-and-page-building/"/>
     </url>
