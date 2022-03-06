@@ -1,9 +1,19 @@
 # [API documentation building][api-documentation-building]
 
-<!-- mdpo-disable-next-line -->
+<!-- mdpo-disable -->
+
+<span class="versions-support">0.15.0 < 0.16.0</span>
+
 ## [mkdocstrings][mkdocstrings-github-link]
 
-You can translate your docstrings using this plugin with mkdocs-mdpo-plugin.
+<!-- mdpo-enable -->
+You can translate your docstrings using mkdocstrings with mdpo.
+
+!!! warning
+
+    - Starting from v0.16.0 the plugin works but function parameters
+    names and types are also added to the PO file as
+    ``msgid "**value:** `str` – Value to check."``.
 
 <!-- mdpo-disable -->
 
@@ -13,12 +23,20 @@ You can translate your docstrings using this plugin with mkdocs-mdpo-plugin.
 
     ::: mkdocs_mdpo_plugin.docs_helper.function
 
+    ### **`mkdocs_mdpo_plugin.docs_helper.other_function`**
+
+    ::: mkdocs_mdpo_plugin.docs_helper.other_function
+
 === "Markdown"
 
     ```markdown
     ### **`mkdocs_mdpo_plugin.docs_helper.function`**
 
     ::: mkdocs_mdpo_plugin.docs_helper.function
+
+    ### **`mkdocs_mdpo_plugin.docs_helper.other_function`**
+
+    ::: mkdocs_mdpo_plugin.docs_helper.other_function
     ```
 
 === "PO file content"
@@ -32,6 +50,15 @@ You can translate your docstrings using this plugin with mkdocs-mdpo-plugin.
 
     msgid "**`mkdocs_mdpo_plugin.docs_helper.function`**"
     msgstr "**`mkdocs_mdpo_plugin.docs_helper.function`**"
+
+    msgid "Other function documentation."
+    msgstr "Documentación de otra función."
+
+    msgid "Return value."
+    msgstr "Valor de retorno."
+
+    msgid "**`mkdocs_mdpo_plugin.docs_helper.other_function`**"
+    msgstr "**`mkdocs_mdpo_plugin.docs_helper.other_function`**"
     ```
 
 <!-- mdpo-enable -->

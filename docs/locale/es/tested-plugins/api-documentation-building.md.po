@@ -12,17 +12,8 @@ msgstr ""
 "[api-documentation-building]: https://github.com/mkdocs/mkdocs/wiki/MkDocs-"
 "Plugins#api-documentation-building"
 
-msgid ""
-"You can translate your docstrings using this plugin with mkdocs-mdpo-plugin."
-msgstr ""
-"Puedes traducir tus cadenas de documentación usando este plugin con mkdocs-"
-"mdpo-plugin."
-
 msgid "[mkdocstrings-github-link]: https://github.com/pawamoy/mkdocstrings"
 msgstr "[mkdocstrings-github-link]: https://github.com/pawamoy/mkdocstrings"
-
-msgid "Value to check."
-msgstr "Valor a comprobar."
 
 msgid "Function documentation."
 msgstr "Documentación de función."
@@ -32,3 +23,28 @@ msgstr "**`mkdocs_mdpo_plugin.docs_helper.function`**"
 
 msgid "API documentation building"
 msgstr "Construcción de documentación de API"
+
+msgid "You can translate your docstrings using mkdocstrings with mdpo."
+msgstr ""
+"Puedes traducir tus cadenas de documentación usando mkdocstrings con mdpo."
+
+msgid "Other function documentation."
+msgstr "Documentación de otra función."
+
+msgid "Return value."
+msgstr "Valor de retorno."
+
+msgid "**`mkdocs_mdpo_plugin.docs_helper.other_function`**"
+msgstr "**`mkdocs_mdpo_plugin.docs_helper.other_function`**"
+
+msgid "Value to check."
+msgstr "Valor a comprobar."
+
+msgid ""
+"Starting from v0.16.0 the plugin works but function parameters names and "
+"types are also added to the PO file as ``msgid \"**value:** `str` – Value to"
+" check.\"``."
+msgstr ""
+"Empezando en v0.16.0 el plugin funciona pero los nombres de parámetros de "
+"función y sus tipos son añadidos también al archivo PO como ``msgid "
+"\"**value:** `str` – Value to check.\"``."
