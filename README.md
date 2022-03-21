@@ -88,12 +88,12 @@ with `mkdocs build` and the `site/` directory will look like:
 ```
 📁 site
 ├── 📄 404.html
-├── assets
+├── 📁 assets
 │   ├── 📁 images
 │   ├── 📁 javascripts
 │   └── 📁 stylesheets
 ├── 📁 es
-│   └── index.html
+│   └── 📄 index.html
 ├── 📄 index.html
 ├── 📄 sitemap.xml
 └── 📄 sitemap.xml.gz
