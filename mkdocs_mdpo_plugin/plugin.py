@@ -461,7 +461,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             ][language]
             temp_abs_dirpath = os.path.dirname(temp_abs_path)
             os.makedirs(temp_abs_dirpath, exist_ok=True)
-            with open(temp_abs_path, 'w') as f:
+            with open(temp_abs_path, 'w', encoding='utf-8') as f:
                 f.write(content)
 
             new_file = mkdocs.structure.files.File(
@@ -732,7 +732,7 @@ class MdpoPlugin(mkdocs.plugins.BasePlugin):
             ) + '/'
             self.translations.locations[location] = page.file._mdpo_language
 
-            with open(render_path, 'w') as f:
+            with open(render_path, 'w', encoding='utf-8') as f:
                 f.write(output)
         return output
 
