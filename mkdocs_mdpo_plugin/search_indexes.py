@@ -84,7 +84,7 @@ def _material_patch_worker_js_files(files, language):
         '/search/search_index.json',
         f'/search/search_index_{language}.json',
     )
-    with open(new_path, 'w') as f:
+    with open(new_path, 'w', encoding='utf-8') as f:
         f.write(new_content)
 
 
@@ -100,7 +100,7 @@ def _mkdocs_patch_worker_js_files(files, language):
         'search_index.json',
         f'search_index_{language}.json',
     )
-    with open(new_worker_js_path, 'w') as f:
+    with open(new_worker_js_path, 'w', encoding='utf-8') as f:
         f.write(new_worker_js_content)
 
     new_main_js_path = _language_extension_path(
@@ -112,7 +112,7 @@ def _mkdocs_patch_worker_js_files(files, language):
         'worker.js',
         f'worker_{language}.js',
     )
-    with open(new_main_js_path, 'w') as f:
+    with open(new_main_js_path, 'w', encoding='utf-8') as f:
         f.write(new_main_js_content)
 
 
@@ -142,7 +142,7 @@ def _material_patch_html_file(fpath, language, worker_files):
         f'{worker_js_fname}',
         f'{worker_js_fname_lang}',
     )
-    with open(fpath, 'w') as f:
+    with open(fpath, 'w', encoding='utf-8') as f:
         f.write(new_content)
 
 
@@ -154,7 +154,7 @@ def _mkdocs_patch_html_file(fpath, language, *args):
         'search/main.js',
         f'search/main_{language}.js',
     )
-    with open(fpath, 'w') as f:
+    with open(fpath, 'w', encoding='utf-8') as f:
         f.write(new_content)
 
 
@@ -206,7 +206,7 @@ def _reathedocs_patch_search_files(
         f'search/main_{default_language}.js',
         f'search/main_{language}.js',
     )
-    with open(lang_search_path, 'w') as f:
+    with open(lang_search_path, 'w', encoding='utf-8') as f:
         f.write(lang_search_path_content)
 
     # patch search file URL in language file
@@ -216,7 +216,7 @@ def _reathedocs_patch_search_files(
         'search.html',
         f'search_{language}.html',
     )
-    with open(fpath, 'w') as f:
+    with open(fpath, 'w', encoding='utf-8') as f:
         f.write(new_content)
 
 
@@ -369,7 +369,7 @@ class TranslationsSearchPatcher:
             language,
         )
         with open(new_path, 'w') as f:
-            f.write(json.dumps(search_index))
+            json.dump(search_index, f)
 
     def _get_html_files_by_language(self):
         language_files = {language: [] for language in self.languages}
