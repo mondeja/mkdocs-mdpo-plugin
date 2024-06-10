@@ -105,4 +105,4 @@ Simple and easy. The extraction of messages process and the produced
 layout are fully customizable, you can even translate code blocks!
 [Check the full documentation here](https://mkdocs-mdpo.ga).
 
-[mdpo-docs]: https://mdpo.readthedocs.io
+[mdpo-docs]: https://mondeja.github.io/mdpo/
